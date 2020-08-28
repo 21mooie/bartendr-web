@@ -1,29 +1,22 @@
 import React from 'react';
-import './App.css';
-import Button from '@material-ui/core/Button';
 import { store } from './store/index';
+
+import './App.css';
+import {Home} from "./components/Home/Home";
+import {Dashboard} from "./components/Dashboard/Dashboard";
+
 
 console.log(store.getState());
 
 function App() {
-  const clickMe = () => {
-    console.log('i was clicked');
-  }
   return (
 
     <div className="App">
-      <div className="hello">
-      <p>Hello this is my cocktail app.</p>
       {/*Search bar for unauthed users who only want to search*/}
-      <Button variant="contained" color="primary" onClick={() => clickMe()}>
-        Log in
-      </Button>
-      <Button variant="contained" color="primary">
-        Sign up
-      </Button>
-      </div>
+      {/*  Router which switches between components, Guard against auth routes*/}
+      <Home />
+      <Dashboard />
     </div>
-
   );
 }
 

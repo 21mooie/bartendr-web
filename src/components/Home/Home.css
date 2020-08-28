@@ -1,0 +1,9 @@
+.main {
+    display: flex;
+    justify-content: center;
+    margin-top: 50vh;
+}
+
+.content {
+    display: inline-block;
+}
