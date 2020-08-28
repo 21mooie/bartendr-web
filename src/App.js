@@ -1,22 +1,25 @@
 import React from 'react';
-import { store } from './store/index';
+import {Provider} from "react-redux";
 
 import './App.css';
 import {Home} from "./components/Home/Home";
-import {Dashboard} from "./components/Dashboard/Dashboard";
+import {ConnectedDashboard} from "./components/Dashboard/Dashboard";
+import { store } from './store/index';
+
 
 
 console.log(store.getState());
 
 function App() {
   return (
-
-    <div className="App">
-      {/*Search bar for unauthed users who only want to search*/}
-      {/*  Router which switches between components, Guard against auth routes*/}
-      <Home />
-      <Dashboard />
-    </div>
+    <Provider store={store}>
+      <div className="App">
+        {/*Search bar for unauthed users who only want to search*/}
+        {/*  Router which switches between components, Guard against auth routes*/}
+        <Home />
+        <ConnectedDashboard />
+      </div>
+    </Provider>
   );
 }
 
