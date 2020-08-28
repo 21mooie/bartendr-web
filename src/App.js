@@ -1,6 +1,9 @@
 import React from 'react';
 import './App.css';
 import Button from '@material-ui/core/Button';
+import { store } from './store/index';
+
+console.log(store.getState());
 
 function App() {
   const clickMe = () => {
