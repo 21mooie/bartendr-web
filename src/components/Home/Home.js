@@ -3,7 +3,7 @@ import Button from "@material-ui/core/Button";
 
 import './Home.css';
 
-export const Home = () => {
+const Home = () => {
   const clickMe = () => {
     console.log('i was clicked');
   }
@@ -21,3 +21,5 @@ export const Home = () => {
     </div>
   )
 }
+
+export default Home;
