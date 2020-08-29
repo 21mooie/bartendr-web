@@ -2,6 +2,7 @@ import React from "react";
 import Button from "@material-ui/core/Button";
 
 import './LandingPage.css';
+import {Link} from "react-router-dom";
 
 const LandingPage = () => {
   const clickMe = () => {
@@ -12,10 +13,14 @@ const LandingPage = () => {
       <div className="content">
         <p>Hello this is my cocktail app.</p>
         <Button variant="contained" color="primary" onClick={() => clickMe()}>
-          Log in
+          <Link to="/login" className="link">
+            Log in
+          </Link>
         </Button>
         <Button variant="contained" color="primary">
-          Sign up
+          <Link to="signup" className="link">
+            Sign up
+          </Link>
         </Button>
       </div>
     </div>

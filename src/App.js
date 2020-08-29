@@ -1,6 +1,6 @@
 import React from 'react';
 import {Provider} from "react-redux";
-import { Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import './App.css';
 import {ConnectedDashboard} from "./components/Dashboard/Dashboard";
@@ -14,6 +14,7 @@ import Drink from "./components/Drink/Drink";
 import Search from "./components/Search/Search";
 import LandingPage from "./components/LandingPage/LandingPage";
 import NotFound from "./components/NotFound/NotFound";
+import Signup from "./components/Signup/Signup";
 
 
 
@@ -29,12 +30,13 @@ function App() {
           {/*  Router which switches between components, Guard against auth routes*/}
           <Switch>
             <Route exact path="/" component={LandingPage} />
-            <Route path="/dashboard" component={ConnectedDashboard}/>
-            <Route path="/login" component={Login} />
+            <Route path="/dashboard" component={ConnectedDashboard} />
+            <Route path="/login" component={Login}/>
+            <Route path="/signup" component={Signup} />
             <Route path="/user" component={User} />
             <Route path="/drink" component={Drink} />
             <Route path="/search" component={Search} />
-            <Route path="*" component={NotFound} />
+            <Route component={NotFound} />
           </Switch>
         </div>
       </Provider>
