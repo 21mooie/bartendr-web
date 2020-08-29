@@ -1,9 +1,9 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
 
-import './Home.css';
+import './LandingPage.css';
 
-const Home = () => {
+const LandingPage = () => {
   const clickMe = () => {
     console.log('i was clicked');
   }
@@ -22,4 +22,4 @@ const Home = () => {
   )
 }
 
-export default Home;
+export default LandingPage;

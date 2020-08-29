@@ -12,7 +12,7 @@ import Navigation from "./components/Navigation/Navigation";
 import User from "./components/User/User";
 import Drink from "./components/Drink/Drink";
 import Search from "./components/Search/Search";
-import Home from "./components/Home/Home";
+import LandingPage from "./components/LandingPage/LandingPage";
 import NotFound from "./components/NotFound/NotFound";
 
 
@@ -28,7 +28,7 @@ function App() {
           {/*Search bar for unauthed users who only want to search*/}
           {/*  Router which switches between components, Guard against auth routes*/}
           <Switch>
-            <Route exact path="/" component={Home} />
+            <Route exact path="/" component={LandingPage} />
             <Route path="/dashboard" component={ConnectedDashboard}/>
             <Route path="/login" component={Login} />
             <Route path="/user" component={User} />
