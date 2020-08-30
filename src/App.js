@@ -5,7 +5,6 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
 import {ConnectedDashboard} from "./components/Dashboard/Dashboard";
 import { store } from './store/index';
-import {history} from "./store/history";
 import Login from "./components/Login/Login";
 import Navigation from "./components/Navigation/Navigation";
 import {ConnectedUser} from "./components/User/User";
@@ -21,7 +20,7 @@ console.log(store.getState());
 
 function App() {
   return (
-    <Router history={history}>
+    <Router>
       <Provider store={store}>
         <div className="App">
           <Navigation />
