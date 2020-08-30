@@ -10,6 +10,8 @@ const Navigation = ({navUrls}) => {
     setLocation(routerLocation.pathname);
     if (navUrls.find(url => url === location)) {
       setShow(true);
+    } else {
+      setShow(false);
     }
   }, [routerLocation.pathname, location, navUrls],);
 
