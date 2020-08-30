@@ -1,3 +1,5 @@
+import md5 from 'md5';
+
 export const user = {
   session: {
     authenticated: false
@@ -16,5 +18,6 @@ export const user = {
       "post_id" : "1fe3fe312212faDF"
     }
   ],
-  uid : "4rer322fafrffda"
+  uid : "4rer322fafrffda",
+  pwdHash: md5('password1')
 }

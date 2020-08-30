@@ -11,7 +11,7 @@ const sagaMiddleware = createSagaMiddleWare();
 
 export const store = createStore(
   combineReducers({
-    session(session = user.session) {
+    session(session = user.session || {}) {
       return session;
     },
     username(username = user.username, action) {
