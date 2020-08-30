@@ -27,7 +27,7 @@ function mapDispatchToProps (dispatch, ownProps){
   return {
     changeUsername(userId, oldUsername, newUsername) {
       console.log('changing username', userId, oldUsername, newUsername);
-      dispatch(requestChangeUsername(userId))
+      dispatch(requestChangeUsername(userId, oldUsername, newUsername))
     }
   }
 }

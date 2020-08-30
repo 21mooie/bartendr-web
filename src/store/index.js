@@ -14,10 +14,10 @@ export const store = createStore(
     username(username = user.username, action) {
       switch(action.type) {
         case mutations.CHANGE_USERNAME:
-          console.log(action);
           return username = action.newUsername;
+        default:
+          return username;
       }
-      return username;
     },
     userId(userId = user.userId) {
       return userId;
