@@ -15,7 +15,7 @@ export const store = createStore(
       switch(action.type) {
         case mutations.CHANGE_USERNAME:
           console.log(action);
-          break;
+          return username = action.newUsername;
       }
       return username;
     },
