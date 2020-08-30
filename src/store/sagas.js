@@ -1,5 +1,4 @@
-import {take,  put, select} from "redux-saga/effects";
-import uuid from "uuid";
+import {take,  put} from "redux-saga/effects";
 import axios from "axios";
 
 import * as mutations from './mutations';
@@ -14,6 +13,16 @@ export function* changeUsernameSaga() {
       uid,
       oldUsername,
       newUsername,
+    });
+  }
+}
+
+export function* createNewUserSaga() {
+  while (true) {
+    const {username, password} = yield take([mutations.CREATE_USER]);
+    axios.post(url + '/cocktail-user', {
+      username,
+      password
     });
   }
 }
