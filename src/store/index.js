@@ -19,8 +19,8 @@ export const store = createStore(
           return username;
       }
     },
-    userId(userId = user.userId) {
-      return userId;
+    uid(uid = user.uid) {
+      return uid;
     },
     photo(photo = user.photo) {
       return photo;

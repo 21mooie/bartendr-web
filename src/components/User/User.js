@@ -12,7 +12,7 @@ export function User({user, changeUsername}) {
     <h2>Change your username here</h2>
     <form noValidate autoComplete="off">
     <TextField id="newUsername " label="New Username" onChange={event => setUsername(event.target.value)}/>
-    <Button onClick={() => changeUsername(user.userId, user.username, newUsername)}>Submit</Button>
+    <Button onClick={() => changeUsername(user.uid, user.username, newUsername)}>Submit</Button>
     </form>
   </div>
 }
@@ -25,9 +25,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps (dispatch, ownProps){
   return {
-    changeUsername(userId, oldUsername, newUsername) {
-      console.log('changing username', userId, oldUsername, newUsername);
-      dispatch(requestChangeUsername(userId, oldUsername, newUsername))
+    changeUsername(uid, oldUsername, newUsername) {
+      console.log('changing username', uid, oldUsername, newUsername);
+      dispatch(requestChangeUsername(uid, oldUsername, newUsername))
     }
   }
 }
