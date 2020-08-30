@@ -1,16 +1,25 @@
-import { createStore, applyMiddleware } from 'redux';
-import { user } from '../server/defaultState.js';
+import { createStore, applyMiddleware, combineReducers } from 'redux';
 import {createLogger} from "redux-logger";
 import createSagaMiddleWare from "redux-saga";
+
+import { user } from '../server/defaultState.js';
 import * as sagas from './sagas.mock';
+import * as mutations from './mutations';
 
 
 const sagaMiddleware = createSagaMiddleWare();
 
 export const store = createStore(
-  function reducer(state = user, action) {
-    return state;
-  },
+  combineReducers({
+    tasks(tasks = user.username, action) {
+      switch(action.type) {
+        case mutations.CHANGE_USERNAME:
+          console.log(action);
+          break;
+      }
+      return tasks;
+    }
+  }),
   applyMiddleware(createLogger(), sagaMiddleware)
 );
 
