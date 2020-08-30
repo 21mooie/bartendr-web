@@ -1,6 +1,6 @@
 import React from 'react';
 import {Provider} from "react-redux";
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 
 import './App.css';
 import {ConnectedDashboard} from "./components/Dashboard/Dashboard";
@@ -17,6 +17,14 @@ import Signup from "./components/Signup/Signup";
 
 
 console.log(store.getState());
+const RouteGuard = Component => ({match}) => {
+  console.info("Route guard", match);
+  if (!store.getState().session.authenticated) {
+    //reroute
+    return <Redirect to="/"/>
+  }
+  return <Component match ={match} />
+}
 
 function App() {
   return (
@@ -28,10 +36,10 @@ function App() {
           {/*  Router which switches between components, Guard against auth routes*/}
           <Switch>
             <Route exact path="/" component={LandingPage} />
-            <Route path="/dashboard" component={ConnectedDashboard} />
+            <Route path="/dashboard" component={RouteGuard(ConnectedDashboard)} />
             <Route path="/login" component={Login}/>
             <Route path="/signup" component={Signup} />
-            <Route path="/user" component={ConnectedUser} />
+            <Route path="/user" component={RouteGuard(ConnectedUser)} />
             <Route path="/drink" component={Drink} />
             <Route path="/search" component={Search} />
             <Route component={NotFound} />
