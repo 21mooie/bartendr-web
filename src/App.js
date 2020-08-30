@@ -13,6 +13,7 @@ import Search from "./components/Search/Search";
 import LandingPage from "./components/LandingPage/LandingPage";
 import NotFound from "./components/NotFound/NotFound";
 import Signup from "./components/Signup/Signup";
+import {history} from "./utils/history";
 
 
 
@@ -28,7 +29,7 @@ const RouteGuard = Component => ({match}) => {
 
 function App() {
   return (
-    <Router>
+    <Router history={history}>
       <Provider store={store}>
         <div className="App">
           <Navigation navUrls={['/dashboard', '/user', '/drink', '/search']}/>

@@ -14,6 +14,8 @@ export const store = createStore(
     session(userSession = user.session || {}, action) {
       let { type, authenticated, session} = action;
       switch (type) {
+        case mutations.SET_STATE:
+          return {...userSession};
         case mutations.REQUEST_AUTHENTICATE_USER:
           return {...userSession, authenticated: mutations.AUTHENTICATING};
         case mutations.PROCESSING_AUTHENTICATE_USER:
@@ -22,24 +24,42 @@ export const store = createStore(
           return userSession;
       }
     },
-    username(username = user.username, action) {
+    username(username = '', action) {
       switch(action.type) {
+        case (mutations.SET_STATE):
+          return action.state.username;
         case mutations.CHANGE_USERNAME:
           return username = action.newUsername;
         default:
           return username;
       }
     },
-    uid(uid = user.uid) {
+    uid(uid = '', action) {
+      switch(action.type) {
+        case(mutations.SET_STATE):
+          return action.state.uid
+      }
       return uid;
     },
-    photo(photo = user.photo) {
+    photo(photo = '', action) {
+      switch(action.type) {
+        case(mutations.SET_STATE):
+          return action.state.photo || null;
+      }
       return photo;
     },
-    fav_drinks(fav_drinks = user.fav_drinks) {
+    fav_drinks(fav_drinks = [], action) {
+      switch(action.type) {
+        case(mutations.SET_STATE):
+          return action.state.fav_drinks || null;
+      }
       return fav_drinks;
     },
-    comments(comments = user.comments) {
+    comments(comments = [], action) {
+      switch(action.type) {
+        case(mutations.SET_STATE):
+          return action.state.comments || null;
+      }
       return comments;
     },
   }),
