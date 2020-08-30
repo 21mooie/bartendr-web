@@ -26,3 +26,18 @@ export function* createNewUserSaga() {
     });
   }
 }
+
+export function* userAuthenticationSaga() {
+  while (true) {
+    const {username, password} = yield take(mutations.REQUEST_AUTHENTICATE_USER);
+    try {
+      const {data} = axios.post(url + `/cocktail-user/authenticate`, {username, password})
+      if (!data) {
+        throw new Error();
+      }
+    } catch(err) {
+      console.log('auth failed: ', err);
+      yield put(mutations.processAuthenticateUser(mutations.NOT_AUTHENTICATED));
+    }
+  }
+}
