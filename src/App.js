@@ -23,7 +23,7 @@ function App() {
     <Router>
       <Provider store={store}>
         <div className="App">
-          <Navigation />
+          <Navigation navUrls={['/dashboard', '/user', '/drink', '/search']}/>
           {/*Search bar for unauthed users who only want to search*/}
           {/*  Router which switches between components, Guard against auth routes*/}
           <Switch>
