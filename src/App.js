@@ -1,6 +1,6 @@
 import React from 'react';
 import {Provider} from "react-redux";
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { Router, Route, Switch, Redirect } from 'react-router-dom';
 
 import './App.css';
 import {ConnectedDashboard} from "./components/Dashboard/Dashboard";
