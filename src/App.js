@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-d
 import './App.css';
 import {ConnectedDashboard} from "./components/Dashboard/Dashboard";
 import { store } from './store/index';
-import Login from "./components/Login/Login";
+import {ConnectedLogin} from "./components/Login/Login";
 import Navigation from "./components/Navigation/Navigation";
 import {ConnectedUser} from "./components/User/User";
 import Drink from "./components/Drink/Drink";
@@ -21,7 +21,7 @@ const RouteGuard = Component => ({match}) => {
   console.info("Route guard", match);
   if (!store.getState().session.authenticated) {
     //reroute
-    return <Redirect to="/"/>
+    return <Redirect to="/login"/>
   }
   return <Component match ={match} />
 }
@@ -37,7 +37,7 @@ function App() {
           <Switch>
             <Route exact path="/" component={LandingPage} />
             <Route path="/dashboard" component={RouteGuard(ConnectedDashboard)} />
-            <Route path="/login" component={Login}/>
+            <Route path="/login" component={ConnectedLogin}/>
             <Route path="/signup" component={Signup} />
             <Route path="/user" component={RouteGuard(ConnectedUser)} />
             <Route path="/drink" component={Drink} />
