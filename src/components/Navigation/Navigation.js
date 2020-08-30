@@ -1,20 +1,18 @@
 import React, {useEffect, useState} from "react";
 import {Link, useLocation } from "react-router-dom";
 
-const Navigation = (props) => {
+const Navigation = ({navUrls}) => {
   const routerLocation = useLocation();
   const [location, setLocation] = useState('');
   const [show, setShow] = useState(false);
+
   useEffect(() => {
     setLocation(routerLocation.pathname);
-    if (props.navUrls.find(url => url === location)) {
+    if (navUrls.find(url => url === location)) {
       setShow(true);
     }
-  }, [routerLocation.pathname, location, props.navUrls],);
+  }, [routerLocation.pathname, location, navUrls],);
 
-  // const showNav = () => {
-  //   console.log(props.show.find(location));
-  // };
   return (
     <div>
       {
