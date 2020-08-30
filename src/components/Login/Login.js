@@ -5,7 +5,7 @@ import Button from "@material-ui/core/Button";
 
 import * as mutations from '../../store/mutations';
 
-export function Login({authenticateUser}) {
+export function Login({authenticateUser, authenticated}) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -14,12 +14,15 @@ export function Login({authenticateUser}) {
     <form onSubmit={(e) => authenticateUser(e, username, password)}>
       <TextField id="username" label="Username" onChange={event => setUsername(event.target.value)}/>
       <TextField id="password" label="Password" onChange={event => setPassword(event.target.value)}/>
+      {authenticated === mutations.NOT_AUTHENTICATED? <p>Login incorrect</p>: null}
       <Button type="submit">Submit</Button>
     </form>
   </div>
 }
 
-const mapStateToProps = state => state;
+const mapStateToProps = ({session}) => ({
+  authenticated: session.authenticated,
+});
 
 const mapDispatchToProps = (dispatch) => ({
   authenticateUser(e, username, password) {
