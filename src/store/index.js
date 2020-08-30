@@ -11,14 +11,26 @@ const sagaMiddleware = createSagaMiddleWare();
 
 export const store = createStore(
   combineReducers({
-    tasks(tasks = user.username, action) {
+    username(username = user.username, action) {
       switch(action.type) {
         case mutations.CHANGE_USERNAME:
           console.log(action);
           break;
       }
-      return tasks;
-    }
+      return username;
+    },
+    userId(userId = user.userId) {
+      return userId;
+    },
+    photo(photo = user.photo) {
+      return photo;
+    },
+    fav_drinks(fav_drinks = user.fav_drinks) {
+      return fav_drinks;
+    },
+    comments(comments = user.comments) {
+      return comments;
+    },
   }),
   applyMiddleware(createLogger(), sagaMiddleware)
 );
