@@ -1,6 +1,6 @@
 import React from 'react';
 import {Provider} from "react-redux";
-import { Router, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 
 import './App.css';
 import {ConnectedDashboard} from "./components/Dashboard/Dashboard";
@@ -13,7 +13,6 @@ import Search from "./components/Search/Search";
 import LandingPage from "./components/LandingPage/LandingPage";
 import NotFound from "./components/NotFound/NotFound";
 import Signup from "./components/Signup/Signup";
-import {history} from "./utils/history";
 
 
 
@@ -29,7 +28,7 @@ const RouteGuard = Component => ({match}) => {
 
 function App() {
   return (
-    <Router history={history}>
+    <Router>
       <Provider store={store}>
         <div className="App">
           <Navigation navUrls={['/dashboard', '/user', '/drink', '/search']}/>

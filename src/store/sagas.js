@@ -2,7 +2,6 @@ import {take,  put} from "redux-saga/effects";
 import axios from "axios";
 
 import * as mutations from './mutations';
-import {history} from "../utils/history";
 
 const url = 'http://localhost:7777';
 
@@ -40,7 +39,6 @@ export function* userAuthenticationSaga() {
       yield put(mutations.setState(data.state));
       yield put(mutations.processAuthenticateUser(mutations.AUTHENTICATED))
 
-      history.push('/dashboard');
     } catch(err) {
       console.log('auth failed: ', err);
       yield put(mutations.processAuthenticateUser(mutations.NOT_AUTHENTICATED));
