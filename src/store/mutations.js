@@ -7,6 +7,7 @@ export const AUTHENTICATING = `AUTHENTICATING`;
 export const AUTHENTICATED = `AUTHENTICATED`;
 export const NOT_AUTHENTICATED = `NOT_AUTHENTICATED`;
 export const SET_STATE = `SET_STATE`;
+export const REQUEST_REGISTER_USER = `REQUEST_REGISTER_USER`;
 
 export const requestChangeUsername = (uid, oldUsername, newUsername) => ({
   type: REQUEST_CHANGE_USERNAME,
@@ -43,4 +44,11 @@ export const processAuthenticateUser = (status = AUTHENTICATING, session = null)
 export const setState = (state = {}) => ({
   type: SET_STATE,
   state,
+});
+
+export const requestRegisterUser = (email, username, password) => ({
+  type: REQUEST_REGISTER_USER,
+  email,
+  username,
+  password
 });

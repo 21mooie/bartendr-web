@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 
-function Signup({session}) {
+export function Signup({session, registerUser}) {
   const [form, setForm] = useState({
     email: '',
     username: '',
@@ -12,10 +12,7 @@ function Signup({session}) {
   });
   return (
     <div>
-      <form onSubmit={(e) => {
-        e.preventDefault();
-        console.log(form);
-      }}>
+      <form onSubmit={(e) => registerUser(e, form.email, form.username, form.password) }>
         <TextField id="email" label="email" onChange={event => setForm({...form, email: event.target.value})}/>
         <TextField id="username" label="username" onChange={event => setForm({...form, username: event.target.value})}/>
         <TextField id="password" label="password" onChange={event => setForm({...form, password: event.target.value})}/>
@@ -25,17 +22,14 @@ function Signup({session}) {
   );
 }
 
-export default Signup;
-
 const mapStateToProps = ({session}) => ({
   authenticated: session.authenticated,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  registerUser(e, username, password) {
+  registerUser(e, email, username, password) {
     e.preventDefault();
-    console.log(username, password)
-    dispatch(mutations.requestAuthenticateUser(username,password));
+    dispatch(mutations.requestRegisterUser(email,username,password));
   }
 });
 

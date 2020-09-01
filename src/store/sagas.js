@@ -45,3 +45,23 @@ export function* userAuthenticationSaga() {
     }
   }
 }
+
+export function* userRegistrationSaga() {
+  while (true) {
+    const {email, username, password} = yield take(mutations.REQUEST_REGISTER_USER);
+    try {
+      console.log(email, username, password);
+      debugger;
+      const {data} = yield axios.post(url + '/authenticate/register', {email, username, password});
+      if (!data) {
+        throw new Error();
+      }
+      console.log('Registered: ', data);
+      yield put(mutations.setState(data.state));
+      yield put(mutations.processAuthenticateUser(mutations.AUTHENTICATED))
+    } catch(err) {
+      console.log('Register failed: ', err);
+      yield put(mutations.processAuthenticateUser(mutations.NOT_AUTHENTICATED));
+    }
+  }
+}

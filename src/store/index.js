@@ -24,6 +24,13 @@ export const store = createStore(
           return userSession;
       }
     },
+    email(email = '', action) {
+      switch(action.type) {
+        case (mutations.SET_STATE):
+          return action.state.email;
+      }
+      return email;
+    },
     username(username = '', action) {
       switch(action.type) {
         case (mutations.SET_STATE):
