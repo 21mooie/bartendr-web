@@ -26,7 +26,7 @@ export const store = createStore(
     },
     email(email = '', action) {
       switch(action.type) {
-        case (mutations.SET_STATE):
+        case mutations.SET_STATE:
           return action.state.email;
       }
       return email;

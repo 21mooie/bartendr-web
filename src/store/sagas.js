@@ -51,7 +51,6 @@ export function* userRegistrationSaga() {
     const {email, username, password} = yield take(mutations.REQUEST_REGISTER_USER);
     try {
       console.log(email, username, password);
-      debugger;
       const {data} = yield axios.post(url + '/authenticate/register', {email, username, password});
       if (!data) {
         throw new Error();
