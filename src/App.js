@@ -12,7 +12,8 @@ import Drink from "./components/Drink/Drink";
 import Search from "./components/Search/Search";
 import LandingPage from "./components/LandingPage/LandingPage";
 import NotFound from "./components/NotFound/NotFound";
-import Signup from "./components/Signup/Signup";
+import {ConnectedSignup} from "./components/Signup/Signup";
+
 
 
 
@@ -38,7 +39,7 @@ function App() {
             <Route exact path="/" component={LandingPage} />
             <Route path="/dashboard" component={RouteGuard(ConnectedDashboard)} />
             <Route path="/login" component={ConnectedLogin}/>
-            <Route path="/signup" component={Signup} />
+            <Route path="/signup" component={ConnectedSignup} />
             <Route path="/user" component={RouteGuard(ConnectedUser)} />
             <Route path="/drink" component={Drink} />
             <Route path="/search" component={Search} />

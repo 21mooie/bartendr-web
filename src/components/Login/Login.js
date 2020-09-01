@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {connect} from "react-redux";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import {Redirect} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 
 import * as mutations from '../../store/mutations';
 
@@ -28,6 +28,9 @@ export function Login({authenticateUser, authenticated}) {
         <Button type="submit">Submit</Button>
 
       </form>
+      <Link to='/signup'>
+        <p>Click here to signup</p>
+      </Link>
       {
         isAuthenticated()
       }
