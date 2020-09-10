@@ -1,14 +1,28 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Button from "@material-ui/core/Button";
 import {Link} from "react-router-dom";
+import axios from "axios";
 
 import './LandingPage.css';
 
+const url = 'http://localhost:7777/';
+
 
 const LandingPage = () => {
+  const [drink, setDrink] = useState({});
   const clickMe = () => {
     console.log('i was clicked');
   }
+
+  useEffect(() => {
+    function getCocktail() {
+      axios.get(`${url}cocktail`).then((response) => {
+        setDrink(response.data['drinks'][0]);
+      });
+    }
+    getCocktail();
+  }, []);
+
   return (
     <div className="main">
       <div className="content">
@@ -24,8 +38,20 @@ const LandingPage = () => {
           </Link>
         </Button>
       </div>
+      {
+        drink
+        &&
+          <div>
+          <p>{drink.strDrink}</p>
+          <img className="img-responsive" alt="" src={drink['strDrinkThumb']} />
+          </div>
+
+      }
     </div>
+
   )
 }
+
+
 
 export default LandingPage;
