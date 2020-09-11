@@ -29,10 +29,11 @@ export const createNewUser = (username, password) => ({
   password
 });
 
-export const requestAuthenticateUser = (username, password) => ({
+export const requestAuthenticateUser = (username, password, token) => ({
   type: REQUEST_AUTHENTICATE_USER,
   username,
-  password
+  password,
+  token
 });
 
 export const processAuthenticateUser = (status = AUTHENTICATING, session = null) => ({

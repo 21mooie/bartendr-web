@@ -29,9 +29,15 @@ export function* createNewUserSaga() {
 
 export function* userAuthenticationSaga() {
   while (true) {
-    const {username, password} = yield take(mutations.REQUEST_AUTHENTICATE_USER);
+    const {username, password, token} = yield take(mutations.REQUEST_AUTHENTICATE_USER);
     try {
-      const {data} = yield axios.post(url + `/authenticate`, {username, password})
+      let response;
+      if (token) {
+        response = yield axios.post(url + `/authenticate`, {token})
+      } else {
+        response = yield axios.post(url + `/authenticate`, {username, password})
+      }
+      let {data} = response;
       if (!data) {
         throw new Error();
       }

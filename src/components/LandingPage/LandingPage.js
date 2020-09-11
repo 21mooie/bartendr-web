@@ -15,6 +15,7 @@ const LandingPage = () => {
   }
 
   useEffect(() => {
+    // will need to refactor on redirect this is causing memory leak
     function getCocktail() {
       axios.get(`${url}cocktail`).then((response) => {
         setDrink(response.data['drinks'][0]);

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Provider} from "react-redux";
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 
 import './App.css';
 import {ConnectedDashboard} from "./components/Dashboard/Dashboard";
@@ -20,14 +21,30 @@ import {ConnectedSignup} from "./components/Signup/Signup";
 console.log(store.getState());
 const RouteGuard = Component => ({match}) => {
   console.info("Route guard", match);
-  if (!store.getState().session.authenticated) {
+  if (!store.getState().session.authenticated && match.path !== '/') {
     //reroute
     return <Redirect to="/login"/>
   }
-  return <Component match ={match} />
+  return <Component match={match} />
 }
 
 function App() {
+  const [cookies, setCookie] = useCookies(['token']);
+  const [token, setToken] = useState(false);
+
+  useEffect(() => {
+    console.log('token:', cookies.token);
+    if (cookies.token) {
+      setToken(cookies.token);
+    }
+  }, []);
+
+  function autoLoginUser() {
+    if (token) {
+      return <Redirect to={{pathname: "/login", state: { token }}}/>
+    }
+  }
+
   return (
     <Router>
       <Provider store={store}>
@@ -35,8 +52,11 @@ function App() {
           <Navigation navUrls={['/dashboard', '/user', '/drink', '/search']}/>
           {/*Search bar for unauthed users who only want to search*/}
           {/*  Router which switches between components, Guard against auth routes*/}
+          {
+            autoLoginUser()
+          }
           <Switch>
-            <Route exact path="/" component={LandingPage} />
+            <Route exact path="/" component={RouteGuard(LandingPage)} />
             <Route path="/dashboard" component={RouteGuard(ConnectedDashboard)} />
             <Route path="/login" component={ConnectedLogin}/>
             <Route path="/signup" component={ConnectedSignup} />

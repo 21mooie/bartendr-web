@@ -6,13 +6,17 @@ import {Link, Redirect} from 'react-router-dom';
 
 import * as mutations from '../../store/mutations';
 
-export function Login({authenticateUser, authenticated}) {
+export function Login({authenticateUser, authenticateUserToken, authenticated, location}) {
+  console.log(location);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   function isAuthenticated() {
     console.log('checking auth status', authenticated);
     if (authenticated === mutations.AUTHENTICATED) {
       return <Redirect to="/dashboard" />;
+    } else if (location.state) {
+      console.log(location.state.token);
+      authenticateUserToken(location.state.token);
     }
     return null;
   }
@@ -46,7 +50,11 @@ const mapDispatchToProps = (dispatch) => ({
   authenticateUser(e, username, password) {
     e.preventDefault();
     console.log(username, password)
-    dispatch(mutations.requestAuthenticateUser(username,password));
+    dispatch(mutations.requestAuthenticateUser(username,password, null));
+  },
+  authenticateUserToken(token) {
+    console.log(`dispatching token ${token}`);
+    dispatch(mutations.requestAuthenticateUser(null,null, token));
   }
 })
 
