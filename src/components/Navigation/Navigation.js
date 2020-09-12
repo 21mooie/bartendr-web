@@ -1,15 +1,17 @@
 import React, {useEffect, useState} from "react";
-import {Link, useLocation } from "react-router-dom";
+import {Link, Redirect, useLocation} from "react-router-dom";
 import Button from "@material-ui/core/Button";
 
 import * as mutations from '../../store/mutations';
 import {connect} from "react-redux";
+import { useCookies } from 'react-cookie';
 
 const Navigation = ({navUrls, clearState}) => {
-  console.log(clearState);
+  const [cookies, setCookie, removeCookie] = useCookies(['token']);
   const routerLocation = useLocation();
   const [location, setLocation] = useState('');
   const [show, setShow] = useState(false);
+  const [redirectVal, setRedirectVal] = useState(null);
 
   useEffect(() => {
     setLocation(routerLocation.pathname);
@@ -23,6 +25,8 @@ const Navigation = ({navUrls, clearState}) => {
   const signOut = () => {
     console.log('clicked');
     clearState();
+    removeCookie('token');
+    setRedirectVal(<Redirect to="/"/>);
   }
 
   return (
@@ -40,6 +44,7 @@ const Navigation = ({navUrls, clearState}) => {
               <h1> Search </h1>
             </Link>
             <Button  onClick={() => signOut()}> Sign Out</Button>
+            {redirectVal}
           </>
         ) : <></>
       }
