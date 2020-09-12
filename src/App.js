@@ -7,7 +7,7 @@ import './App.css';
 import {ConnectedDashboard} from "./components/Dashboard/Dashboard";
 import { store } from './store/index';
 import {ConnectedLogin} from "./components/Login/Login";
-import Navigation from "./components/Navigation/Navigation";
+import {ConnectedNavigation} from "./components/Navigation/Navigation";
 import {ConnectedUser} from "./components/User/User";
 import Drink from "./components/Drink/Drink";
 import Search from "./components/Search/Search";
@@ -49,7 +49,7 @@ function App() {
     <Router>
       <Provider store={store}>
         <div className="App">
-          <Navigation navUrls={['/dashboard', '/user', '/drink', '/search']}/>
+          <ConnectedNavigation navUrls={['/dashboard', '/user', '/drink', '/search']}/>
           {/*Search bar for unauthed users who only want to search*/}
           {/*  Router which switches between components, Guard against auth routes*/}
           {
@@ -57,12 +57,12 @@ function App() {
           }
           <Switch>
             <Route exact path="/" component={RouteGuard(LandingPage)} />
-            <Route path="/dashboard" component={RouteGuard(ConnectedDashboard)} />
             <Route path="/login" component={ConnectedLogin}/>
             <Route path="/signup" component={ConnectedSignup} />
+            <Route path="/dashboard" component={RouteGuard(ConnectedDashboard)} />
             <Route path="/user" component={RouteGuard(ConnectedUser)} />
-            <Route path="/drink" component={Drink} />
             <Route path="/search" component={Search} />
+            <Route path="/drink" component={Drink} />
             <Route component={NotFound} />
           </Switch>
         </div>

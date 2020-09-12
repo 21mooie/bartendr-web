@@ -20,6 +20,8 @@ export const store = createStore(
           return {...userSession, authenticated: mutations.AUTHENTICATING};
         case mutations.PROCESSING_AUTHENTICATE_USER:
           return {...userSession, authenticated};
+        case mutations.PROCESS_UNAUTHENTICATE_USER:
+          return {...userSession, authenticated};
         default:
           return userSession;
       }
@@ -61,13 +63,6 @@ export const store = createStore(
           return action.state.fav_drinks || null;
       }
       return fav_drinks;
-    },
-    comments(comments = [], action) {
-      switch(action.type) {
-        case(mutations.SET_STATE):
-          return action.state.comments || null;
-      }
-      return comments;
     },
   }),
   applyMiddleware(createLogger(), sagaMiddleware)

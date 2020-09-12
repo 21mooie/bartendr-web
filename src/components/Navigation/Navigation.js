@@ -1,7 +1,12 @@
 import React, {useEffect, useState} from "react";
 import {Link, useLocation } from "react-router-dom";
+import Button from "@material-ui/core/Button";
 
-const Navigation = ({navUrls}) => {
+import * as mutations from '../../store/mutations';
+import {connect} from "react-redux";
+
+const Navigation = ({navUrls, clearState}) => {
+  console.log(clearState);
   const routerLocation = useLocation();
   const [location, setLocation] = useState('');
   const [show, setShow] = useState(false);
@@ -15,14 +20,27 @@ const Navigation = ({navUrls}) => {
     }
   }, [routerLocation.pathname, location, navUrls],);
 
+  const signOut = () => {
+    console.log('clicked');
+    clearState();
+  }
+
   return (
     <div>
       {
         show ? (
-          <Link to="dashboard">
-            <h1>My dashboard</h1>
-            <p>{location}</p>
-          </Link>
+          <>
+            <Link to="dashboard">
+              <h1>My dashboard</h1>
+            </Link>
+            <Link to='/user'>
+               <h1>My Profile</h1>
+            </Link>
+            <Link to='/search'>
+              <h1> Search </h1>
+            </Link>
+            <Button  onClick={() => signOut()}> Sign Out</Button>
+          </>
         ) : <></>
       }
     </div>
@@ -30,4 +48,12 @@ const Navigation = ({navUrls}) => {
 }
 
 export default Navigation;
+
+const mapDispatchToProps = (dispatch) => ({
+  clearState() {
+    dispatch(mutations.requestClearState(null));
+  }
+});
+
+export const ConnectedNavigation = connect(null, mapDispatchToProps)(Navigation);
 

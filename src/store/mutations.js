@@ -8,6 +8,8 @@ export const AUTHENTICATED = `AUTHENTICATED`;
 export const NOT_AUTHENTICATED = `NOT_AUTHENTICATED`;
 export const SET_STATE = `SET_STATE`;
 export const REQUEST_REGISTER_USER = `REQUEST_REGISTER_USER`;
+export const REQUEST_CLEAR_STATE = `REQUEST_CLEAR_STATE`;
+export const PROCESS_UNAUTHENTICATE_USER = `PROCESS_UNAUTHENTICATE_USER`;
 
 export const requestChangeUsername = (uid, oldUsername, newUsername) => ({
   type: REQUEST_CHANGE_USERNAME,
@@ -52,4 +54,14 @@ export const requestRegisterUser = (email, username, password) => ({
   email,
   username,
   password
+});
+
+export const requestClearState = () => ({
+  type: REQUEST_CLEAR_STATE
+});
+
+export const processUnauthenticateUser = (status = false, session = null) => ({
+  type: PROCESS_UNAUTHENTICATE_USER,
+  session,
+  authenticated: status
 });

@@ -1,7 +1,9 @@
-import {take,  put} from "redux-saga/effects";
+import {take,  put, takeEvery} from "redux-saga/effects";
 import axios from "axios";
 import Cookies from 'js-cookie';
+
 import * as mutations from './mutations';
+import {user} from '../server/defaultState';
 
 const url = 'http://localhost:7777';
 
@@ -68,6 +70,19 @@ export function* userRegistrationSaga() {
     } catch(err) {
       console.log('Register failed: ', err);
       yield put(mutations.processAuthenticateUser(mutations.NOT_AUTHENTICATED));
+    }
+  }
+}
+
+export function* clearStateSaga() {
+  while (true) {
+    yield take(mutations.REQUEST_CLEAR_STATE);
+    try {
+      console.log('Clearing State');
+      yield put(mutations.setState(user));
+      yield put(mutations.processUnauthenticateUser());
+    } catch (err) {
+      console.log(`Clear state failed: ${err}`);
     }
   }
 }
