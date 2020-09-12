@@ -15,7 +15,7 @@ export function Login({authenticateUser, authenticateUserToken, authenticated, l
     console.log('checking auth status', authenticated);
     if (authenticated === mutations.AUTHENTICATED) {
       return <Redirect to="/dashboard" />;
-    } else if (location.state.token && !tokenChecked) {
+    } else if (location.state && !tokenChecked) {
       console.log(location.state.token);
       authenticateUserToken(location.state.token);
       setTokenChecked(true);
