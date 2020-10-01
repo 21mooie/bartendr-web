@@ -23,7 +23,7 @@ export const store = createStore(
         case mutations.PROCESS_UNAUTHENTICATE_USER:
           return {...userSession, authenticated};
         default:
-          return {authenticated: false};
+          return {authenticated: mutations.NOT_AUTHENTICATED};
       }
     },
     email(email = '', action) {

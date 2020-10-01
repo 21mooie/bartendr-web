@@ -80,7 +80,7 @@ export function* clearStateSaga() {
     try {
       console.log('Clearing State');
       yield put(mutations.setState(user));
-      yield put(mutations.processUnauthenticateUser());
+      yield put(mutations.processAuthenticateUser(mutations.NOT_AUTHENTICATED));
     } catch (err) {
       console.log(`Clear state failed: ${err}`);
     }

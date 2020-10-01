@@ -1,7 +1,5 @@
 export const user = {
-  session: {
-    authenticated: false
-  },
+  session: {},
   email: "",
   username : "",
   photo : "",

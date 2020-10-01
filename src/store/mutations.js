@@ -38,9 +38,8 @@ export const requestAuthenticateUser = (username, password, token) => ({
   token
 });
 
-export const processAuthenticateUser = (status = AUTHENTICATING, session = null) => ({
+export const processAuthenticateUser = (status = AUTHENTICATING) => ({
   type: PROCESSING_AUTHENTICATE_USER,
-  session,
   authenticated: status
 });
 
@@ -58,10 +57,4 @@ export const requestRegisterUser = (email, username, password) => ({
 
 export const requestClearState = () => ({
   type: REQUEST_CLEAR_STATE
-});
-
-export const processUnauthenticateUser = (status = false, session = null) => ({
-  type: PROCESS_UNAUTHENTICATE_USER,
-  session,
-  authenticated: status
 });
