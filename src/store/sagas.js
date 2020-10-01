@@ -3,7 +3,7 @@ import axios from "axios";
 import Cookies from 'js-cookie';
 
 import * as mutations from './mutations';
-import {user} from '../server/defaultState';
+import {user} from '../consts/defaultState';
 
 const url = 'http://localhost:7777';
 

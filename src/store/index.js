@@ -2,7 +2,7 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import {createLogger} from "redux-logger";
 import createSagaMiddleWare from "redux-saga";
 
-import { user } from '../server/defaultState.js';
+
 import * as sagas from './sagas';
 import * as mutations from './mutations';
 
@@ -11,7 +11,7 @@ const sagaMiddleware = createSagaMiddleWare();
 
 export const store = createStore(
   combineReducers({
-    session(userSession = user.session || {}, action) {
+    session(userSession = {}, action) {
       let { type, authenticated, session} = action;
       switch (type) {
         case mutations.SET_STATE:
@@ -23,7 +23,7 @@ export const store = createStore(
         case mutations.PROCESS_UNAUTHENTICATE_USER:
           return {...userSession, authenticated};
         default:
-          return userSession;
+          return {authenticated: false};
       }
     },
     email(email = '', action) {
