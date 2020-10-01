@@ -30,8 +30,9 @@ export const store = createStore(
       switch(action.type) {
         case mutations.SET_STATE:
           return action.state.email;
+        default:
+          return email;
       }
-      return email;
     },
     username(username = '', action) {
       switch(action.type) {
@@ -46,23 +47,27 @@ export const store = createStore(
     uid(uid = '', action) {
       switch(action.type) {
         case(mutations.SET_STATE):
-          return action.state.uid
+          return action.state.uid;
+        default:
+          return uid;
       }
-      return uid;
     },
     photo(photo = '', action) {
       switch(action.type) {
         case(mutations.SET_STATE):
           return action.state.photo || null;
+        default:
+          return photo;
       }
-      return photo;
+
     },
     fav_drinks(fav_drinks = [], action) {
       switch(action.type) {
         case(mutations.SET_STATE):
           return action.state.fav_drinks || null;
+        default:
+          return fav_drinks;
       }
-      return fav_drinks;
     },
   }),
   applyMiddleware(createLogger(), sagaMiddleware)
