@@ -22,9 +22,9 @@ export function Signup({authenticated, registerUser}) {
   return (
     <div>
       <form onSubmit={(e) => registerUser(e, form.email, form.username, form.password) }>
-        <TextField id="email" label="email" onChange={event => setForm({...form, email: event.target.value})}/>
-        <TextField id="username" label="username" onChange={event => setForm({...form, username: event.target.value})}/>
-        <TextField id="password" label="password" onChange={event => setForm({...form, password: event.target.value})}/>
+        <TextField id="email" label="email" onBlur={event => setForm({...form, email: event.target.value})}/>
+        <TextField id="username" label="username" onBlur={event => setForm({...form, username: event.target.value})}/>
+        <TextField id="password" label="password" onBlur={event => setForm({...form, password: event.target.value})}/>
         <Button type="submit">Submit</Button>
       </form>
       {

@@ -28,8 +28,8 @@ export function Login({authenticateUser, authenticateUserToken, authenticated, l
     <div>
       <p>Login Here</p>
       <form onSubmit={(e) => authenticateUser(e, username, password)}>
-        <TextField id="username" label="Username" onChange={event => setUsername(event.target.value)}/>
-        <TextField id="password" label="Password" onChange={event => setPassword(event.target.value)}/>
+        <TextField id="username" label="Username" onBlur={event => setUsername(event.target.value)}/>
+        <TextField id="password" label="Password" onBlur={event => setPassword(event.target.value)}/>
         {authenticated === mutations.NOT_AUTHENTICATED? <p>Login incorrect</p>: null}
         <Button type="submit">Submit</Button>
 
