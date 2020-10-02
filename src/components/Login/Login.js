@@ -30,7 +30,7 @@ export function Login({authenticateUser, authenticateUserToken, authenticated, l
       <form onSubmit={(e) => authenticateUser(e, username, password)}>
         <TextField id="username" label="Username" onBlur={event => setUsername(event.target.value)}/>
         <TextField id="password" label="Password" onBlur={event => setPassword(event.target.value)}/>
-        {authenticated === mutations.NOT_AUTHENTICATED? <p>Login incorrect</p>: null}
+        {authenticated === mutations.FAILED_AUTHENTICATED ? <p>Login incorrect</p>: null}
         <Button type="submit">Submit</Button>
 
       </form>

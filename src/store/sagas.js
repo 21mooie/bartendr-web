@@ -50,7 +50,7 @@ export function* userAuthenticationSaga() {
 
     } catch(err) {
       console.log('auth failed: ', err);
-      yield put(mutations.processAuthenticateUser(mutations.NOT_AUTHENTICATED));
+      yield put(mutations.processAuthenticateUser(mutations.FAILED_AUTHENTICATED));
     }
   }
 }
