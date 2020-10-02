@@ -14,14 +14,14 @@ import Search from "./components/Search/Search";
 import LandingPage from "./components/LandingPage/LandingPage";
 import NotFound from "./components/NotFound/NotFound";
 import {ConnectedSignup} from "./components/Signup/Signup";
-
+import * as mutations from './store/mutations';
 
 
 
 console.log(store.getState());
 const RouteGuard = Component => ({match}) => {
   console.info("Route guard", match);
-  if (!store.getState().session.authenticated && match.path !== '/') {
+  if (store.getState().session.authenticated !== mutations.AUTHENTICATED && match.path !== '/') {
     //reroute
     return <Redirect to="/login"/>
   }
