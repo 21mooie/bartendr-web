@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {Provider} from "react-redux";
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
@@ -30,18 +30,10 @@ const RouteGuard = Component => ({match}) => {
 
 function App() {
   const [cookies, setCookie] = useCookies(['token']);
-  const [token, setToken] = useState(false);
-
-  useEffect(() => {
-    console.log('token:', cookies.token);
-    if (cookies.token) {
-      setToken(cookies.token);
-    }
-  }, []);
 
   function autoLoginUser() {
-    if (token) {
-      return <Redirect to={{pathname: "/login", state: { token }}}/>
+    if (cookies.token) {
+      return <Redirect to={{pathname: "/login", state: { token: cookies.token }}}/>
     }
   }
 
