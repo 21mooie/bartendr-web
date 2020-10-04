@@ -23,7 +23,7 @@ export function Login({authenticateUser, authenticateUserToken, authenticated, l
       console.log(location.state.token);
       authenticateUserToken(location.state.token);
     }
-  },[authenticateUserToken, location.state]);
+  },[]);
 
 
   return (
