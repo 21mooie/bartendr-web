@@ -3,7 +3,7 @@ import axios from "axios";
 import Cookies from 'js-cookie';
 
 import * as mutations from './mutations';
-import {user} from '../server/defaultState';
+import {user} from '../consts/defaultState';
 
 const url = 'http://localhost:7777';
 
@@ -50,7 +50,7 @@ export function* userAuthenticationSaga() {
 
     } catch(err) {
       console.log('auth failed: ', err);
-      yield put(mutations.processAuthenticateUser(mutations.NOT_AUTHENTICATED));
+      yield put(mutations.processAuthenticateUser(mutations.FAILED_AUTHENTICATED));
     }
   }
 }
@@ -74,13 +74,13 @@ export function* userRegistrationSaga() {
   }
 }
 
-export function* clearStateSaga() {
+export function* unAuthenticateSaga() {
   while (true) {
     yield take(mutations.REQUEST_CLEAR_STATE);
     try {
       console.log('Clearing State');
       yield put(mutations.setState(user));
-      yield put(mutations.processUnauthenticateUser());
+      yield put(mutations.processAuthenticateUser(mutations.NOT_AUTHENTICATED));
     } catch (err) {
       console.log(`Clear state failed: ${err}`);
     }

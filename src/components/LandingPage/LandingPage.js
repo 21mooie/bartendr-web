@@ -9,7 +9,7 @@ const url = 'http://localhost:7777/';
 
 
 const LandingPage = () => {
-  const [drink, setDrink] = useState({});
+  const [drink, setDrink] = useState(null);
   const clickMe = () => {
     console.log('i was clicked');
   }
@@ -21,8 +21,10 @@ const LandingPage = () => {
         setDrink(response.data['drinks'][0]);
       });
     }
-    getCocktail();
-  }, []);
+    if (!drink) {
+      getCocktail();
+    }
+  }, [drink]);
 
   return (
     <div className="main">

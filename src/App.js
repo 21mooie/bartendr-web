@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {Provider} from "react-redux";
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
@@ -14,14 +14,14 @@ import Search from "./components/Search/Search";
 import LandingPage from "./components/LandingPage/LandingPage";
 import NotFound from "./components/NotFound/NotFound";
 import {ConnectedSignup} from "./components/Signup/Signup";
-
+import * as mutations from './store/mutations';
 
 
 
 console.log(store.getState());
 const RouteGuard = Component => ({match}) => {
   console.info("Route guard", match);
-  if (!store.getState().session.authenticated && match.path !== '/') {
+  if (store.getState().session.authenticated !== mutations.AUTHENTICATED && match.path !== '/') {
     //reroute
     return <Redirect to="/login"/>
   }
@@ -30,18 +30,10 @@ const RouteGuard = Component => ({match}) => {
 
 function App() {
   const [cookies, setCookie] = useCookies(['token']);
-  const [token, setToken] = useState(false);
-
-  useEffect(() => {
-    console.log('token:', cookies.token);
-    if (cookies.token) {
-      setToken(cookies.token);
-    }
-  }, []);
 
   function autoLoginUser() {
-    if (token) {
-      return <Redirect to={{pathname: "/login", state: { token }}}/>
+    if (cookies.token) {
+      return <Redirect to={{pathname: "/login", state: { token: cookies.token }}}/>
     }
   }
 

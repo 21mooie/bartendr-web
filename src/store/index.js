@@ -2,7 +2,7 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import {createLogger} from "redux-logger";
 import createSagaMiddleWare from "redux-saga";
 
-import { user } from '../server/defaultState.js';
+
 import * as sagas from './sagas';
 import * as mutations from './mutations';
 
@@ -11,7 +11,7 @@ const sagaMiddleware = createSagaMiddleWare();
 
 export const store = createStore(
   combineReducers({
-    session(userSession = user.session || {}, action) {
+    session(userSession = {}, action) {
       let { type, authenticated, session} = action;
       switch (type) {
         case mutations.SET_STATE:
@@ -23,15 +23,16 @@ export const store = createStore(
         case mutations.PROCESS_UNAUTHENTICATE_USER:
           return {...userSession, authenticated};
         default:
-          return userSession;
+          return {authenticated: mutations.NOT_AUTHENTICATED};
       }
     },
     email(email = '', action) {
       switch(action.type) {
         case mutations.SET_STATE:
           return action.state.email;
+        default:
+          return email;
       }
-      return email;
     },
     username(username = '', action) {
       switch(action.type) {
@@ -46,23 +47,27 @@ export const store = createStore(
     uid(uid = '', action) {
       switch(action.type) {
         case(mutations.SET_STATE):
-          return action.state.uid
+          return action.state.uid;
+        default:
+          return uid;
       }
-      return uid;
     },
     photo(photo = '', action) {
       switch(action.type) {
         case(mutations.SET_STATE):
           return action.state.photo || null;
+        default:
+          return photo;
       }
-      return photo;
+
     },
     fav_drinks(fav_drinks = [], action) {
       switch(action.type) {
         case(mutations.SET_STATE):
           return action.state.fav_drinks || null;
+        default:
+          return fav_drinks;
       }
-      return fav_drinks;
     },
   }),
   applyMiddleware(createLogger(), sagaMiddleware)
