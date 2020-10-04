@@ -17,7 +17,6 @@ export function Signup({authenticated, registerUser}) {
     if (authenticated === mutations.AUTHENTICATED) {
       return <Redirect to="/dashboard" />;
     }
-    return null;
   }
   return (
     <div>

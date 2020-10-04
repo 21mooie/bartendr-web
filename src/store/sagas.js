@@ -74,7 +74,7 @@ export function* userRegistrationSaga() {
   }
 }
 
-export function* clearStateSaga() {
+export function* unAuthenticateSaga() {
   while (true) {
     yield take(mutations.REQUEST_CLEAR_STATE);
     try {
