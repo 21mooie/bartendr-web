@@ -1,0 +1,14 @@
+.header {
+    color: red;
+    display: flex;
+    padding: 20px;
+    background-color: black;
+    justify-content: space-between;
+    align-items: center;
+    overflow-x: scroll;
+}
+
+.header > img {
+    object-fit: contain;
+    height: 80px;
+}
