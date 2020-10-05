@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import {Link, Redirect, useLocation} from "react-router-dom";
-import Button from "@material-ui/core/Button";
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import PersonIcon from '@material-ui/icons/Person';
 import SearchIcon from '@material-ui/icons/Search';
@@ -41,18 +40,25 @@ const Navigation = ({navUrls, clearState}) => {
           <div className="header">
             <img src="https://press.hulu.com/wp-content/uploads/2020/02/hulu-white.png" />
             <div className="header__icons">
-              <Link to="dashboard">
-                <DashboardIcon />
+              <Link to="dashboard" className="header__icon">
+                  <DashboardIcon />
+                  <p>Dashboard</p>
               </Link>
-              <Link to='/user'>
+
+              <Link className="header__icon" to='/user'>
                 <PersonIcon />
+                <p>Profile</p>
               </Link>
-              <Link to='/search'>
+
+              <Link className="header__icon" to='/search'>
                 <SearchIcon />
+                <p>Search</p>
               </Link>
-              <Button  onClick={() => signOut()}>
-                <MeetingRoomIcon />
-              </Button>
+
+              <div   className="header__icon" onClick={() => signOut()}>
+                <MeetingRoomIcon className="header__icon"/>
+                <p className="header__icon">Sign Out</p>
+              </div>
               {redirectVal}
             </div>
           </div>

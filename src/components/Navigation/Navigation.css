@@ -1,5 +1,5 @@
 .header {
-    color: red;
+    color: white;
     display: flex;
     padding: 20px;
     background-color: black;
@@ -11,4 +11,33 @@
 .header > img {
     object-fit: contain;
     height: 80px;
+}
+
+.header__icons {
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.header__icon {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    width: 100px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.header__icon > p {
+    font-size: small;
+    display: none;
+}
+
+.header__icon:hover > p {
+    display: inline;
+}
+
+.header__icon > .MuiSvgIcon-root{
+    margin-left: auto;
+    margin-right: auto;
 }
