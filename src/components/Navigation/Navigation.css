@@ -28,6 +28,10 @@
     text-decoration: none;
 }
 
+.header__icon-active > p {
+    display: inline !important;
+}
+
 .header__icon > p {
     font-size: small;
     display: none;

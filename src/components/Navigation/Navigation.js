@@ -9,6 +9,7 @@ import * as mutations from '../../store/mutations';
 import {connect} from "react-redux";
 import { useCookies } from 'react-cookie';
 import './Navigation.css';
+import {Routes} from "../../consts/routes";
 
 const Navigation = ({navUrls, clearState}) => {
   const [cookies, setCookie, removeCookie] = useCookies(['token']);
@@ -40,22 +41,22 @@ const Navigation = ({navUrls, clearState}) => {
           <div className="header">
             <img src="https://press.hulu.com/wp-content/uploads/2020/02/hulu-white.png" />
             <div className="header__icons">
-              <Link to="dashboard" className="header__icon">
+              <Link to="dashboard" className={`header__icon ${location === Routes.DASHBOARD ? 'header__icon-active' : ''}`}>
                   <DashboardIcon />
                   <p>Dashboard</p>
               </Link>
 
-              <Link className="header__icon" to='/user'>
+              <Link className={`header__icon ${location === Routes.USER ? 'header__icon-active' : ''}`} to='/user'>
                 <PersonIcon />
                 <p>Profile</p>
               </Link>
 
-              <Link className="header__icon" to='/search'>
+              <Link className={`header__icon ${location === Routes.SEARCH ? 'header__icon-active' : ''}`} to='/search'>
                 <SearchIcon />
                 <p>Search</p>
               </Link>
 
-              <div   className="header__icon" onClick={() => signOut()}>
+              <div className="header__icon" onClick={() => signOut()}>
                 <MeetingRoomIcon className="header__icon"/>
                 <p className="header__icon">Sign Out</p>
               </div>
