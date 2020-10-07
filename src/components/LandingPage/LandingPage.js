@@ -4,6 +4,7 @@ import {Link} from "react-router-dom";
 import axios from "axios";
 
 import './LandingPage.css';
+import DrinkCard from "../common/DrinkCard/DrinkCard";
 
 const url = 'http://localhost:7777/';
 
@@ -44,11 +45,7 @@ const LandingPage = () => {
       {
         drink
         &&
-          <div>
-          <p>{drink.strDrink}</p>
-          <img className="img-responsive" alt="" src={drink['strDrinkThumb']} />
-          </div>
-
+          <DrinkCard drink={drink}/>
       }
     </div>
 
