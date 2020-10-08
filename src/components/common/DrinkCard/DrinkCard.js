@@ -8,9 +8,11 @@ import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 
+import './DrinkCard.css';
+
 const useStyles = makeStyles({
   root: {
-    maxWidth: 345,
+    maxWidth: 400,
   },
   media: {
     height: 350,
@@ -20,31 +22,33 @@ const useStyles = makeStyles({
 export default function DrinkCard({drink}) {
   const classes = useStyles();
   return (
-    <Card className={classes.root}>
-      <CardActionArea>
-        <CardMedia
-          component="img"
-          alt="drink"
-          className={classes.media}
-          src={drink['strDrinkThumb']}
-          title="Drink up"/>
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            {drink.strDrink}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            Made of {drink.strIngredient1}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            {drink.strAlcoholic}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary" onClick={() => {console.log(`button clicked`);}}>
-          Learn More
-        </Button>
-      </CardActions>
-    </Card>
+    <div className="card">
+      <Card className={classes.root}>
+        <CardActionArea>
+          <CardMedia
+            component="img"
+            alt="drink"
+            className={classes.media}
+            src={drink['strDrinkThumb']}
+            title="Drink up"/>
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="h2">
+              {drink.strDrink}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              Made of {drink.strIngredient1}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              {drink.strAlcoholic}
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+        <CardActions>
+          <Button size="small" color="primary" onClick={() => {console.log(`button clicked`);}}>
+            Learn More
+          </Button>
+        </CardActions>
+      </Card>
+    </div>
   );
 }
