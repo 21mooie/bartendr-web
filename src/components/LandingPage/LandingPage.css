@@ -1,9 +1,8 @@
 .main {
-    display: flex;
-    justify-content: center;
-    margin-top: 50vh;
+    text-align: center
 }
 
 .content {
-    display: inline-block;
+    justify-content: center;
+    display: inline;
 }

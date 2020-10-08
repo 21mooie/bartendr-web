@@ -29,6 +29,12 @@ const LandingPage = () => {
 
   return (
     <div className="main">
+      <h1>Welcome to Bartender</h1>
+      {
+        drink
+        &&
+          <DrinkCard drink={drink}/>
+      }
       <div className="content">
         <p>Hello this is my cocktail app.</p>
         <Button variant="contained" color="primary" onClick={() => clickMe()}>
@@ -42,11 +48,6 @@ const LandingPage = () => {
           </Link>
         </Button>
       </div>
-      {
-        drink
-        &&
-          <DrinkCard drink={drink}/>
-      }
     </div>
 
   )
