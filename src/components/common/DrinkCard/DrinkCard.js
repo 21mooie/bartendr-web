@@ -6,15 +6,26 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles({
+  root: {
+    maxWidth: 345,
+  },
+  media: {
+    height: 350,
+  },
+});
 
 export default function DrinkCard({drink}) {
+  const classes = useStyles();
   return (
-    <Card>
+    <Card className={classes.root}>
       <CardActionArea>
         <CardMedia
           component="img"
           alt="drink"
-          height="500"
+          className={classes.media}
           src={drink['strDrinkThumb']}
           title="Drink up"/>
         <CardContent>
