@@ -6,3 +6,11 @@
     justify-content: center;
     display: inline;
 }
+
+.title {
+    margin-bottom: 50px;
+}
+
+.button {
+    margin-left: 10px;
+}
