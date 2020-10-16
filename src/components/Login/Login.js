@@ -72,9 +72,11 @@ export function Login({authenticateUser, authenticateUserToken, authenticated, l
           </div>
 
         </form>
+        <div className="signup-link">
         <Link to='/signup'>
-          <p>Click here to signup</p>
+          Click here to signup
         </Link>
+        </div>
       </div>
       {
         isAuthenticated()

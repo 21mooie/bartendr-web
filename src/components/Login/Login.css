@@ -22,4 +22,10 @@ h3 {
 
 .button-class {
     margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.signup-link {
+    display: flex;
+    justify-content: flex-end;
 }
