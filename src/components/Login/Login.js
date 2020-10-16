@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import {Link, Redirect} from 'react-router-dom';
-import LockOpenIcon from '@material-ui/icons/LockOpen';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
 import * as mutations from '../../store/mutations';
 import './Login.css';
@@ -30,18 +30,52 @@ export function Login({authenticateUser, authenticateUserToken, authenticated, l
 
   return (
     <div className="login">
-      <LockOpenIcon />
-      <p>Login</p>
-      <form onSubmit={(e) => authenticateUser(e, username, password)} className="">
-        <TextField id="username" label="Username" onBlur={event => setUsername(event.target.value)} fullWidth/>
-        <TextField id="password" label="Password" onBlur={event => setPassword(event.target.value)} fullWidth/>
-        {authenticated === mutations.FAILED_AUTHENTICATED ? <p>Login incorrect</p>: null}
-        <Button type="submit" fullWidth>Submit</Button>
+      <div className="login-form">
+        <div className="icon">
+          <LockOutlinedIcon />
+        </div>
+        <h3>Login</h3>
+        <form onSubmit={(e) => authenticateUser(e, username, password)} className="">
+          <TextField
+            id="username"
+            label="Username"
+            onBlur={event => setUsername(event.target.value)}
+            variant="outlined"
+            margin="normal"
+            autoComplete="current-username"
+            required
+            autoFocus
+            fullWidth
+          />
+          <TextField
+            id="password"
+            label="Password"
+            onBlur={event => setPassword(event.target.value)}
+            variant="outlined"
+            margin="normal"
+            autoComplete="current-password"
+            type="password"
+            name="password"
+            required
+            fullWidth
+          />
+          {authenticated === mutations.FAILED_AUTHENTICATED ? <p>Login incorrect</p>: null}
+          <div className="button-class">
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              fullWidth
+            >
+              Submit
+            </Button>
+          </div>
 
-      </form>
-      <Link to='/signup'>
-        <p>Click here to signup</p>
-      </Link>
+        </form>
+        <Link to='/signup'>
+          <p>Click here to signup</p>
+        </Link>
+      </div>
       {
         isAuthenticated()
       }
