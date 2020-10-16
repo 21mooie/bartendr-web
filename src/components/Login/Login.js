@@ -3,8 +3,10 @@ import {connect} from "react-redux";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import {Link, Redirect} from 'react-router-dom';
+import LockOpenIcon from '@material-ui/icons/LockOpen';
 
 import * as mutations from '../../store/mutations';
+import './Login.css';
 
 export function Login({authenticateUser, authenticateUserToken, authenticated, location}) {
   console.log(location);
@@ -27,13 +29,14 @@ export function Login({authenticateUser, authenticateUserToken, authenticated, l
 
 
   return (
-    <div>
-      <p>Login Here</p>
-      <form onSubmit={(e) => authenticateUser(e, username, password)}>
-        <TextField id="username" label="Username" onBlur={event => setUsername(event.target.value)}/>
-        <TextField id="password" label="Password" onBlur={event => setPassword(event.target.value)}/>
+    <div className="login">
+      <LockOpenIcon />
+      <p>Login</p>
+      <form onSubmit={(e) => authenticateUser(e, username, password)} className="">
+        <TextField id="username" label="Username" onBlur={event => setUsername(event.target.value)} fullWidth/>
+        <TextField id="password" label="Password" onBlur={event => setPassword(event.target.value)} fullWidth/>
         {authenticated === mutations.FAILED_AUTHENTICATED ? <p>Login incorrect</p>: null}
-        <Button type="submit">Submit</Button>
+        <Button type="submit" fullWidth>Submit</Button>
 
       </form>
       <Link to='/signup'>
