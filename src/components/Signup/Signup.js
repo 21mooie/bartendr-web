@@ -3,7 +3,10 @@ import * as mutations from "../../store/mutations";
 import {connect} from "react-redux";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import {Redirect} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
+
+import "../Login/Login.css";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 
 export function Signup({authenticated, registerUser}) {
   const [form, setForm] = useState({
@@ -19,13 +22,63 @@ export function Signup({authenticated, registerUser}) {
     }
   }
   return (
-    <div>
-      <form onSubmit={(e) => registerUser(e, form.email, form.username, form.password) }>
-        <TextField id="email" label="email" onBlur={event => setForm({...form, email: event.target.value})}/>
-        <TextField id="username" label="username" onBlur={event => setForm({...form, username: event.target.value})}/>
-        <TextField id="password" label="password" onBlur={event => setForm({...form, password: event.target.value})}/>
-        <Button type="submit">Submit</Button>
-      </form>
+    <div className="login">
+      <div className="login-form">
+        <div className="icon">
+          <LockOutlinedIcon />
+        </div>
+        <h3 className="centered-text">Signup</h3>
+        <form onSubmit={(e) => registerUser(e, form.email, form.username, form.password) }>
+          <TextField
+            id="email"
+            label="email"
+            onBlur={event => setForm({...form, email: event.target.value})}
+            variant="outlined"
+            margin="normal"
+            autoComplete="email"
+            required
+            autoFocus
+
+          />
+          <TextField
+            id="username"
+            label="username"
+            onBlur={event => setForm({...form, username: event.target.value})}
+            variant="outlined"
+            margin="normal"
+            required
+
+
+          />
+          <TextField
+            id="password"
+            label="password"
+            onBlur={event => setForm({...form, password: event.target.value})}
+            variant="outlined"
+            margin="normal"
+            autoComplete="current-password"
+            type="password"
+            name="password"
+            required
+
+          />
+          <div className="button-class">
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+
+            >
+              Submit
+            </Button>
+          </div>
+        </form>
+        <div className="signup-link">
+          <Link to='/login'>
+            Click here to Login
+          </Link>
+        </div>
+      </div>
       {
         isAuthenticated()
       }

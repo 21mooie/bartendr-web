@@ -34,8 +34,8 @@ export function Login({authenticateUser, authenticateUserToken, authenticated, l
         <div className="icon">
           <LockOutlinedIcon />
         </div>
-        <h3>Login</h3>
-        <form onSubmit={(e) => authenticateUser(e, username, password)} className="">
+        <h3 className="centered-text">Login</h3>
+        <form onSubmit={(e) => authenticateUser(e, username, password)}>
           <TextField
             id="username"
             label="Username"
@@ -45,7 +45,7 @@ export function Login({authenticateUser, authenticateUserToken, authenticated, l
             autoComplete="current-username"
             required
             autoFocus
-            fullWidth
+
           />
           <TextField
             id="password"
@@ -57,7 +57,7 @@ export function Login({authenticateUser, authenticateUserToken, authenticated, l
             type="password"
             name="password"
             required
-            fullWidth
+
           />
           {authenticated === mutations.FAILED_AUTHENTICATED ? <p>Login incorrect</p>: null}
           <div className="button-class">
@@ -65,7 +65,7 @@ export function Login({authenticateUser, authenticateUserToken, authenticated, l
               type="submit"
               variant="contained"
               color="primary"
-              fullWidth
+
             >
               Submit
             </Button>
@@ -74,7 +74,7 @@ export function Login({authenticateUser, authenticateUserToken, authenticated, l
         </form>
         <div className="signup-link">
         <Link to='/signup'>
-          Click here to signup
+          Click here to Signup
         </Link>
         </div>
       </div>

@@ -16,9 +16,6 @@
     margin: auto;
 }
 
-h3 {
-    text-align: center;
-}
 
 .button-class {
     margin-top: 15px;
@@ -28,4 +25,8 @@ h3 {
 .signup-link {
     display: flex;
     justify-content: flex-end;
+}
+
+.centered-text {
+    text-align: center;
 }
