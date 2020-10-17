@@ -4,6 +4,7 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import PersonIcon from '@material-ui/icons/Person';
 import SearchIcon from '@material-ui/icons/Search';
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
+import MenuIcon from '@material-ui/icons/Menu';
 
 import * as mutations from '../../store/mutations';
 import {connect} from "react-redux";
@@ -39,6 +40,7 @@ const Navigation = ({showMenuPaths, clearState}) => {
         <img src="https://press.hulu.com/wp-content/uploads/2020/02/hulu-white.png" alt="logo"/>
         {
           showMenu ? (
+            <>
             <div className="header__icons">
 
               <Link to="dashboard" className={`header__icon ${location === Routes.DASHBOARD ? 'header__icon-active' : ''}`}>
@@ -61,6 +63,10 @@ const Navigation = ({showMenuPaths, clearState}) => {
                 <p className="header__icon">Sign Out</p>
               </div>
             </div>
+            <div className="menu__icon">
+              <MenuIcon fontSize="large"/>
+            </div>
+            </>
             )
           : <></>
         }

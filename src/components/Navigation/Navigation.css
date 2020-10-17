@@ -26,9 +26,18 @@
 }
 
 .header__icons {
-    display: flex;
-    align-items: center;
-    text-align: center;
+    display: none;
+}
+
+@media screen and (min-width: 768px) {
+    .header__icons {
+        display: flex;
+        align-items: center;
+        text-align: center;
+    }
+    .menu__icon {
+        display: none;
+    }
 }
 
 .header__icon {
