@@ -34,40 +34,39 @@ const Navigation = ({showMenuPaths, clearState}) => {
     setRedirectVal(<Redirect to="/"/>);
   }
   return (
-    <div>
+    <>
+      <div className="header">
+        <img src="https://press.hulu.com/wp-content/uploads/2020/02/hulu-white.png" alt="logo"/>
+        {
+          showMenu ? (
+            <div className="header__icons">
 
-          <div className="header">
-            <img src="https://press.hulu.com/wp-content/uploads/2020/02/hulu-white.png" alt="logo"/>
-            {
-              showMenu ? (
-                <div className="header__icons">
+              <Link to="dashboard" className={`header__icon ${location === Routes.DASHBOARD ? 'header__icon-active' : ''}`}>
+                  <DashboardIcon />
+                  <p>Dashboard</p>
+              </Link>
 
-                  <Link to="dashboard" className={`header__icon ${location === Routes.DASHBOARD ? 'header__icon-active' : ''}`}>
-                      <DashboardIcon />
-                      <p>Dashboard</p>
-                  </Link>
+              <Link className={`header__icon ${location === Routes.USER ? 'header__icon-active' : ''}`} to='/user'>
+                <PersonIcon />
+                <p>Profile</p>
+              </Link>
 
-                  <Link className={`header__icon ${location === Routes.USER ? 'header__icon-active' : ''}`} to='/user'>
-                    <PersonIcon />
-                    <p>Profile</p>
-                  </Link>
+              <Link className={`header__icon ${location === Routes.SEARCH ? 'header__icon-active' : ''}`} to='/search'>
+                <SearchIcon />
+                <p>Search</p>
+              </Link>
 
-                  <Link className={`header__icon ${location === Routes.SEARCH ? 'header__icon-active' : ''}`} to='/search'>
-                    <SearchIcon />
-                    <p>Search</p>
-                  </Link>
-
-                  <div className="header__icon" onClick={() => signOut()}>
-                    <MeetingRoomIcon className="header__icon"/>
-                    <p className="header__icon">Sign Out</p>
-                  </div>
-                </div>
-                )
-              : <></>
-            }
-            {redirectVal}
-          </div>
-    </div>
+              <div className="header__icon" onClick={() => signOut()}>
+                <MeetingRoomIcon className="header__icon"/>
+                <p className="header__icon">Sign Out</p>
+              </div>
+            </div>
+            )
+          : <></>
+        }
+        {redirectVal}
+      </div>
+    </>
   )
 }
 
