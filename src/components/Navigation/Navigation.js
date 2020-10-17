@@ -11,6 +11,7 @@ import {connect} from "react-redux";
 import { useCookies } from 'react-cookie';
 import './Navigation.css';
 import {Routes} from "../../consts/routes";
+import Sidebar from "../Sidebar/Sidebar";
 
 const Navigation = ({showMenuPaths, clearState}) => {
   const [cookies, setCookie, removeCookie] = useCookies(['token']);
@@ -18,6 +19,7 @@ const Navigation = ({showMenuPaths, clearState}) => {
   const [location, setLocation] = useState('');
   const [showMenu, setShowMenu] = useState(false);
   const [redirectVal, setRedirectVal] = useState(null);
+  const [showSidebar, setShowSidebar] = useState(false);
 
   useEffect(() => {
     setLocation(routerLocation.pathname);
@@ -64,12 +66,13 @@ const Navigation = ({showMenuPaths, clearState}) => {
               </div>
             </div>
             <div className="menu__icon">
-              <MenuIcon fontSize="large"/>
+              <MenuIcon fontSize="large" onClick={() => {setShowSidebar(true)}}/>
             </div>
             </>
             )
           : <></>
         }
+        <Sidebar isOpen={showSidebar} triggerCloseSidebar={() => {setShowSidebar(false)}}/>
         {redirectVal}
       </div>
     </>
