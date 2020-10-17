@@ -41,7 +41,7 @@ function App() {
     <Router>
       <Provider store={store}>
         <div className="app">
-          <ConnectedNavigation navUrls={['/dashboard', '/user', '/drink', '/search']}/>
+          <ConnectedNavigation showMenuPaths={['/dashboard', '/user', '/drink', '/search']}/>
           {/*Search bar for unauthed users who only want to search*/}
           {/*  Router which switches between components, Guard against auth routes*/}
           {

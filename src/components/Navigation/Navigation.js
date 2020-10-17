@@ -11,21 +11,21 @@ import { useCookies } from 'react-cookie';
 import './Navigation.css';
 import {Routes} from "../../consts/routes";
 
-const Navigation = ({navUrls, clearState}) => {
+const Navigation = ({showMenuPaths, clearState}) => {
   const [cookies, setCookie, removeCookie] = useCookies(['token']);
   const routerLocation = useLocation();
   const [location, setLocation] = useState('');
-  const [show, setShow] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
   const [redirectVal, setRedirectVal] = useState(null);
 
   useEffect(() => {
     setLocation(routerLocation.pathname);
-    if (navUrls.find(url => url === location)) {
-      setShow(true);
+    if (showMenuPaths.find(url => url === location)) {
+      setShowMenu(true);
     } else {
-      setShow(false);
+      setShowMenu(false);
     }
-  }, [routerLocation.pathname, location, navUrls],);
+  }, [routerLocation.pathname, location, showMenuPaths],);
 
   const signOut = () => {
     console.log('clicked');
@@ -33,38 +33,40 @@ const Navigation = ({navUrls, clearState}) => {
     removeCookie('token');
     setRedirectVal(<Redirect to="/"/>);
   }
-
   return (
     <div>
-      {
-        show ? (
+
           <div className="header">
-            <img src="https://press.hulu.com/wp-content/uploads/2020/02/hulu-white.png" />
-            <div className="header__icons">
-              <Link to="dashboard" className={`header__icon ${location === Routes.DASHBOARD ? 'header__icon-active' : ''}`}>
-                  <DashboardIcon />
-                  <p>Dashboard</p>
-              </Link>
+            <img src="https://press.hulu.com/wp-content/uploads/2020/02/hulu-white.png" alt="logo"/>
+            {
+              showMenu ? (
+                <div className="header__icons">
 
-              <Link className={`header__icon ${location === Routes.USER ? 'header__icon-active' : ''}`} to='/user'>
-                <PersonIcon />
-                <p>Profile</p>
-              </Link>
+                  <Link to="dashboard" className={`header__icon ${location === Routes.DASHBOARD ? 'header__icon-active' : ''}`}>
+                      <DashboardIcon />
+                      <p>Dashboard</p>
+                  </Link>
 
-              <Link className={`header__icon ${location === Routes.SEARCH ? 'header__icon-active' : ''}`} to='/search'>
-                <SearchIcon />
-                <p>Search</p>
-              </Link>
+                  <Link className={`header__icon ${location === Routes.USER ? 'header__icon-active' : ''}`} to='/user'>
+                    <PersonIcon />
+                    <p>Profile</p>
+                  </Link>
 
-              <div className="header__icon" onClick={() => signOut()}>
-                <MeetingRoomIcon className="header__icon"/>
-                <p className="header__icon">Sign Out</p>
-              </div>
-              {redirectVal}
-            </div>
+                  <Link className={`header__icon ${location === Routes.SEARCH ? 'header__icon-active' : ''}`} to='/search'>
+                    <SearchIcon />
+                    <p>Search</p>
+                  </Link>
+
+                  <div className="header__icon" onClick={() => signOut()}>
+                    <MeetingRoomIcon className="header__icon"/>
+                    <p className="header__icon">Sign Out</p>
+                  </div>
+                </div>
+                )
+              : <></>
+            }
+            {redirectVal}
           </div>
-        ) : <></>
-      }
     </div>
   )
 }
