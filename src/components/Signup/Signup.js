@@ -28,7 +28,7 @@ export function Signup({authenticated, registerUser}) {
           <LockOutlinedIcon />
         </div>
         <h3 className="centered-text">Signup</h3>
-        <form onSubmit={(e) => registerUser(e, form.email, form.username, form.password) }>
+        <form onSubmit={(e) => registerUser(e, form.email, form.username, form.password)} className="input">
           <TextField
             id="email"
             label="email"
@@ -38,7 +38,7 @@ export function Signup({authenticated, registerUser}) {
             autoComplete="email"
             required
             autoFocus
-
+            fullWidth
           />
           <TextField
             id="username"
@@ -47,8 +47,8 @@ export function Signup({authenticated, registerUser}) {
             variant="outlined"
             margin="normal"
             required
-
-
+            autoComplete="username"
+            fullWidth
           />
           <TextField
             id="password"
@@ -60,14 +60,14 @@ export function Signup({authenticated, registerUser}) {
             type="password"
             name="password"
             required
-
+            fullWidth
           />
           <div className="button-class">
             <Button
               type="submit"
               variant="contained"
               color="primary"
-
+              fullWidth
             >
               Submit
             </Button>

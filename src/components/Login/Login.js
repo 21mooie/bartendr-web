@@ -35,18 +35,18 @@ export function Login({authenticateUser, authenticateUserToken, authenticated, l
           <LockOutlinedIcon />
         </div>
         <h3 className="centered-text">Login</h3>
-        <form onSubmit={(e) => authenticateUser(e, username, password)}>
-          <TextField
-            id="username"
-            label="Username"
-            onBlur={event => setUsername(event.target.value)}
-            variant="outlined"
-            margin="normal"
-            autoComplete="current-username"
-            required
-            autoFocus
-
-          />
+        <form onSubmit={(e) => authenticateUser(e, username, password)} className="input">
+            <TextField
+              id="username"
+              label="Username"
+              onBlur={event => setUsername(event.target.value)}
+              variant="outlined"
+              margin="normal"
+              autoComplete="current-username"
+              required
+              autoFocus
+              fullWidth
+            />
           <TextField
             id="password"
             label="Password"
@@ -57,7 +57,7 @@ export function Login({authenticateUser, authenticateUserToken, authenticated, l
             type="password"
             name="password"
             required
-
+            fullWidth
           />
           {authenticated === mutations.FAILED_AUTHENTICATED ? <p>Login incorrect</p>: null}
           <div className="button-class">
@@ -65,7 +65,7 @@ export function Login({authenticateUser, authenticateUserToken, authenticated, l
               type="submit"
               variant="contained"
               color="primary"
-
+              fullWidth
             >
               Submit
             </Button>
