@@ -24,3 +24,47 @@
 .negativeTop {
     top: -100%;
 }
+
+.cancel {
+    position: absolute;
+    top: 1.2rem;
+    right:1.5rem;
+    background: transparent;
+    font-size: 2rem;
+    cursor: pointer;
+    outline: none;
+}
+
+.menu {
+    color: #FFFFFF;
+    position: absolute;
+    top: 20%;
+    left: 40%;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 300px;
+    justify-content: space-around;
+}
+
+.middle-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows:repeat(6, 80px);
+}
+
+.menu > a {
+    text-decoration: none;
+}
+
+.menu > a > p {
+    color: #FFFFFF;
+    font-size: 1.5rem;
+    transition: 0.2s ease-in-out;
+}
+
+.menu > div > p {
+    color: #FFFFFF;
+    font-size: 1.5rem;
+    transition: 0.2s ease-in-out;
+}
