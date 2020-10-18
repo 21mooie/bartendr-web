@@ -72,7 +72,11 @@ const Navigation = ({showMenuPaths, clearState}) => {
             )
           : <></>
         }
-        <Sidebar isOpen={showSidebar} triggerCloseSidebar={() => {setShowSidebar(false)}}/>
+        <Sidebar
+          isOpen={showSidebar}
+          triggerCloseSidebar={() => {setShowSidebar(false)}}
+          triggerLogout={() => signOut()}
+        />
         {redirectVal}
       </div>
     </>
