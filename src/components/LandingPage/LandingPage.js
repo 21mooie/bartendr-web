@@ -6,6 +6,7 @@ import axios from "axios";
 import './LandingPage.css';
 import DrinkCard from "../common/DrinkCard/DrinkCard";
 import {makeStyles} from "@material-ui/core/styles";
+import Hero from "../common/Hero/Hero";
 
 const url = 'http://localhost:7777/';
 
@@ -43,6 +44,7 @@ const LandingPage = () => {
   return (
 
     <div className="main">
+      <Hero />
       <h1 className="title">Welcome to Bartender</h1>
       {
         drink
