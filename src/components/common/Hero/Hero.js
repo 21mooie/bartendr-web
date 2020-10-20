@@ -13,7 +13,7 @@ const Hero = (props) => {
         </video>
       </div>
       <div className="content">
-        <h1>Virtual Banking Made Easy</h1>
+        <h1>Order the perfect drink, every time</h1>
         <p>Join a community of drinking enthusiasts and share recipes</p>
         <div className="btnWrapper">
           <Button />
