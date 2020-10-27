@@ -45,27 +45,26 @@ const LandingPage = () => {
 
     <div className="main">
       <Hero />
-      <h1 className="title">Welcome to Bartender</h1>
       {
         drink
         &&
-          <div className="title">
+          <div className="content_LandingPage">
             <DrinkCard drink={drink}/>
+            <div>
+              <p>Hello this is my cocktail app.</p>
+              <Button className={classes.leftButton} variant="contained" color="primary" onClick={() => clickMe()}>
+                <Link to="/login" className="link">
+                  Log in
+                </Link>
+              </Button>
+              <Button className={classes.leftButton} variant="contained" color="primary">
+                <Link to="/signup" className="link">
+                  Sign up
+                </Link>
+              </Button>
+            </div>
           </div>
       }
-      <div className="content">
-        <p>Hello this is my cocktail app.</p>
-        <Button className={classes.leftButton} variant="contained" color="primary" onClick={() => clickMe()}>
-          <Link to="/login" className="link">
-            Log in
-          </Link>
-        </Button>
-        <Button className={classes.leftButton} variant="contained" color="primary">
-          <Link to="/signup" className="link">
-            Sign up
-          </Link>
-        </Button>
-      </div>
     </div>
 
   )
