@@ -2,10 +2,9 @@ import React, {useEffect, useState} from "react";
 import Button from "@material-ui/core/Button";
 import {Link} from "react-router-dom";
 import axios from "axios";
+import {makeStyles} from "@material-ui/core/styles";
 
 import './LandingPage.css';
-import DrinkCard from "../common/DrinkCard/DrinkCard";
-import {makeStyles} from "@material-ui/core/styles";
 import Hero from "../common/Hero/Hero";
 import Info from "../common/Info/Info";
 
@@ -50,8 +49,13 @@ const LandingPage = () => {
         drink
         &&
           <div className="content_LandingPage">
-            <Info />
-            <DrinkCard drink={drink}/>
+            <Info
+              drink={drink}
+              buttonPresent={false}
+              topline="Personalized recommendations"
+              heading="Give this drink a try"
+              subtitle="Receive great drink suggestions based on your preferences thanks to our personalization engine"
+            />
             <div>
               <p>Hello this is my cocktail app.</p>
               <Button className={classes.leftButton} variant="contained" color="primary" onClick={() => clickMe()}>
