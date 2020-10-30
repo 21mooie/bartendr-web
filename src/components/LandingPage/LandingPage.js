@@ -55,6 +55,15 @@ const LandingPage = () => {
               topline="Personalized recommendations"
               heading="Give this drink a try"
               subtitle="Receive great drink suggestions based on your preferences thanks to our personalization engine"
+              imgLeft={false}
+            />
+            <Info
+              drink={drink}
+              buttonPresent={false}
+              topline="Personalized recommendations"
+              heading="Give this drink a try"
+              subtitle="Receive great drink suggestions based on your preferences thanks to our personalization engine"
+              imgLeft={true}
             />
             <div>
               <Button className={classes.leftButton} variant="contained" color="primary" onClick={() => clickMe()}>
