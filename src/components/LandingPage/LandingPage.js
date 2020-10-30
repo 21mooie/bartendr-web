@@ -57,15 +57,9 @@ const LandingPage = () => {
               subtitle="Receive great drink suggestions based on your preferences thanks to our personalization engine"
             />
             <div>
-              <p>Hello this is my cocktail app.</p>
               <Button className={classes.leftButton} variant="contained" color="primary" onClick={() => clickMe()}>
                 <Link to="/login" className="link">
                   Log in
-                </Link>
-              </Button>
-              <Button className={classes.leftButton} variant="contained" color="primary">
-                <Link to="/signup" className="link">
-                  Sign up
                 </Link>
               </Button>
             </div>
