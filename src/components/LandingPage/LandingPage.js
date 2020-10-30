@@ -51,19 +51,21 @@ const LandingPage = () => {
           <div className="content_LandingPage">
             <Info
               drink={drink}
-              buttonPresent={false}
+              dark={true}
               topline="Personalized recommendations"
-              heading="Give this drink a try"
+              heading="Try this drink"
               subtitle="Receive great drink suggestions based on your preferences thanks to our personalization engine"
               imgLeft={false}
+              buttonPresent={false}
             />
             <Info
               drink={drink}
-              buttonPresent={false}
-              topline="Personalized recommendations"
-              heading="Give this drink a try"
-              subtitle="Receive great drink suggestions based on your preferences thanks to our personalization engine"
+              dark={false}
+              topline="Community Oriented"
+              heading="Meet other drink enthusiasts"
+              subtitle="Make friends and share recipes for popular drinks"
               imgLeft={true}
+              buttonPresent={false}
             />
             <div>
               <Button className={classes.leftButton} variant="contained" color="primary" onClick={() => clickMe()}>
