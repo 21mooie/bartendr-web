@@ -7,6 +7,7 @@ import './LandingPage.css';
 import DrinkCard from "../common/DrinkCard/DrinkCard";
 import {makeStyles} from "@material-ui/core/styles";
 import Hero from "../common/Hero/Hero";
+import Info from "../common/Info/Info";
 
 const url = 'http://localhost:7777/';
 
@@ -49,6 +50,7 @@ const LandingPage = () => {
         drink
         &&
           <div className="content_LandingPage">
+            <Info />
             <DrinkCard drink={drink}/>
             <div>
               <p>Hello this is my cocktail app.</p>
