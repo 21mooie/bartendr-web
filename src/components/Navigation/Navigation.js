@@ -5,13 +5,14 @@ import PersonIcon from '@material-ui/icons/Person';
 import SearchIcon from '@material-ui/icons/Search';
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 import MenuIcon from '@material-ui/icons/Menu';
+import {connect} from "react-redux";
 
 import * as mutations from '../../store/mutations';
-import {connect} from "react-redux";
 import { useCookies } from 'react-cookie';
 import './Navigation.css';
 import {Routes} from "../../consts/routes";
 import Sidebar from "../Sidebar/Sidebar";
+import Button from "../common/Button/Button";
 
 const Navigation = ({showMenuPaths, clearState}) => {
   const [cookies, setCookie, removeCookie] = useCookies(['token']);
@@ -70,7 +71,9 @@ const Navigation = ({showMenuPaths, clearState}) => {
             </div>
             </>
             )
-          : <></>
+          : <>
+              <Button text="Login" urlPath="login" icon={false} />
+            </>
         }
         <Sidebar
           isOpen={showSidebar}

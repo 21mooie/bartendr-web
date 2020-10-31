@@ -16,7 +16,7 @@ const Hero = (props) => {
         <h1>Order the perfect drink, every time</h1>
         <p>Join a community of drinking enthusiasts and share recipes</p>
         <div className="btnWrapper">
-          <Button />
+          <Button text="Get started" urlPath="signup" icon={true}/>
         </div>
       </div>
     </div>

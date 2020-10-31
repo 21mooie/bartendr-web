@@ -68,13 +68,6 @@ const LandingPage = () => {
               imgLeft={true}
               buttonPresent={false}
             />
-            <div>
-              <Button className={classes.leftButton} variant="contained" color="primary" onClick={() => clickMe()}>
-                <Link to="/login" className="link">
-                  Log in
-                </Link>
-              </Button>
-            </div>
           </div>
       }
     </div>

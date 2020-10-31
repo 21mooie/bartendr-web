@@ -13,11 +13,17 @@ const useStyles = makeStyles({
   },
 });
 
-const Button = (props) => {
+const Button = ({text, urlPath, icon}) => {
   const classes = useStyles();
 
   return (
-    <Link to="signup" className="btn">Get started <ArrowRightAltIcon className={classes.button} /> </Link>
+    <Link to={urlPath} className="btn">
+      {text}
+      {
+       icon &&
+       <ArrowRightAltIcon className={classes.button} />
+      }
+    </Link>
   );
 }
 
