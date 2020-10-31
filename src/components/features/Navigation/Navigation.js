@@ -10,9 +10,9 @@ import {connect} from "react-redux";
 import * as mutations from '../../../store/mutations';
 import { useCookies } from 'react-cookie';
 import './Navigation.css';
-import {Routes} from "../../consts/routes";
+import {Routes} from "../../../consts/routes";
 import Sidebar from "../Sidebar/Sidebar";
-import Button from "../common/Button/Button";
+import Button from "../../common/Button/Button";
 
 const Navigation = ({showMenuPaths, clearState}) => {
   const [cookies, setCookie, removeCookie] = useCookies(['token']);
