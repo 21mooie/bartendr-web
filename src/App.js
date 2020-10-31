@@ -15,6 +15,7 @@ import LandingPage from "./components/features/LandingPage/LandingPage";
 import NotFound from "./components/features/NotFound/NotFound";
 import {ConnectedSignup} from "./components/features/Signup/Signup";
 import * as mutations from './store/mutations';
+import {Footer} from "./components/features/Footer/Footer";
 
 
 
@@ -40,7 +41,7 @@ function App() {
   return (
     <Router>
       <Provider store={store}>
-        <div className="app">
+        <>
           <ConnectedNavigation showMenuPaths={['/dashboard', '/user', '/drink', '/search']}/>
           {/*Search bar for unauthed users who only want to search*/}
           {/*  Router which switches between components, Guard against auth routes*/}
@@ -57,7 +58,8 @@ function App() {
             <Route path="/drink" component={Drink} />
             <Route component={NotFound} />
           </Switch>
-        </div>
+          <Footer />
+        </>
       </Provider>
     </Router>
   );
