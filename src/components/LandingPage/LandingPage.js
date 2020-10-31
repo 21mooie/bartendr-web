@@ -7,6 +7,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import './LandingPage.css';
 import Hero from "../common/Hero/Hero";
 import Info from "../common/Info/Info";
+import party from "../../images/undraw_having_fun_iais.svg";
 
 const url = 'http://localhost:7777/';
 
@@ -59,7 +60,7 @@ const LandingPage = () => {
               buttonPresent={false}
             />
             <Info
-              drink={drink}
+              img={party}
               dark={false}
               topline="Community Oriented"
               heading="Meet other drink enthusiasts"

@@ -4,7 +4,7 @@ import './Info.css';
 import Button from "../Button/Button";
 import DrinkCard from "../DrinkCard/DrinkCard";
 
-function Info({drink, buttonPresent, topline, heading, subtitle, imgLeft, dark}) {
+function Info({drink, img, buttonPresent, topline, heading, subtitle, imgLeft, dark}) {
   return (
     <div className={dark ? "Info_container_dark" : "Info_container_light"}>
       <div className="Info_wrapper">
@@ -24,8 +24,14 @@ function Info({drink, buttonPresent, topline, heading, subtitle, imgLeft, dark})
           </div>
           <div className="Info_column2">
             <div className="Info_img_wrap">
-              {/*<img src="https://www.w3schools.com/images/w3schools_green.jpg"/>*/}
-              <DrinkCard drink={drink} />
+              {
+                img &&
+                  <img src={img} />
+              }
+              {
+                drink &&
+                <DrinkCard drink={drink} />
+              }
             </div>
           </div>
         </div>

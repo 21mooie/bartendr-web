@@ -110,11 +110,13 @@
     height: 100%;
 }
 
-/*.Info_container > img {*/
-/*    width: 555px;*/
-/*    margin: 0 0 10px 0;*/
-/*    padding-right: 0;*/
-/*}*/
+.Info_img_wrap > img {
+    width: 100%;
+    margin-top: 0;
+    margin-right: 0;
+    margin-left: 10px;
+    padding-right: 0;
+}
 
 @media only screen and (min-width: 480px) {
 
