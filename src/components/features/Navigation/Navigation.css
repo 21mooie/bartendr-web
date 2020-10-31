@@ -19,18 +19,24 @@
     scrollbar-width: none;  /* Firefox */
 }
 
-.header > img {
-    object-fit: contain;
-    height: 80px;
-    cursor: pointer;
-}
-
 .header__icons {
     display: none;
 }
 
 .menu__icon {
     cursor: pointer;
+}
+
+.Navigation_logo {
+    color: #FFFFFF;
+    justify-self: start;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+    font-weight: bold;
 }
 
 @media screen and (min-width: 768px) {
