@@ -7,7 +7,7 @@ import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 import MenuIcon from '@material-ui/icons/Menu';
 import {connect} from "react-redux";
 
-import * as mutations from '../../store/mutations';
+import * as mutations from '../../../store/mutations';
 import { useCookies } from 'react-cookie';
 import './Navigation.css';
 import {Routes} from "../../consts/routes";

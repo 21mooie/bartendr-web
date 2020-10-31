@@ -5,7 +5,7 @@ import Button from "@material-ui/core/Button";
 import {Link, Redirect} from 'react-router-dom';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
-import * as mutations from '../../store/mutations';
+import * as mutations from '../../../store/mutations';
 import './Login.css';
 
 export function Login({authenticateUser, authenticateUserToken, authenticated, location}) {
