@@ -4,17 +4,18 @@ import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-d
 import { useCookies } from 'react-cookie';
 
 import './App.css';
-import {ConnectedDashboard} from "./components/Dashboard/Dashboard";
+import {ConnectedDashboard} from "./components/features/Dashboard/Dashboard";
 import { store } from './store/index';
-import {ConnectedLogin} from "./components/Login/Login";
-import {ConnectedNavigation} from "./components/Navigation/Navigation";
-import {ConnectedUser} from "./components/User/User";
-import Drink from "./components/Drink/Drink";
-import Search from "./components/Search/Search";
-import LandingPage from "./components/LandingPage/LandingPage";
-import NotFound from "./components/NotFound/NotFound";
-import {ConnectedSignup} from "./components/Signup/Signup";
+import {ConnectedLogin} from "./components/features/Login/Login";
+import {ConnectedNavigation} from "./components/features/Navigation/Navigation";
+import {ConnectedUser} from "./components/features/User/User";
+import Drink from "./components/features/Drink/Drink";
+import Search from "./components/features/Search/Search";
+import LandingPage from "./components/features/LandingPage/LandingPage";
+import NotFound from "./components/features/NotFound/NotFound";
+import {ConnectedSignup} from "./components/features/Signup/Signup";
 import * as mutations from './store/mutations';
+import {Footer} from "./components/features/Footer/Footer";
 
 
 
@@ -40,8 +41,8 @@ function App() {
   return (
     <Router>
       <Provider store={store}>
-        <div className="App">
-          <ConnectedNavigation navUrls={['/dashboard', '/user', '/drink', '/search']}/>
+        <>
+          <ConnectedNavigation showMenuPaths={['/dashboard', '/user', '/drink', '/search']}/>
           {/*Search bar for unauthed users who only want to search*/}
           {/*  Router which switches between components, Guard against auth routes*/}
           {
@@ -57,7 +58,8 @@ function App() {
             <Route path="/drink" component={Drink} />
             <Route component={NotFound} />
           </Switch>
-        </div>
+          <Footer />
+        </>
       </Provider>
     </Router>
   );

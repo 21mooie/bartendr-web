@@ -1,0 +1,7 @@
+.card {
+    justify-content: center;
+}
+
+.card > .MuiPaper-root {
+    display: inline-block;
+}
