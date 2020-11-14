@@ -8,14 +8,12 @@ import MenuIcon from '@material-ui/icons/Menu';
 import {connect} from "react-redux";
 
 import * as mutations from '../../../store/mutations';
-import { useCookies } from 'react-cookie';
 import './Navigation.css';
 import {Routes} from "../../../consts/routes";
 import Sidebar from "../Sidebar/Sidebar";
-import Button from "../../common/Button/Button";
+import Auth0Auth from "../Auth0Auth/Auth0Auth";
 
 const Navigation = ({showMenuPaths, clearState}) => {
-  const [cookies, setCookie, removeCookie] = useCookies(['token']);
   const routerLocation = useLocation();
   const [location, setLocation] = useState('');
   const [showMenu, setShowMenu] = useState(false);
@@ -34,7 +32,6 @@ const Navigation = ({showMenuPaths, clearState}) => {
   const signOut = () => {
     console.log('clicked');
     clearState();
-    removeCookie('token');
     setRedirectVal(<Redirect to="/"/>);
   }
   return (
@@ -72,7 +69,7 @@ const Navigation = ({showMenuPaths, clearState}) => {
             </>
             )
           : <>
-              <Button text="Login" urlPath="login" icon={false} />
+              <Auth0Auth />
             </>
         }
         <Sidebar
