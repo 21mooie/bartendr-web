@@ -11,14 +11,16 @@ import * as mutations from '../../../store/mutations';
 import './Navigation.css';
 import {Routes} from "../../../consts/routes";
 import Sidebar from "../Sidebar/Sidebar";
-import Auth0Auth from "../Auth0Auth/Auth0Auth";
+import { useAuth0 } from "@auth0/auth0-react";
+import Login from "../Login/Login";
 
-const Navigation = ({showMenuPaths, clearState}) => {
+const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser}) => {
   const routerLocation = useLocation();
   const [location, setLocation] = useState('');
   const [showMenu, setShowMenu] = useState(false);
   const [redirectVal, setRedirectVal] = useState(null);
   const [showSidebar, setShowSidebar] = useState(false);
+  const { user, isAuthenticated, logout } = useAuth0();
 
   useEffect(() => {
     setLocation(routerLocation.pathname);
@@ -27,10 +29,17 @@ const Navigation = ({showMenuPaths, clearState}) => {
     } else {
       setShowMenu(false);
     }
+    console.log(`isAuthenticated: ${isAuthenticated}`);
+    if (isAuthenticated) {
+      // requestUser(user.name);
+      console.log(`user.name: ${user.name}`);
+      requestRegisterUser(user.name);
+    }
   }, [routerLocation.pathname, location, showMenuPaths],);
 
   const signOut = () => {
     console.log('clicked');
+    logout({ returnTo: window.location.origin })
     clearState();
     setRedirectVal(<Redirect to="/"/>);
   }
@@ -69,7 +78,8 @@ const Navigation = ({showMenuPaths, clearState}) => {
             </>
             )
           : <>
-              <Auth0Auth />
+              {/*<Button text="Login" urlPath="login" icon={false} />*/}
+              <Login />
             </>
         }
         <Sidebar
@@ -88,6 +98,12 @@ export default Navigation;
 const mapDispatchToProps = (dispatch) => ({
   clearState() {
     dispatch(mutations.requestClearState(null));
+  },
+  requestUser(email){
+    dispatch(mutations.requestUser(email));
+  },
+  requestRegisterUser(email) {
+    dispatch(mutations.requestRegisterUser(email));
   }
 });
 

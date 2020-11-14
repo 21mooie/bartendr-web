@@ -57,10 +57,10 @@ export function* userAuthenticationSaga() {
 
 export function* userRegistrationSaga() {
   while (true) {
-    const {email, username, password} = yield take(mutations.REQUEST_REGISTER_USER);
+    const {email} = yield take(mutations.REQUEST_REGISTER_USER);
     try {
-      console.log(email, username, password);
-      const {data} = yield axios.post(url + '/authenticate/register', {email, username, password});
+      console.log(email);
+      const {data} = yield axios.post(url + '/authenticate/register', {email});
       if (!data) {
         throw new Error();
       }
@@ -70,6 +70,28 @@ export function* userRegistrationSaga() {
     } catch(err) {
       console.log('Register failed: ', err);
       yield put(mutations.processAuthenticateUser(mutations.NOT_AUTHENTICATED));
+    }
+  }
+}
+
+export function* auth0AuthenticationSaga() {
+  while (true) {
+    const {email} = yield take(mutations.REQUEST_USER);
+    try {
+      let response;
+      response = yield axios.post(url + `/authenticate`, {email})
+      let {data} = response;
+      if (!data) {
+        throw new Error();
+      }
+      Cookies.set('token', data.token);
+      console.log('Authenticated: ', data);
+      yield put(mutations.setState(data.state));
+      yield put(mutations.processAuthenticateUser(mutations.AUTHENTICATED))
+
+    } catch(err) {
+      console.log('auth failed: ', err);
+      yield put(mutations.processAuthenticateUser(mutations.FAILED_AUTHENTICATED));
     }
   }
 }

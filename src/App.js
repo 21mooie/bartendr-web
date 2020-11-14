@@ -1,40 +1,40 @@
 import React from 'react';
 import {Provider} from "react-redux";
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
-import { useCookies } from 'react-cookie';
 
 import './App.css';
 import {ConnectedDashboard} from "./components/features/Dashboard/Dashboard";
 import { store } from './store/index';
-import {ConnectedLogin} from "./components/features/Login/Login";
 import {ConnectedNavigation} from "./components/features/Navigation/Navigation";
 import {ConnectedUser} from "./components/features/User/User";
 import Drink from "./components/features/Drink/Drink";
 import Search from "./components/features/Search/Search";
 import LandingPage from "./components/features/LandingPage/LandingPage";
 import NotFound from "./components/features/NotFound/NotFound";
-import {ConnectedSignup} from "./components/features/Signup/Signup";
 import * as mutations from './store/mutations';
 import {Footer} from "./components/features/Footer/Footer";
+import { useAuth0 } from "@auth0/auth0-react";
 
 
 
-console.log(store.getState());
+console.log(`Store: ${JSON.stringify(store.getState())}`);
+console.log(`You are running in  ${process.env.NODE_ENV}`);
 const RouteGuard = Component => ({match}) => {
-  console.info("Route guard", match);
-  if (store.getState().session.authenticated !== mutations.AUTHENTICATED && match.path !== '/') {
-    //reroute
-    return <Redirect to="/login"/>
-  }
+  // console.info("Route guard", match);
+  // if (store.getState().session.authenticated !== mutations.AUTHENTICATED && match.path !== '/') {
+  //   //reroute
+  //   return <Redirect to="/"/>
+  // }
   return <Component match={match} />
 }
 
 function App() {
-  const [cookies, setCookie] = useCookies(['token']);
+  const { isAuthenticated } = useAuth0();
 
   function autoLoginUser() {
-    if (cookies.token) {
-      return <Redirect to={{pathname: "/login", state: { token: cookies.token }}}/>
+    console.log(`isAuthenticated: ${isAuthenticated}`);
+    if (isAuthenticated) {
+      return <Redirect to="/dashboard"/>
     }
   }
 
@@ -50,8 +50,6 @@ function App() {
           }
           <Switch>
             <Route exact path="/" component={RouteGuard(LandingPage)} />
-            <Route path="/login" component={ConnectedLogin}/>
-            <Route path="/signup" component={ConnectedSignup} />
             <Route path="/dashboard" component={RouteGuard(ConnectedDashboard)} />
             <Route path="/user" component={RouteGuard(ConnectedUser)} />
             <Route path="/search" component={Search} />

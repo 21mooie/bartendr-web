@@ -11,6 +11,7 @@ export const SET_STATE = `SET_STATE`;
 export const REQUEST_REGISTER_USER = `REQUEST_REGISTER_USER`;
 export const REQUEST_CLEAR_STATE = `REQUEST_CLEAR_STATE`;
 export const PROCESS_UNAUTHENTICATE_USER = `PROCESS_UNAUTHENTICATE_USER`;
+export const REQUEST_USER = `REQUEST_USER`;
 
 export const requestChangeUsername = (uid, oldUsername, newUsername) => ({
   type: REQUEST_CHANGE_USERNAME,
@@ -39,6 +40,11 @@ export const requestAuthenticateUser = (username, password, token) => ({
   token
 });
 
+export const requestUser = (email) => ({
+  type: REQUEST_USER,
+  email,
+});
+
 export const processAuthenticateUser = (status = AUTHENTICATING) => ({
   type: PROCESSING_AUTHENTICATE_USER,
   authenticated: status
@@ -49,11 +55,9 @@ export const setState = (state = {}) => ({
   state,
 });
 
-export const requestRegisterUser = (email, username, password) => ({
+export const requestRegisterUser = (email) => ({
   type: REQUEST_REGISTER_USER,
   email,
-  username,
-  password
 });
 
 export const requestClearState = () => ({
