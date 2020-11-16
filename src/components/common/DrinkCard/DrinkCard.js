@@ -22,7 +22,10 @@ const useStyles = makeStyles({
 export default function DrinkCard({drink}) {
   const classes = useStyles();
   return (
-    <div className="card">
+    <>
+    {
+      drink &&
+      <div className="card">
       <Card className={classes.root}>
         <CardActionArea>
           <CardMedia
@@ -50,5 +53,7 @@ export default function DrinkCard({drink}) {
         </CardActions>
       </Card>
     </div>
+    }
+    </>
   );
 }

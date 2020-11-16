@@ -34,7 +34,7 @@ function App() {
   function autoLoginUser() {
     console.log(`isAuthenticated: ${isAuthenticated}`);
     if (isAuthenticated) {
-      return <Redirect to="/dashboard"/>
+      return <Redirect to="/user"/>
     }
   }
 
