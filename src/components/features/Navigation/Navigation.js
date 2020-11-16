@@ -31,9 +31,8 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
     }
     console.log(`isAuthenticated: ${isAuthenticated}`);
     if (isAuthenticated) {
-      // requestUser(user.name);
-      console.log(`user.name: ${user.name}`);
-      requestRegisterUser(user.name);
+      console.log(user);
+      requestRegisterUser(user.email, user.nickname);
     }
   }, [routerLocation.pathname, location, showMenuPaths],);
 
@@ -102,8 +101,8 @@ const mapDispatchToProps = (dispatch) => ({
   requestUser(email){
     dispatch(mutations.requestUser(email));
   },
-  requestRegisterUser(email) {
-    dispatch(mutations.requestRegisterUser(email));
+  requestRegisterUser(email, username) {
+    dispatch(mutations.requestRegisterUser(email, username));
   }
 });
 

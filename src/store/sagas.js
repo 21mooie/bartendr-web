@@ -57,10 +57,9 @@ export function* userAuthenticationSaga() {
 
 export function* userRegistrationSaga() {
   while (true) {
-    const {email} = yield take(mutations.REQUEST_REGISTER_USER);
+    const {email, username} = yield take(mutations.REQUEST_REGISTER_USER);
     try {
-      console.log(email);
-      const {data} = yield axios.post(url + '/authenticate/register', {email});
+      const {data} = yield axios.post(url + '/authenticate/register', {email, username});
       if (!data) {
         throw new Error();
       }
