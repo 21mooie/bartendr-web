@@ -55,9 +55,10 @@ export const setState = (state = {}) => ({
   state,
 });
 
-export const requestRegisterUser = (email) => ({
+export const requestRegisterUser = (email, username) => ({
   type: REQUEST_REGISTER_USER,
   email,
+  username
 });
 
 export const requestClearState = () => ({
