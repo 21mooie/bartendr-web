@@ -39,10 +39,10 @@ export function* userRegistrationSaga() {
 
 export function* auth0AuthenticationSaga() {
   while (true) {
-    const {email} = yield take(mutations.REQUEST_USER);
+    const {username} = yield take(mutations.REQUEST_USER);
     try {
       let response;
-      response = yield axios.post(url + `/authenticate`, {email})
+      response = yield axios.post(url + `/authenticate`, {username})
       let {data} = response;
       if (!data) {
         throw new Error();

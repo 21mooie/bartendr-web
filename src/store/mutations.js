@@ -26,9 +26,9 @@ export const changeUsername = (uid, oldUsername, newUsername) => ({
   newUsername
 });
 
-export const requestUser = (email) => ({
+export const requestUser = (username) => ({
   type: REQUEST_USER,
-  email,
+  username,
 });
 
 export const processAuthenticateUser = (status = AUTHENTICATING) => ({

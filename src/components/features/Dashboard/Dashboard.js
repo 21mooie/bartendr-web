@@ -4,9 +4,8 @@ import { useAuth0 } from "@auth0/auth0-react";
 import {Redirect} from "react-router-dom";
 
 
-export const Dashboard = () => {
-  const { user, isAuthenticated, isLoading } = useAuth0();
-
+export const Dashboard = ({user}) => {
+  const { isAuthenticated } = useAuth0();
   function handleUnAuth() {
     if (!isAuthenticated) {
       return <Redirect to="/" />;
@@ -16,11 +15,12 @@ export const Dashboard = () => {
   }
 
   function data() {
-    return ( <div>
-      <img src={user.picture} alt={user.name} />
-      <h2>{user.name}</h2>
-      <p>{user.email}</p>
-    </div> );
+    return (
+      <div>
+        <h2>{user.name}</h2>
+        <p>{user.email}</p>
+      </div>
+    );
   }
    return (
      <>
