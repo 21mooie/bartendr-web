@@ -34,7 +34,7 @@ function App() {
   function autoLoginUser() {
     console.log(`isAuthenticated: ${isAuthenticated}`);
     if (isAuthenticated) {
-      return <Redirect to="/user"/>
+      return <Redirect to="/user/anotheruser"/>
     }
   }
 
@@ -51,7 +51,7 @@ function App() {
           <Switch>
             <Route exact path="/" component={RouteGuard(LandingPage)} />
             <Route path="/dashboard" component={RouteGuard(ConnectedDashboard)} />
-            <Route path="/user" component={RouteGuard(ConnectedUser)} />
+            <Route path="/user/:username" component={RouteGuard(ConnectedUser)} />
             <Route path="/search" component={Search} />
             <Route path="/drink" component={Drink} />
             <Route component={NotFound} />

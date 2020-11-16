@@ -10,8 +10,9 @@ import "./User.css";
 import DrinkCard from "../../common/DrinkCard/DrinkCard";
 const url = 'http://localhost:7777/';
 
-export function User({user, changeUsername}) {
+export function User({user, changeUsername, match}) {
   const [newUsername, setUsername] = useState('');
+  const [editInfoToggled, setEditInfoToggled] = useState(false);
   const [drink, setDrink] = useState(null);
 
   useEffect(() => {
@@ -26,19 +27,42 @@ export function User({user, changeUsername}) {
     }
   }, [drink]);
 
+  function isThisCurrentUser() {
+    if (match.params.username === user.username) {
+      return showCurrentUser();
+    }
+    return <Button>Follow</Button>;
+  }
+
+  const showCurrentUser = () => {
+      let val = "";
+      if (editInfoToggled) {
+        val = (
+          <div>
+            <h2>Change your username here</h2>
+            <form noValidate autoComplete="off">
+              <TextField id="newUsername " label="New Username" onChange={event => setUsername(event.target.value)}/>
+            </form>
+            <Button onClick={() => {setEditInfoToggled(!editInfoToggled)}}>Cancel</Button>
+            <Button onClick={() => {setEditInfoToggled(!editInfoToggled)}}>Submit</Button>
+          </div>
+        );
+      } else {
+        val = <Button onClick={() => {setEditInfoToggled(!editInfoToggled)}}>Edit info</Button>;
+      }
+
+      return val;
+  };
+
   return (
     <div className="user">
       <div className="user__photo">
         <AccountCircleIcon  style={{ fontSize: 100 }}/>
       </div>
       <h3>{user.username}</h3>
-      <Button>Change username</Button>
-      <h2>Change your username here</h2>
-      <form noValidate autoComplete="off">
-      <TextField id="newUsername " label="New Username" onChange={event => setUsername(event.target.value)}/>
-      <Button onClick={() => changeUsername(user.uid, user.username, newUsername)}>Submit</Button>
-      </form>
-      <Button>Follow</Button>
+      {
+        isThisCurrentUser()
+      }
       <div className="user__favDrinks">
         <h3>Favorite Drinks</h3>
         <DrinkCard drink={drink}/>
