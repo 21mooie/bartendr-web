@@ -19,42 +19,6 @@ export function* changeUsernameSaga() {
   }
 }
 
-export function* createNewUserSaga() {
-  while (true) {
-    const {username, password} = yield take([mutations.CREATE_USER]);
-    axios.post(url + '/cocktail-user', {
-      username,
-      password
-    });
-  }
-}
-
-export function* userAuthenticationSaga() {
-  while (true) {
-    const {username, password, token} = yield take(mutations.REQUEST_AUTHENTICATE_USER);
-    try {
-      let response;
-      if (token) {
-        response = yield axios.post(url + `/authenticate`, {token})
-      } else {
-        response = yield axios.post(url + `/authenticate`, {username, password})
-      }
-      let {data} = response;
-      if (!data) {
-        throw new Error();
-      }
-      Cookies.set('token', data.token);
-      console.log('Authenticated: ', data);
-      yield put(mutations.setState(data.state));
-      yield put(mutations.processAuthenticateUser(mutations.AUTHENTICATED))
-
-    } catch(err) {
-      console.log('auth failed: ', err);
-      yield put(mutations.processAuthenticateUser(mutations.FAILED_AUTHENTICATED));
-    }
-  }
-}
-
 export function* userRegistrationSaga() {
   while (true) {
     const {email, username} = yield take(mutations.REQUEST_REGISTER_USER);
