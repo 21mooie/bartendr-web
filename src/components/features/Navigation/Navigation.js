@@ -55,12 +55,12 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
             <>
             <div className="header__icons">
 
-              <Link to="dashboard" className={`header__icon ${location === Routes.DASHBOARD ? 'header__icon-active' : ''}`}>
+              <Link to="/dashboard" className={`header__icon ${location === Routes.DASHBOARD ? 'header__icon-active' : ''}`}>
                   <DashboardIcon />
                   <p>Dashboard</p>
               </Link>
 
-              <Link className={`header__icon ${location === Routes.USER ? 'header__icon-active' : ''}`} to={`/user/${user.nickname}`}>
+              <Link className={`header__icon ${location.includes(Routes.USER)  ? 'header__icon-active' : ''}`} to={`/user/${user.nickname}`}>
                 <PersonIcon />
                 <p>Profile</p>
               </Link>

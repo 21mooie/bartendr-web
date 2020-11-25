@@ -65,8 +65,8 @@ export function User({user, changeUsername, match}) {
       }
       <div className="user__favDrinks">
         <h3>Favorite Drinks</h3>
-        <div class="user__favDrink__grid">
-          <div class="user__favDrink__item">
+        <div className="user__favDrink__grid">
+          <div className="user__favDrink__item">
             <DrinkCard drink={drink}/>
           </div>
           <div className="user__favDrink__item">
