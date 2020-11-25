@@ -24,11 +24,15 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
 
   useEffect(() => {
     setLocation(routerLocation.pathname);
-    if (showMenuPaths.find(url => url === location)) {
-      setShowMenu(true);
-    } else {
-      setShowMenu(false);
-    }
+    setShowMenu(false);
+    showMenuPaths.every(function(url, index) {
+      // Do your thing, then:
+      if (location.includes(url))  {
+        setShowMenu(true);
+        return false;
+      }
+      return true;
+    });
     console.log(`isAuthenticated: ${isAuthenticated}`);
     if (isAuthenticated) {
       requestRegisterUser(user.email, user.nickname);
