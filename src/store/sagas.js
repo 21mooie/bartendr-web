@@ -19,24 +19,6 @@ export function* changeUsernameSaga() {
   }
 }
 
-export function* userRegistrationSaga() {
-  while (true) {
-    const {email, username} = yield take(mutations.REQUEST_REGISTER_USER);
-    try {
-      const {data} = yield axios.post(url + '/authenticate/register', {email, username});
-      if (!data) {
-        throw new Error();
-      }
-      console.log('Registered: ', data);
-      yield put(mutations.setState(data.state));
-      yield put(mutations.processAuthenticateUser(mutations.AUTHENTICATED))
-    } catch(err) {
-      console.log('Register failed: ', err);
-      yield put(mutations.processAuthenticateUser(mutations.NOT_AUTHENTICATED));
-    }
-  }
-}
-
 export function* auth0AuthenticationSaga() {
   while (true) {
     const {username} = yield take(mutations.REQUEST_USER);

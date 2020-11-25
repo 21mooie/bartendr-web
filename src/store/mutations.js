@@ -7,7 +7,6 @@ export const AUTHENTICATED = `AUTHENTICATED`;
 export const NOT_AUTHENTICATED = `NOT_AUTHENTICATED`;
 export const FAILED_AUTHENTICATED = `FAILED_AUTHENTICATED`;
 export const SET_STATE = `SET_STATE`;
-export const REQUEST_REGISTER_USER = `REQUEST_REGISTER_USER`;
 export const REQUEST_CLEAR_STATE = `REQUEST_CLEAR_STATE`;
 export const PROCESS_UNAUTHENTICATE_USER = `PROCESS_UNAUTHENTICATE_USER`;
 export const REQUEST_USER = `REQUEST_USER`;
@@ -39,12 +38,6 @@ export const processAuthenticateUser = (status = AUTHENTICATING) => ({
 export const setState = (state = {}) => ({
   type: SET_STATE,
   state,
-});
-
-export const requestRegisterUser = (email, username) => ({
-  type: REQUEST_REGISTER_USER,
-  email,
-  username
 });
 
 export const requestClearState = () => ({
