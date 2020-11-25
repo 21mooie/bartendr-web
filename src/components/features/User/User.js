@@ -65,7 +65,17 @@ export function User({user, changeUsername, match}) {
       }
       <div className="user__favDrinks">
         <h3>Favorite Drinks</h3>
-        <DrinkCard drink={drink}/>
+        <div class="user__favDrink__grid">
+          <div class="user__favDrink__item">
+            <DrinkCard drink={drink}/>
+          </div>
+          <div className="user__favDrink__item">
+            <DrinkCard drink={drink}/>
+          </div>
+          <div className="user__favDrink__item">
+            <DrinkCard drink={drink}/>
+          </div>
+        </div>
       </div>
 
     </div>
