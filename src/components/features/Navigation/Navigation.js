@@ -80,8 +80,6 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
             </>
             )
           : <>
-              {/*<Button text="Login" urlPath="login" icon={false} />*/}
-              <Login />
             </>
         }
         <Sidebar
