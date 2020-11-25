@@ -1,6 +1,7 @@
 import React from 'react';
 import {Provider} from "react-redux";
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { useAuth0 } from "@auth0/auth0-react";
 
 import './App.css';
 import {ConnectedDashboard} from "./components/features/Dashboard/Dashboard";
@@ -11,9 +12,7 @@ import Drink from "./components/features/Drink/Drink";
 import Search from "./components/features/Search/Search";
 import LandingPage from "./components/features/LandingPage/LandingPage";
 import NotFound from "./components/features/NotFound/NotFound";
-import * as mutations from './store/mutations';
 import {Footer} from "./components/features/Footer/Footer";
-import { useAuth0 } from "@auth0/auth0-react";
 
 
 

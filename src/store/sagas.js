@@ -1,6 +1,5 @@
 import {take,  put, takeEvery} from "redux-saga/effects";
 import axios from "axios";
-import Cookies from 'js-cookie';
 
 import * as mutations from './mutations';
 import {user} from '../consts/defaultState';
@@ -29,7 +28,6 @@ export function* auth0AuthenticationSaga() {
       if (!data) {
         throw new Error();
       }
-      Cookies.set('token', data.token);
       console.log('Authenticated: ', data);
       yield put(mutations.setState(data.state));
       yield put(mutations.processAuthenticateUser(mutations.AUTHENTICATED))
