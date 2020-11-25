@@ -1,9 +1,8 @@
 import React from 'react';
 import ArrowRightAltIcon from "@material-ui/icons/ArrowRightAlt";
 import {makeStyles} from "@material-ui/core/styles";
-import {Link} from "react-router-dom";
 
-import "./Button.css";
+import "./CTAButton.css";
 
 const useStyles = makeStyles({
   button: {
@@ -13,18 +12,18 @@ const useStyles = makeStyles({
   },
 });
 
-const Button = ({text, urlPath, icon}) => {
+const CTAButton = ({text, icon, func}) => {
   const classes = useStyles();
 
   return (
-    <Link to={urlPath} className="btn">
+    <button className="btn" onClick={() => {func()}}>
       {text}
       {
        icon &&
        <ArrowRightAltIcon className={classes.button} />
       }
-    </Link>
+    </button>
   );
 }
 
-export default Button;
+export default CTAButton;

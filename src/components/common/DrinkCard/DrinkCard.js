@@ -13,22 +13,27 @@ import './DrinkCard.css';
 const useStyles = makeStyles({
   root: {
     maxWidth: 400,
+    borderRadius: 30,
   },
   media: {
-    height: 350,
+    maxHeight: 450,
   },
 });
 
 export default function DrinkCard({drink}) {
   const classes = useStyles();
   return (
-    <div className="card">
+    <>
+    {
+      drink &&
+      <div className="card">
       <Card className={classes.root}>
-        <CardActionArea>
+        <CardActionArea
+          onClick = {() => {console.log('clicked');}}
+        >
           <CardMedia
             component="img"
             alt="drink"
-            className={classes.media}
             src={drink['strDrinkThumb']}
             title="Drink up"/>
           <CardContent>
@@ -43,12 +48,9 @@ export default function DrinkCard({drink}) {
             </Typography>
           </CardContent>
         </CardActionArea>
-        <CardActions>
-          <Button size="small" color="primary" onClick={() => {console.log(`button clicked`);}}>
-            Learn More
-          </Button>
-        </CardActions>
       </Card>
     </div>
+    }
+    </>
   );
 }

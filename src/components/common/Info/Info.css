@@ -140,12 +140,6 @@
 }
 
 @media only screen and (min-width: 768px) {
-    .Info_container {
-        color: #FFFFFF;
-        background: #010606;
-        padding: 0;
-    }
-
     .Info_row_img_right {
         display: grid;
         grid-auto-columns: minmax(auto, 1fr);

@@ -12,7 +12,6 @@ import './Navigation.css';
 import {Routes} from "../../../consts/routes";
 import Sidebar from "../Sidebar/Sidebar";
 import { useAuth0 } from "@auth0/auth0-react";
-import Login from "../Login/Login";
 
 const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser}) => {
   const routerLocation = useLocation();
@@ -21,20 +20,25 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
   const [redirectVal, setRedirectVal] = useState(null);
   const [showSidebar, setShowSidebar] = useState(false);
   const { user, isAuthenticated, logout } = useAuth0();
+  const [authChecked, setAuthChecked] = useState(false);
 
   useEffect(() => {
     setLocation(routerLocation.pathname);
-    if (showMenuPaths.find(url => url === location)) {
-      setShowMenu(true);
-    } else {
-      setShowMenu(false);
-    }
+    setShowMenu(false);
+    showMenuPaths.every(function(url, index) {
+      // Do your thing, then:
+      if (location.includes(url))  {
+        setShowMenu(true);
+        return false;
+      }
+      return true;
+    });
     console.log(`isAuthenticated: ${isAuthenticated}`);
-    if (isAuthenticated) {
-      requestRegisterUser(user.email, user.nickname);
+    if (isAuthenticated && !authChecked) {
       requestUser(user.nickname);
+      setAuthChecked(true);
     }
-  }, [routerLocation.pathname, location, showMenuPaths],);
+  }, [authChecked, isAuthenticated, location, requestUser, routerLocation.pathname, showMenuPaths]);
 
   const signOut = () => {
     console.log('clicked');
@@ -45,18 +49,18 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
   return (
     <>
       <div className="header">
-        <Link to='/' className="Navigation_logo">Bartender</Link>
+        <Link to={isAuthenticated ? '/dashboard' : '/'} className="Navigation_logo">Bartender</Link>
         {
           showMenu ? (
             <>
             <div className="header__icons">
 
-              <Link to="dashboard" className={`header__icon ${location === Routes.DASHBOARD ? 'header__icon-active' : ''}`}>
+              <Link to="/dashboard" className={`header__icon ${location === Routes.DASHBOARD ? 'header__icon-active' : ''}`}>
                   <DashboardIcon />
                   <p>Dashboard</p>
               </Link>
 
-              <Link className={`header__icon ${location === Routes.USER ? 'header__icon-active' : ''}`} to='/user'>
+              <Link className={`header__icon ${location.includes(Routes.USER)  ? 'header__icon-active' : ''}`} to={`/user/${user.nickname}`}>
                 <PersonIcon />
                 <p>Profile</p>
               </Link>
@@ -77,8 +81,6 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
             </>
             )
           : <>
-              {/*<Button text="Login" urlPath="login" icon={false} />*/}
-              <Login />
             </>
         }
         <Sidebar
@@ -100,9 +102,6 @@ const mapDispatchToProps = (dispatch) => ({
   },
   requestUser(username){
     dispatch(mutations.requestUser(username));
-  },
-  requestRegisterUser(email, username) {
-    dispatch(mutations.requestRegisterUser(email, username));
   }
 });
 
