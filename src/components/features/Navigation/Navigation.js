@@ -12,7 +12,6 @@ import './Navigation.css';
 import {Routes} from "../../../consts/routes";
 import Sidebar from "../Sidebar/Sidebar";
 import { useAuth0 } from "@auth0/auth0-react";
-import Login from "../Login/Login";
 
 const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser}) => {
   const routerLocation = useLocation();
@@ -21,6 +20,7 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
   const [redirectVal, setRedirectVal] = useState(null);
   const [showSidebar, setShowSidebar] = useState(false);
   const { user, isAuthenticated, logout } = useAuth0();
+  const [authChecked, setAuthChecked] = useState(false);
 
   useEffect(() => {
     setLocation(routerLocation.pathname);
@@ -34,10 +34,11 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
       return true;
     });
     console.log(`isAuthenticated: ${isAuthenticated}`);
-    if (isAuthenticated) {
+    if (isAuthenticated && !authChecked) {
       requestUser(user.nickname);
+      setAuthChecked(true);
     }
-  }, [routerLocation.pathname, location, showMenuPaths],);
+  }, [authChecked, isAuthenticated, location, requestUser, routerLocation.pathname, showMenuPaths]);
 
   const signOut = () => {
     console.log('clicked');
@@ -48,7 +49,7 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
   return (
     <>
       <div className="header">
-        <Link to='/' className="Navigation_logo">Bartender</Link>
+        <Link to={isAuthenticated ? '/dashboard' : '/'} className="Navigation_logo">Bartender</Link>
         {
           showMenu ? (
             <>
@@ -59,7 +60,7 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
                   <p>Dashboard</p>
               </Link>
 
-              <Link className={`header__icon ${location === Routes.USER ? 'header__icon-active' : ''}`} to='/user'>
+              <Link className={`header__icon ${location === Routes.USER ? 'header__icon-active' : ''}`} to={`/user/${user.nickname}`}>
                 <PersonIcon />
                 <p>Profile</p>
               </Link>
