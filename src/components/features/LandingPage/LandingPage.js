@@ -57,7 +57,6 @@ const LandingPage = () => {
               heading="Try this drink"
               subtitle="Receive great drink suggestions based on your preferences thanks to our personalization engine"
               imgLeft={false}
-              buttonPresent={false}
             />
             <Info
               img={party}
@@ -66,7 +65,6 @@ const LandingPage = () => {
               heading="Meet other drink enthusiasts"
               subtitle="Make friends and share recipes for popular drinks"
               imgLeft={true}
-              buttonPresent={false}
             />
           </div>
       }
