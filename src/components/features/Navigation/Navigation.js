@@ -25,7 +25,7 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
   useEffect(() => {
     setLocation(routerLocation.pathname);
     setShowMenu(false);
-    showMenuPaths.every(function(url, index) {
+    showMenuPaths.every(function(url) {
       // Do your thing, then:
       if (location.includes(url))  {
         setShowMenu(true);
@@ -51,7 +51,7 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
       <div className="header">
         <Link to={isAuthenticated ? '/dashboard' : '/'} className="Navigation_logo">Bartender</Link>
         {
-          showMenu ? (
+          showMenu && isAuthenticated? (
             <>
             <div className="header__icons">
 
