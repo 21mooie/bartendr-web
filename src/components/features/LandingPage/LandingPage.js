@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from "react";
-import Button from "@material-ui/core/Button";
-import {Link} from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import axios from "axios";
-import {makeStyles} from "@material-ui/core/styles";
+import {useAuth0} from "@auth0/auth0-react";
 
 import './LandingPage.css';
 import Hero from "../../common/Hero/Hero";
@@ -11,24 +10,9 @@ import party from "../../../images/undraw_having_fun_iais.svg";
 
 const url = 'http://localhost:7777/';
 
-const useStyles = makeStyles({
-  leftButton: {
-    marginRight: "10px",
-  },
-  rightButton: {
-    marginLeft: "10px",
-  },
-  media: {
-    height: 350,
-  },
-});
-
 const LandingPage = () => {
-  const classes = useStyles();
   const [drink, setDrink] = useState(null);
-  const clickMe = () => {
-    console.log('i was clicked');
-  }
+  const { isAuthenticated } = useAuth0();
 
   useEffect(() => {
     // will need to refactor on redirect this is causing memory leak
@@ -42,9 +26,19 @@ const LandingPage = () => {
     }
   }, [drink]);
 
+  function autoLoginUser() {
+    console.log(`isAuthenticated: ${isAuthenticated}`);
+    if (isAuthenticated) {
+      return <Redirect to="/dashboard"/>
+    }
+  }
+
   return (
 
     <div className="main">
+      {
+        autoLoginUser()
+      }
       <Hero />
       {
         drink

@@ -1,7 +1,6 @@
 import React from 'react';
 import {Provider} from "react-redux";
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
-import { useAuth0 } from "@auth0/auth0-react";
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import './App.css';
 import {ConnectedDashboard} from "./components/features/Dashboard/Dashboard";
@@ -28,14 +27,6 @@ const RouteGuard = Component => ({match}) => {
 }
 
 function App() {
-  const { isAuthenticated } = useAuth0();
-
-  function autoLoginUser() {
-    console.log(`isAuthenticated: ${isAuthenticated}`);
-    if (isAuthenticated) {
-      return <Redirect to="/dashboard"/>
-    }
-  }
 
   return (
     <Router>
@@ -44,9 +35,6 @@ function App() {
           <ConnectedNavigation showMenuPaths={['/dashboard', '/user', '/drink', '/search']}/>
           {/*Search bar for unauthed users who only want to search*/}
           {/*  Router which switches between components, Guard against auth routes*/}
-          {
-            autoLoginUser()
-          }
           <Switch>
             <Route exact path="/" component={RouteGuard(LandingPage)} />
             <Route path="/dashboard" component={RouteGuard(ConnectedDashboard)} />
