@@ -1,8 +1,11 @@
 export const user = {
-  session: {},
   email: "",
   username : "",
-  photo : "",
   fav_drinks : [],
   uid : "",
+  photo: null,
+  followers: [],
+  following: [],
+  numFollowers: 0,
+  numFollowing: 0,
 }
