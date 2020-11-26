@@ -11,21 +11,6 @@ const sagaMiddleware = createSagaMiddleWare();
 
 export const store = createStore(
   combineReducers({
-    session(userSession = {}, action) {
-      let { type, authenticated, session} = action;
-      switch (type) {
-        case mutations.SET_STATE:
-          return {...userSession};
-        case mutations.REQUEST_AUTHENTICATE_USER:
-          return {...userSession, authenticated: mutations.AUTHENTICATING};
-        case mutations.PROCESSING_AUTHENTICATE_USER:
-          return {...userSession, authenticated};
-        case mutations.PROCESS_UNAUTHENTICATE_USER:
-          return {...userSession, authenticated};
-        default:
-          return {authenticated: mutations.NOT_AUTHENTICATED};
-      }
-    },
     email(email = '', action) {
       switch(action.type) {
         case mutations.SET_STATE:
@@ -67,6 +52,38 @@ export const store = createStore(
           return action.state.fav_drinks || null;
         default:
           return fav_drinks;
+      }
+    },
+    followers(followers = [], action) {
+      switch(action.type) {
+        case(mutations.SET_STATE):
+          return action.state.followers || null;
+        default:
+          return followers;
+      }
+    },
+    following(following = [], action) {
+      switch(action.type) {
+        case(mutations.SET_STATE):
+          return action.state.following || null;
+        default:
+          return following;
+      }
+    },
+    numFollowers(numFollowers = 0, action) {
+      switch(action.type) {
+        case(mutations.SET_STATE):
+          return action.state.numFollowers;
+        default:
+          return numFollowers;
+      }
+    },
+    numFollowing(numFollowing = 0, action) {
+      switch(action.type) {
+        case(mutations.SET_STATE):
+          return action.state.numFollowing;
+        default:
+          return numFollowing;
       }
     },
   }),

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
-import {Redirect} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 
 
 export const Dashboard = ({user}) => {
@@ -19,8 +19,11 @@ export const Dashboard = ({user}) => {
       <div>
         <h2>{user.username}</h2>
         <p>{user.email}</p>
+        <Link to="/user/muatatest1125">
+          Click here
+        </Link>
       </div>
-    );
+    )
   }
    return (
      <>
