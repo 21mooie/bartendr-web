@@ -28,7 +28,7 @@ class Search extends Component {
   };
 
   sendQuery() {
-    axios.post(`${url}/query`, {query: this.state.searchVal})
+    axios.post(`${url}/query/string`, {query: this.state.searchVal})
       .then(({data}) => {
         console.log(data);
         if (data.drinkResults.drinks) {
