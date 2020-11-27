@@ -1,0 +1,20 @@
+.search {
+    background: #2E2E2E;
+    color: #FFFFFF;
+    display: flex;
+    justify-content: center;
+    min-height: 500px;
+}
+
+.search__container {
+    margin: 50px;
+    align-items: center;
+}
+
+.search__icon {
+    display: inline-flex;
+}
+
+.search__button {
+    display: inline-flex;
+}
