@@ -1,0 +1,6 @@
+.drink {
+    background: #2E2E2E;
+    color: #FFFFFF;
+    display: flex;
+    min-height: 500px;
+}
