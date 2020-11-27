@@ -6,6 +6,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 import { makeStyles } from '@material-ui/core/styles';
 
 import './DrinkCard.css';
@@ -36,18 +37,28 @@ export default function DrinkCard({drink}) {
             alt="drink"
             src={drink['strDrinkThumb']}
             title="Drink up"/>
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
-              {drink.strDrink}
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-              Made of {drink.strIngredient1}
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-              {drink.strAlcoholic}
-            </Typography>
+          <CardContent className="card__content">
+            <div className="card__info">
+              <Typography gutterBottom variant="h5" component="h2">
+                {drink.strDrink}
+              </Typography>
+              <Typography variant="body2" color="textSecondary" component="p">
+                Made of {drink.strIngredient1}
+              </Typography>
+              <Typography variant="body2" color="textSecondary" component="p">
+                {drink.strAlcoholic}
+              </Typography>
+            </div>
+            <div className="card__fav__container">
+              <FavoriteIcon fontSize="large" color="secondary"/>
+            </div>
           </CardContent>
         </CardActionArea>
+        <CardActions>
+          <Button size="small" color="primary" onClick={() => {console.log(`button clicked`);}}>
+            Learn More
+          </Button>
+        </CardActions>
       </Card>
     </div>
     }
