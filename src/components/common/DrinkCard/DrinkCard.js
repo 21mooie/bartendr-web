@@ -8,6 +8,7 @@ import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import { makeStyles } from '@material-ui/core/styles';
+import {Link} from "react-router-dom";
 
 import './DrinkCard.css';
 
@@ -55,9 +56,12 @@ export default function DrinkCard({drink}) {
           </CardContent>
         </CardActionArea>
         <CardActions>
-          <Button size="small" color="primary" onClick={() => {console.log(`button clicked`);}}>
-            Learn More
+          <Button size="small" color="primary">
+            <Link to={`/drink/${drink.idDrink}`} className="card__link">
+              Learn More
+            </Link>
           </Button>
+
         </CardActions>
       </Card>
     </div>

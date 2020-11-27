@@ -19,3 +19,7 @@
     margin-left: auto;
     margin-right: 0;
 }
+
+.card__link {
+    text-decoration: none;
+}
