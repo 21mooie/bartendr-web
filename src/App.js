@@ -33,7 +33,8 @@ function App() {
             <ProtectedRoute path="/dashboard" component={ConnectedDashboard} />
             <Route path="/user/:username" component={ConnectedUser} />
             <Route path="/search" component={Search} />
-            <Route path="/drink" component={Drink} />
+            <Route path="/drink/:idDrink" component={Drink} />
+            <Route path="/ingredient" component={Drink} />
             <Route component={NotFound} />
           </Switch>
           <Footer />
