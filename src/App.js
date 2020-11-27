@@ -12,19 +12,12 @@ import Search from "./components/features/Search/Search";
 import LandingPage from "./components/features/LandingPage/LandingPage";
 import NotFound from "./components/features/NotFound/NotFound";
 import {Footer} from "./components/features/Footer/Footer";
+import ProtectedRoute from "./components/common/ProtectedRoute/ProtectedRoute";
 
 
 
 console.log(`Store: ${JSON.stringify(store.getState())}`);
 console.log(`You are running in  ${process.env.NODE_ENV}`);
-const RouteGuard = Component => ({match}) => {
-  // console.info("Route guard", match);
-  // if (store.getState().session.authenticated !== mutations.AUTHENTICATED && match.path !== '/') {
-  //   //reroute
-  //   return <Redirect to="/"/>
-  // }
-  return <Component match={match} />
-}
 
 function App() {
 
@@ -36,9 +29,9 @@ function App() {
           {/*Search bar for unauthed users who only want to search*/}
           {/*  Router which switches between components, Guard against auth routes*/}
           <Switch>
-            <Route exact path="/" component={RouteGuard(LandingPage)} />
-            <Route path="/dashboard" component={RouteGuard(ConnectedDashboard)} />
-            <Route path="/user/:username" component={RouteGuard(ConnectedUser)} />
+            <Route exact path="/" component={LandingPage} />
+            <ProtectedRoute path="/dashboard" component={ConnectedDashboard} />
+            <Route path="/user/:username" component={ConnectedUser} />
             <Route path="/search" component={Search} />
             <Route path="/drink" component={Drink} />
             <Route component={NotFound} />
