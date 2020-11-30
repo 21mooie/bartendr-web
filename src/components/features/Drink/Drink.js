@@ -1,11 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
-import {url} from "../../../consts";
+import FavoriteIcon from "@material-ui/icons/Favorite";
 
 import './Drink.css';
+import NotFound from "../NotFound/NotFound";
+import {url} from "../../../consts";
+
 
 function Drink({match}) {
   const [drink, setDrink] = useState(null);
+  const [drinkNotFound, setDrinkNotFound] = useState(null);
 
   useEffect( () => {
     const {idDrink} = match.params;
@@ -19,6 +23,7 @@ function Drink({match}) {
         })
         .catch((err) => {
           // render 404 error page
+          setDrinkNotFound(true);
         });
     }
   }, []);
@@ -35,6 +40,9 @@ function Drink({match}) {
                 <h3 className="drink__title">{drink.strDrink}</h3>
                 <p>Type: {drink.strAlcoholic}</p>
                 <p>Category: {drink.strCategory}</p>
+                <div className="drink__fav__icon">
+                  <FavoriteIcon fontSize="large" color="secondary"/>
+                </div>
               </div>
             </div>
             <div className="drink__detailed_info">
@@ -51,6 +59,10 @@ function Drink({match}) {
               </div>
             </div>
           </div>
+      }
+      {
+        drinkNotFound &&
+          <NotFound />
       }
     </div>
   )
