@@ -60,7 +60,7 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
                   <p>Dashboard</p>
               </Link>
 
-              <Link className={`header__icon ${location.includes(Routes.USER)  ? 'header__icon-active' : ''}`} to={`/user/${user.nickname}`}>
+              <Link className={`header__icon ${location === `/user/${user.nickname}`  ? 'header__icon-active' : ''}`} to={`/user/${user.nickname}`}>
                 <PersonIcon />
                 <p>Profile</p>
               </Link>
