@@ -12,6 +12,7 @@ import './Navigation.css';
 import {Routes} from "../../../consts/routes";
 import Sidebar from "../Sidebar/Sidebar";
 import { useAuth0 } from "@auth0/auth0-react";
+import CTAButton from "../../common/Button/CTAButton";
 
 const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser}) => {
   const routerLocation = useLocation();
@@ -19,7 +20,7 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
   const [showMenu, setShowMenu] = useState(false);
   const [redirectVal, setRedirectVal] = useState(null);
   const [showSidebar, setShowSidebar] = useState(false);
-  const { user, isAuthenticated, logout } = useAuth0();
+  const { user, isAuthenticated, logout, loginWithRedirect } = useAuth0();
   const [authChecked, setAuthChecked] = useState(false);
 
   useEffect(() => {
@@ -45,6 +46,12 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
     logout({ returnTo: window.location.origin })
     clearState();
     setRedirectVal(<Redirect to="/"/>);
+  }
+
+  function showLoginButton() {
+    if (location !== Routes.LANDING_PAGE) {
+      return <CTAButton text="Login/Signup" func={loginWithRedirect}/>;
+    }
   }
   return (
     <>
@@ -81,6 +88,11 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
             </>
             )
           : <>
+              <div>
+                {
+                  showLoginButton()
+                }
+              </div>
             </>
         }
         <Sidebar
@@ -93,8 +105,6 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
     </>
   )
 }
-
-export default Navigation;
 
 const mapDispatchToProps = (dispatch) => ({
   clearState() {
