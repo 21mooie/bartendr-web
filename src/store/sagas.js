@@ -1,10 +1,9 @@
 import {take,  put, takeEvery} from "redux-saga/effects";
 import axios from "axios";
+import { url } from '../consts';
 
 import * as mutations from './mutations';
 import {user} from '../consts/defaultState';
-
-const url = 'http://localhost:7777';
 
 export function* changeUsernameSaga() {
   while (true) {

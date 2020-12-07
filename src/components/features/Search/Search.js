@@ -5,7 +5,7 @@ import Input from '@material-ui/core/Input';
 import axios from 'axios';
 
 import './Search.css';
-import {url} from "../../../consts";
+import { url } from "../../../consts";
 import DrinkCard from "../../common/DrinkCard/DrinkCard";
 
 

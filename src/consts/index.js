@@ -1,1 +1,1 @@
-export const url = 'http://localhost:7777';
+export const url = 'http://bartender-api-dev.us-east-1.elasticbeanstalk.com';
