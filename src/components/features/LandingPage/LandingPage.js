@@ -2,13 +2,12 @@ import React, {useEffect, useState} from "react";
 import { Redirect } from "react-router-dom";
 import axios from "axios";
 import {useAuth0} from "@auth0/auth0-react";
+import {url} from '../../../consts';
 
 import './LandingPage.css';
 import Hero from "../../common/Hero/Hero";
 import Info from "../../common/Info/Info";
 import party from "../../../images/undraw_having_fun_iais.svg";
-
-const url = 'http://localhost:7777/';
 
 const LandingPage = () => {
   const [drink, setDrink] = useState(null);
@@ -17,7 +16,7 @@ const LandingPage = () => {
   useEffect(() => {
     // will need to refactor on redirect this is causing memory leak
     function getCocktail() {
-      axios.get(`${url}cocktail`).then((response) => {
+      axios.get(`${url}/cocktail`).then((response) => {
         setDrink(response.data['drinks'][0]);
       });
     }

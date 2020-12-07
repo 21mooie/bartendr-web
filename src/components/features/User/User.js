@@ -5,10 +5,10 @@ import { connect } from "react-redux";
 import {requestChangeUsername} from "../../../store/mutations";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import axios from "axios";
+import { url } from '../../../consts';
 
 import "./User.css";
 import DrinkCard from "../../common/DrinkCard/DrinkCard";
-const url = 'http://localhost:7777/';
 
 export function User({user, changeUsername, match}) {
   const [newUsername, setUsername] = useState('');
@@ -18,7 +18,7 @@ export function User({user, changeUsername, match}) {
   useEffect(() => {
     // will need to refactor on redirect this is causing memory leak
     function getCocktail() {
-      axios.get(`${url}cocktail`).then((response) => {
+      axios.get(`${url}/cocktail`).then((response) => {
         setDrink(response.data['drinks'][0]);
       });
     }
