@@ -11,14 +11,6 @@
     margin: 50px;
 }
 
-.search__icon {
-    display: inline-flex;
-}
-
-.search__button {
-    display: inline-flex;
-}
-
 .search__resultsContainer {
     padding-bottom: 50px;
 }

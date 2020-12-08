@@ -8,7 +8,7 @@ import { store } from './store/index';
 import {ConnectedNavigation} from "./components/features/Navigation/Navigation";
 import {ConnectedUser} from "./components/features/User/User";
 import Drink from "./components/features/Drink/Drink";
-import Search from "./components/features/Search/Search";
+import SearchWithRouter from "./components/features/Search/Search";
 import LandingPage from "./components/features/LandingPage/LandingPage";
 import NotFound from "./components/features/NotFound/NotFound";
 import {Footer} from "./components/features/Footer/Footer";
@@ -32,7 +32,7 @@ function App() {
             <Route exact path="/" component={LandingPage} />
             <ProtectedRoute path="/dashboard" component={ConnectedDashboard} />
             <Route path="/user/:username" component={ConnectedUser} />
-            <Route path="/search" component={Search} />
+            <Route path="/search" component={SearchWithRouter} />
             <Route path="/drink/:idDrink" component={Drink} />
             <Route path="/ingredient" component={Drink} />
             <Route component={NotFound} />

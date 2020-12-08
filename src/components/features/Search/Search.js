@@ -1,20 +1,11 @@
 import React, {Component} from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import SearchIcon from '@material-ui/icons/Search';
-import Input from '@material-ui/core/Input';
 import axios from 'axios';
+import { withRouter } from "react-router";
 
 import './Search.css';
 import { url } from "../../../consts";
 import DrinkCard from "../../common/DrinkCard/DrinkCard";
 
-
-const useStyles = theme => ({
-  input: {
-    width: 350,
-    color: 'white',
-  }
-});
 
 class Search extends Component {
   constructor(props) {
@@ -27,8 +18,18 @@ class Search extends Component {
     };
   };
 
-  sendQuery() {
-    axios.post(`${url}/query/string`, {query: this.state.searchVal})
+  componentDidMount() {
+    this.sendQuery(this.props.location.state.searchVal);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.location.state.searchVal !== prevProps.location.state.searchVal) {
+      this.sendQuery(this.props.location.state.searchVal);
+    }
+  }
+
+  sendQuery(query) {
+    axios.post(`${url}/query/string`, {query})
       .then(({data}) => {
         console.log(data);
         if (data.drinkResults.drinks) {
@@ -44,17 +45,7 @@ class Search extends Component {
     return (
       <div className='search'>
         <div className='search__container'>
-          <Input
-            className={this.props.classes.input}
-            placeholder="Search ..."
-            value={this.state.value}
-            onChange={(event) => this.setState({searchVal: event.target.value})}
-          />
-          <button
-            onClick={() => this.sendQuery()}
-          >
-            <SearchIcon />
-          </button>
+          {this.props.location.state.searchVal}
         </div>
         <div className='search__resultsContainer'>
           {
@@ -68,4 +59,5 @@ class Search extends Component {
   }
 }
 
-export default withStyles(useStyles)(Search);
+const SearchWithRouter = withRouter(Search);
+export default SearchWithRouter;

@@ -39,15 +39,8 @@
     font-weight: bold;
 }
 
-@media screen and (min-width: 768px) {
-    .header__icons {
-        display: flex;
-        align-items: center;
-        text-align: center;
-    }
-    .menu__icon {
-        display: none;
-    }
+.header__input > .MuiInputBase-root > input {
+    color: white;
 }
 
 .header__icon {
@@ -75,4 +68,15 @@
 .header__icon > .MuiSvgIcon-root{
     margin-left: auto;
     margin-right: auto;
+}
+
+@media screen and (min-width: 768px) {
+    .header__icons {
+        display: flex;
+        align-items: center;
+        text-align: center;
+    }
+    .menu__icon {
+        display: none;
+    }
 }
