@@ -6,6 +6,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 import MenuIcon from '@material-ui/icons/Menu';
 import {connect} from "react-redux";
+import { withRouter } from "react-router";
 
 import * as mutations from '../../../store/mutations';
 import './Navigation.css';
@@ -13,8 +14,9 @@ import {Routes} from "../../../consts/routes";
 import Sidebar from "../Sidebar/Sidebar";
 import { useAuth0 } from "@auth0/auth0-react";
 import CTAButton from "../../common/Button/CTAButton";
+import Input from "@material-ui/core/Input";
 
-const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser}) => {
+const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser, history}) => {
   const routerLocation = useLocation();
   const [location, setLocation] = useState('');
   const [showMenu, setShowMenu] = useState(false);
@@ -22,6 +24,7 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
   const [showSidebar, setShowSidebar] = useState(false);
   const { user, isAuthenticated, logout, loginWithRedirect } = useAuth0();
   const [authChecked, setAuthChecked] = useState(false);
+  const [searchVal, setSearchVal] = useState('');
 
   useEffect(() => {
     setLocation(routerLocation.pathname);
@@ -53,6 +56,17 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
       return <CTAButton text="Login/Signup" func={loginWithRedirect}/>;
     }
   }
+
+  function performSearch() {
+    if (searchVal && searchVal !== '') {
+      history.push({
+        pathname: '/search',
+        search: `?query=${searchVal}`,
+        state: {searchVal}
+      })
+    }
+  }
+
   return (
     <>
       <div className="header">
@@ -60,6 +74,16 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
         {
           showMenu && isAuthenticated? (
             <>
+            <div className="header__input">
+              <Input
+                placeholder="Search ..."
+                value={searchVal}
+                onChange={(event) => setSearchVal(event.target.value)}
+              />
+              <button onClick={() => performSearch()}>
+                <SearchIcon />
+              </button>
+            </div>
             <div className="header__icons">
 
               <Link to="/dashboard" className={`header__icon ${location === Routes.DASHBOARD ? 'header__icon-active' : ''}`}>
@@ -95,16 +119,22 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
               </div>
             </>
         }
-        <Sidebar
-          isOpen={showSidebar}
-          triggerCloseSidebar={() => {setShowSidebar(false)}}
-          triggerLogout={() => signOut()}
-        />
+        {
+          showSidebar ?
+            <Sidebar
+            isOpen={showSidebar}
+            triggerCloseSidebar={() => {setShowSidebar(false)}}
+            triggerLogout={() => signOut()}
+          /> :
+            null
+        }
         {redirectVal}
       </div>
     </>
   )
 }
+
+const NavigationWithRouter = withRouter(Navigation);
 
 const mapDispatchToProps = (dispatch) => ({
   clearState() {
@@ -115,5 +145,5 @@ const mapDispatchToProps = (dispatch) => ({
   }
 });
 
-export const ConnectedNavigation = connect(null, mapDispatchToProps)(Navigation);
+export const ConnectedNavigation = connect(null, mapDispatchToProps)(NavigationWithRouter);
 
