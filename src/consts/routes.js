@@ -6,4 +6,5 @@ export const Routes = {
   LANDING_PAGE: `/`,
   REGISTER: `/register`,
   DRINK: `/drink`,
+  EXPLORE: `/explore`,
 }

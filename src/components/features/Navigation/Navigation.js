@@ -3,6 +3,7 @@ import {Link, Redirect, useLocation} from "react-router-dom";
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import PersonIcon from '@material-ui/icons/Person';
 import SearchIcon from '@material-ui/icons/Search';
+import ExploreIcon from '@material-ui/icons/Explore';
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 import MenuIcon from '@material-ui/icons/Menu';
 import {connect} from "react-redux";
@@ -96,9 +97,9 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
                 <p>Profile</p>
               </Link>
 
-              <Link className={`header__icon ${location === Routes.SEARCH ? 'header__icon-active' : ''}`} to='/search'>
-                <SearchIcon />
-                <p>Search</p>
+              <Link className={`header__icon ${location === Routes.EXPLORE ? 'header__icon-active' : ''}`} to='/explore'>
+                <ExploreIcon />
+                <p>Explore</p>
               </Link>
 
               <div className="header__icon" onClick={() => signOut()}>
@@ -119,15 +120,11 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
               </div>
             </>
         }
-        {
-          showSidebar ?
-            <Sidebar
-            isOpen={showSidebar}
-            triggerCloseSidebar={() => {setShowSidebar(false)}}
-            triggerLogout={() => signOut()}
-          /> :
-            null
-        }
+        <Sidebar
+          isOpen={showSidebar}
+          triggerCloseSidebar={() => {setShowSidebar(false)}}
+          triggerLogout={() => signOut()}
+        />
         {redirectVal}
       </div>
     </>
