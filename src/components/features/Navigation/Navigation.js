@@ -53,12 +53,6 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
     setRedirectVal(<Redirect to="/"/>);
   }
 
-  function showLoginButton() {
-    if (location !== Routes.LANDING_PAGE) {
-      return <CTAButton text="Login/Signup" func={loginWithRedirect}/>;
-    }
-  }
-
   function performSearch() {
     if (searchVal && searchVal !== '') {
       history.push({
@@ -76,7 +70,7 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
         {
           showMenu && isAuthenticated? (
             <>
-            <div className="header__input">
+            <div className="navigation__search">
               <Input
                 placeholder="Search ..."
                 value={searchVal}
@@ -86,8 +80,8 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
                 <SearchIcon />
               </Button>
             </div>
-            <div className="header__icons">
 
+            <div className="header__icons">
               <Link to="/dashboard" className={`header__icon ${location === Routes.DASHBOARD ? 'header__icon-active' : ''}`}>
                   <DashboardIcon />
                   <p>Dashboard</p>
@@ -113,20 +107,39 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
             </div>
             </>
             )
-          : <>
-              <div>
-                {
-                  showLoginButton()
-                }
-              </div>
+          :
+            <>
+              {
+                location !== Routes.LANDING_PAGE ?
+                  <>
+                    <div className="navigation__search">
+                      <Input
+                      placeholder="Search ..."
+                      value={searchVal}
+                      onChange={(event) => setSearchVal(event.target.value)}
+                      />
+
+                      <Button onClick={() => performSearch()}>
+                        <SearchIcon />
+                      </Button>
+                    </div>
+
+                    <CTAButton
+                      text="Login/Signup"
+                      func={loginWithRedirect}
+                    />
+                  </>
+                :
+                null
+              }
             </>
-        }
-        <Sidebar
-          isOpen={showSidebar}
-          triggerCloseSidebar={() => {setShowSidebar(false)}}
-          triggerLogout={() => signOut()}
-        />
-        {redirectVal}
+      }
+      <Sidebar
+        isOpen={showSidebar}
+        triggerCloseSidebar={() => {setShowSidebar(false)}}
+        triggerLogout={() => signOut()}
+      />
+      {redirectVal}
       </div>
     </>
   )
