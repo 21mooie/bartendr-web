@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import { withRouter } from "react-router";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import './Search.css';
 import { url } from "../../../consts";
@@ -17,34 +18,41 @@ class Search extends Component {
         drinks: []
       },
       searchPerformed: false,
+      searchInProgress: false,
     };
   };
 
   componentDidMount() {
-    this.sendQuery(this.props.location.state.searchVal);
+    if (this.props.location.state.searchVal) {
+      this.sendQuery(this.props.location.state.searchVal);
+    }
   }
 
   componentDidUpdate(prevProps) {
+    console.log(this.props);
     if (this.props.location.state.searchVal !== prevProps.location.state.searchVal) {
       this.sendQuery(this.props.location.state.searchVal);
     }
   }
 
   sendQuery(query) {
+    this.setState({searchInProgress: true})
     axios.post(`${url}/query/string`, {query})
       .then(({data}) => {
         console.log(data);
         if (data.drinkResults.drinks) {
           this.setState({
             drinkResults: data.drinkResults,
-            searchPerformed: true
+            searchPerformed: true,
+            searchInProgress: false
           });
         } else {
           this.setState({
             drinkResults: {
               drinks: [],
             },
-            searchPerformed: true
+            searchPerformed: true,
+            searchInProgress: false
           });
         }
       });
@@ -59,17 +67,23 @@ class Search extends Component {
 
             this.state.drinkResults.drinks.length === 0 && this.state.searchPerformed ?
               <div className='search__emptyResultsContainer'>
-                <img className='search__notfound__image' src={image} />
+                <img className='search__notfound__image' src={image} alt='Data not found'/>
                 <p className='search__notfound__text'>Sorry, we couldn't find {this.props.location.state.searchVal}</p>
               </div>
             :
-              <div className='search__resultsContainer'>
-                {
-                  this.state.drinkResults.drinks.map(drink => (
-                    <DrinkCard key={drink.idDrink} drink={drink}/>
-                  ))
-                }
-              </div>
+              this.state.searchInProgress ?
+                <div className='search__loading'>
+                  <CircularProgress size='80px'/>
+                  <p className='search__loading_text'>Loading...</p>
+                </div>
+              :
+                <div className='search__resultsContainer'>
+                  {
+                    this.state.drinkResults.drinks.map(drink => (
+                      <DrinkCard key={drink.idDrink} drink={drink}/>
+                    ))
+                  }
+                </div>
           }
         </div>
       </div>
