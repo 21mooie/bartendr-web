@@ -13,6 +13,7 @@ import LandingPage from "./components/features/LandingPage/LandingPage";
 import NotFound from "./components/features/NotFound/NotFound";
 import {Footer} from "./components/features/Footer/Footer";
 import ProtectedRoute from "./components/common/ProtectedRoute/ProtectedRoute";
+import Explore from "./components/features/Explore/Explore";
 
 
 
@@ -25,7 +26,7 @@ function App() {
     <Router>
       <Provider store={store}>
         <>
-          <ConnectedNavigation showMenuPaths={['/dashboard', '/user', '/drink', '/search']}/>
+          <ConnectedNavigation showMenuPaths={['/dashboard', '/user', '/drink', '/search', '/explore']}/>
           {/*Search bar for unauthed users who only want to search*/}
           {/*  Router which switches between components, Guard against auth routes*/}
           <Switch>
@@ -35,6 +36,7 @@ function App() {
             <Route path="/search" component={SearchWithRouter} />
             <Route path="/drink/:idDrink" component={Drink} />
             <Route path="/ingredient" component={Drink} />
+            <Route path="/explore" component={Explore} />
             <Route component={NotFound} />
           </Switch>
           <Footer />
