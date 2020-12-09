@@ -5,6 +5,7 @@ import { withRouter } from "react-router";
 import './Search.css';
 import { url } from "../../../consts";
 import DrinkCard from "../../common/DrinkCard/DrinkCard";
+import image from "../../../images/undraw_wine_tasting_30vw.svg";
 
 
 class Search extends Component {
@@ -15,6 +16,7 @@ class Search extends Component {
       drinkResults: {
         drinks: []
       },
+      searchPerformed: false,
     };
   };
 
@@ -33,9 +35,17 @@ class Search extends Component {
       .then(({data}) => {
         console.log(data);
         if (data.drinkResults.drinks) {
-          this.setState({drinkResults: data.drinkResults});
+          this.setState({
+            drinkResults: data.drinkResults,
+            searchPerformed: true
+          });
         } else {
-          this.setState({drinkResults: { drinks: [] }});
+          this.setState({
+            drinkResults: {
+              drinks: [],
+            },
+            searchPerformed: true
+          });
         }
       });
   }
@@ -44,14 +54,22 @@ class Search extends Component {
   render() {
     return (
       <div className='search'>
-        <div className='search__container'>
-          {this.props.location.state.searchVal}
-        </div>
-        <div className='search__resultsContainer'>
+        <div>
           {
-            this.state.drinkResults.drinks.map(drink => (
-              <DrinkCard key={drink.idDrink} drink={drink}/>
-            ))
+
+            this.state.drinkResults.drinks.length === 0 && this.state.searchPerformed ?
+              <div className='search__emptyResultsContainer'>
+                <img className='search__notfound__image' src={image} />
+                <p className='search__notfound__text'>Sorry, we couldn't find {this.props.location.state.searchVal}</p>
+              </div>
+            :
+              <div className='search__resultsContainer'>
+                {
+                  this.state.drinkResults.drinks.map(drink => (
+                    <DrinkCard key={drink.idDrink} drink={drink}/>
+                  ))
+                }
+              </div>
           }
         </div>
       </div>

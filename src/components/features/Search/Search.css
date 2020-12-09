@@ -3,14 +3,19 @@
     color: #FFFFFF;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items:center;
     min-height: 500px;
 }
 
-.search__container {
-    margin: 50px;
+.search__resultsContainer {
+    padding: 50px 0;
 }
 
-.search__resultsContainer {
-    padding-bottom: 50px;
+.search__notfound__image {
+    height: 200px;
+}
+
+.search__notfound__text {
+    margin: 20px;
 }
