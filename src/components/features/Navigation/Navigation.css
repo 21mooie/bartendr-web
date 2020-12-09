@@ -43,6 +43,16 @@
     color: white;
 }
 
+.header__input > button {
+    color: white;
+    background-color: #01BF71;;
+}
+
+.header__input > button:hover {
+    color: #01BF71;
+    background-color: white;
+}
+
 .header__icon {
     color: white;
     display: flex;

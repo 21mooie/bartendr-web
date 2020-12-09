@@ -8,6 +8,8 @@ import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 import MenuIcon from '@material-ui/icons/Menu';
 import {connect} from "react-redux";
 import { withRouter } from "react-router";
+import Button from '@material-ui/core/Button';
+import Input from "@material-ui/core/Input";
 
 import * as mutations from '../../../store/mutations';
 import './Navigation.css';
@@ -15,7 +17,6 @@ import {Routes} from "../../../consts/routes";
 import Sidebar from "../Sidebar/Sidebar";
 import { useAuth0 } from "@auth0/auth0-react";
 import CTAButton from "../../common/Button/CTAButton";
-import Input from "@material-ui/core/Input";
 
 const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser, history}) => {
   const routerLocation = useLocation();
@@ -81,9 +82,9 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
                 value={searchVal}
                 onChange={(event) => setSearchVal(event.target.value)}
               />
-              <button onClick={() => performSearch()}>
+              <Button onClick={() => performSearch()}>
                 <SearchIcon />
-              </button>
+              </Button>
             </div>
             <div className="header__icons">
 
