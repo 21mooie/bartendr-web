@@ -19,3 +19,12 @@
 .search__notfound__text {
     margin: 20px;
 }
+
+.search__loading {
+    display: flex;
+    flex-direction: column;
+}
+
+.search__loading_text {
+    margin: 20px 0;
+}
