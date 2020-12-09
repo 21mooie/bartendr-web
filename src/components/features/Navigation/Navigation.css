@@ -39,16 +39,16 @@
     font-weight: bold;
 }
 
-.header__input > .MuiInputBase-root > input {
+.navigation__search > .MuiInputBase-root > input {
     color: white;
 }
 
-.header__input > button {
+.navigation__search > button {
     color: white;
     background-color: #01BF71;;
 }
 
-.header__input > button:hover {
+.navigation__search > button:hover {
     color: #01BF71;
     background-color: white;
 }
