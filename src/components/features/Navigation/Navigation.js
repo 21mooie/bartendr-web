@@ -65,7 +65,7 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
   return (
     <>
       <div className="header">
-        <Link to={isAuthenticated ? '/dashboard' : '/'} className="Navigation_logo">Bartender</Link>
+        <Link to={isAuthenticated ? '/dashboard' : '/'} className="Navigation_logo">Bartendr</Link>
         {
           showMenu && isAuthenticated? (
             <>

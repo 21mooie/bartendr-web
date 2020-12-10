@@ -35,7 +35,7 @@ export const Footer = (props) => {
         </div>
         <div className="Footer_social_media">
           <div className="Footer_social_media_wrap">
-            <Link className="Footer_social_logo">Bartender</Link>
+            <Link className="Footer_social_logo">Bartendr</Link>
             <p className="Footer_website_rights">Bartender © {new Date().getFullYear()} All rights reserved.</p>
             <div className="Footer_social_icons">
               <Link className="Footer_social_icon_link"><FacebookIcon /></Link>
