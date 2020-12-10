@@ -2,12 +2,12 @@ import React, {useEffect, useState} from 'react';
 import Button from "@material-ui/core/Button";
 import TextField from '@material-ui/core/TextField';
 import { connect } from "react-redux";
-import {requestChangeUsername} from "../../../store/mutations";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import axios from "axios";
-import { url } from '../../../consts';
 
 import "./User.css";
+import { requestChangeUsername } from "../../../store/mutations";
+import { url } from '../../../consts';
 import DrinkCard from "../../common/DrinkCard/DrinkCard";
 
 export function User({user, changeUsername, match}) {

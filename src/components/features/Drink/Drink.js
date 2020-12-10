@@ -1,15 +1,19 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import FavoriteIcon from "@material-ui/icons/Favorite";
+import { connect } from "react-redux";
+import { useAuth0 } from "@auth0/auth0-react";
 
 import './Drink.css';
 import NotFound from "../NotFound/NotFound";
 import {url} from "../../../consts";
 
 
-function Drink({match}) {
+export function Drink({ user, match }) {
   const [drink, setDrink] = useState(null);
   const [drinkNotFound, setDrinkNotFound] = useState(null);
+  const [favToggled, setFavToggled] = useState(false);
+  const {  isAuthenticated } = useAuth0();
 
   useEffect( () => {
     const {idDrink} = match.params;
@@ -41,7 +45,15 @@ function Drink({match}) {
                 <p>Type: {drink.strAlcoholic}</p>
                 <p>Category: {drink.strCategory}</p>
                 <div className="drink__fav__icon">
-                  <FavoriteIcon fontSize="large" color="secondary"/>
+                  {
+                    isAuthenticated ?
+                      <FavoriteIcon
+                        fontSize="large"
+                        color={favToggled? 'secondary' : 'disabled'}
+                        onClick={() => setFavToggled(!favToggled) }
+                      /> :
+                      null
+                  }
                 </div>
               </div>
             </div>
@@ -68,4 +80,17 @@ function Drink({match}) {
   )
 }
 
-export default Drink;
+function mapStateToProps(state) {
+  return {
+    user: state
+  }
+}
+
+function mapDispatchToProps (dispatch, ownProps){
+  return {
+
+  }
+}
+
+const ConnectedDrink = connect(mapStateToProps, mapDispatchToProps)(Drink);
+export default ConnectedDrink;

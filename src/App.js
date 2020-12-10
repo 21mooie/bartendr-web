@@ -7,13 +7,13 @@ import {ConnectedDashboard} from "./components/features/Dashboard/Dashboard";
 import { store } from './store/index';
 import {ConnectedNavigation} from "./components/features/Navigation/Navigation";
 import {ConnectedUser} from "./components/features/User/User";
-import Drink from "./components/features/Drink/Drink";
 import SearchWithRouter from "./components/features/Search/Search";
 import LandingPage from "./components/features/LandingPage/LandingPage";
 import NotFound from "./components/features/NotFound/NotFound";
 import {Footer} from "./components/features/Footer/Footer";
 import ProtectedRoute from "./components/common/ProtectedRoute/ProtectedRoute";
 import Explore from "./components/features/Explore/Explore";
+import ConnectedDrink from "./components/features/Drink/Drink";
 
 
 
@@ -34,8 +34,8 @@ function App() {
             <ProtectedRoute path="/dashboard" component={ConnectedDashboard} />
             <Route path="/user/:username" component={ConnectedUser} />
             <Route path="/search" component={SearchWithRouter} />
-            <Route path="/drink/:idDrink" component={Drink} />
-            <Route path="/ingredient" component={Drink} />
+            <Route path="/drink/:idDrink" component={ConnectedDrink} />
+            <Route path="/ingredient" component={ConnectedDrink} />
             <Route path="/explore" component={Explore} />
             <Route component={NotFound} />
           </Switch>
