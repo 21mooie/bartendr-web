@@ -39,7 +39,6 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
       }
       return true;
     });
-    console.log(`isAuthenticated: ${isAuthenticated}`);
     if (isAuthenticated && !authChecked) {
       requestUser(user.nickname);
       setAuthChecked(true);
