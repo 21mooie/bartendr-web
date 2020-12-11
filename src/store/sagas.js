@@ -47,3 +47,16 @@ export function* unAuthenticateSaga() {
     }
   }
 }
+
+export function* updateFavDrinks() {
+  while (true) {
+    const { idDrink, add } =  yield take(mutations.REQUEST_UPDATE_FAV_DRINKS);
+    try {
+      const response = yield axios.post(`${url}/users/fav_drinks`, {idDrink, add});
+      yield put(mutations.successfulUpdateFavDrinks());
+    } catch (err) {
+      console.log(err);
+      yield put(mutations.failedUpdateFavDrinks());
+    }
+  }
+}
