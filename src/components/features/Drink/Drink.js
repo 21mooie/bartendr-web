@@ -7,17 +7,19 @@ import { useAuth0 } from "@auth0/auth0-react";
 import './Drink.css';
 import NotFound from "../NotFound/NotFound";
 import {url} from "../../../consts";
+import * as mutations from '../../../store/mutations';
 
 
-export function Drink({ user, match }) {
+export function Drink({ favDrinks, match, updateFavDrinks }) {
+  const {idDrink} = match.params;
   const [drink, setDrink] = useState(null);
   const [drinkNotFound, setDrinkNotFound] = useState(null);
-  const [favToggled, setFavToggled] = useState(false);
-  const {  isAuthenticated } = useAuth0();
+  const [isFavDrink, setIsFavDrink] = useState(favDrinks.includes(idDrink));
+  const [favDrinkToggled, setFavDrinkToggled] = useState(false);
+  const { isAuthenticated } = useAuth0();
 
   useEffect( () => {
-    const {idDrink} = match.params;
-    if (idDrink) {
+    if (idDrink && !drink) {
       axios.post(`${url}/query/id`, {idDrink})
         .then(({data}) => {
           console.log(data);
@@ -30,7 +32,11 @@ export function Drink({ user, match }) {
           setDrinkNotFound(true);
         });
     }
-  }, []);
+    if (favDrinkToggled) {
+      updateFavDrinks(drink.idDrink, isFavDrink);
+    }
+  }, [updateFavDrinks, drink, isFavDrink, match.params, idDrink, favDrinkToggled]);
+
   return (
     <div className="drink">
       {
@@ -49,8 +55,11 @@ export function Drink({ user, match }) {
                     isAuthenticated ?
                       <FavoriteIcon
                         fontSize="large"
-                        color={favToggled? 'secondary' : 'disabled'}
-                        onClick={() => setFavToggled(!favToggled) }
+                        color={isFavDrink? 'secondary' : 'disabled'}
+                        onClick={() => {
+                          setIsFavDrink(!isFavDrink);
+                          setFavDrinkToggled(true);
+                        }}
                       /> :
                       null
                   }
@@ -82,13 +91,15 @@ export function Drink({ user, match }) {
 
 function mapStateToProps(state) {
   return {
-    user: state
+    favDrinks: state.fav_drinks
   }
 }
 
 function mapDispatchToProps (dispatch, ownProps){
   return {
-
+    updateFavDrinks(idDrink, isFavDrink) {
+      dispatch(mutations.requestUpdateFavDrinks(idDrink, isFavDrink))
+    }
   }
 }
 
