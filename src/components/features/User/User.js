@@ -65,17 +65,16 @@ export function User({user, changeUsername, match}) {
       }
       <div className="user__favDrinks">
         <h3>Favorite Drinks</h3>
-        <div className="user__favDrink__grid">
-          <div className="user__favDrink__item">
-            <DrinkCard drink={drink}/>
+          <div className="user__favDrink__grid">
+            {
+              user.fav_drinks.drinks.map((fav_drink) => (
+                  <div className="user__favDrink__item">
+                    <DrinkCard drink={fav_drink}/>
+                  </div>
+                
+              ))
+            }
           </div>
-          <div className="user__favDrink__item">
-            <DrinkCard drink={drink}/>
-          </div>
-          <div className="user__favDrink__item">
-            <DrinkCard drink={drink}/>
-          </div>
-        </div>
       </div>
 
     </div>
