@@ -40,8 +40,9 @@ export const failedSetUser = () => ({
   type: FAILED_SET_USER
 });
 
-export const requestUpdateFavDrinks = (idDrink, add) => ({
+export const requestUpdateFavDrinks = (username, idDrink, add) => ({
   type: REQUEST_UPDATE_FAV_DRINKS,
+  username,
   idDrink,
   add,
 });
