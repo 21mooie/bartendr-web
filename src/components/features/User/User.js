@@ -9,6 +9,8 @@ import "./User.css";
 import { requestChangeUsername } from "../../../store/mutations";
 import { url } from '../../../consts';
 import DrinkCard from "../../common/DrinkCard/DrinkCard";
+import UserInfoForm from './UserInfoForm/UserInfoForm';
+import FollowButton from './FollowButton/FollowButton';
 
 export function User({user, changeUsername, match}) {
   const [newUsername, setUsername] = useState('');
@@ -27,48 +29,28 @@ export function User({user, changeUsername, match}) {
     }
   }, [drink]);
 
-  function isThisCurrentUser() {
-    if (match.params.username === user.username) {
-      return showCurrentUser();
-    }
-    return <Button>Follow</Button>;
-  }
-
-  const showCurrentUser = () => {
-      let val = "";
-      if (editInfoToggled) {
-        val = (
-          <div>
-            <h2>Change your username here</h2>
-            <form noValidate autoComplete="off">
-              <TextField id="newUsername " label="New Username" onChange={event => setUsername(event.target.value)}/>
-            </form>
-            <Button onClick={() => {setEditInfoToggled(!editInfoToggled)}}>Cancel</Button>
-            <Button onClick={() => {setEditInfoToggled(!editInfoToggled)}}>Submit</Button>
-          </div>
-        );
-      } else {
-        val = <Button onClick={() => {setEditInfoToggled(!editInfoToggled)}}>Edit info</Button>;
-      }
-
-      return val;
-  };
-
   return (
     <div className="user">
       <div className="user__photo">
         <AccountCircleIcon  style={{ fontSize: 100 }}/>
       </div>
-      <h3>{user.username}</h3>
-      {
-        isThisCurrentUser()
-      }
+      <h3>{match.params.username}</h3>
+      <UserInfoForm
+        viewingCurrentUserProfile={user.username === match.params.username}
+        editInfoProp={editInfoToggled}
+        setEditInfoProp={setEditInfoToggled}
+        setUsernameProp={setUsername}
+      />
+      <FollowButton
+        viewingCurrentUserProfile={user.username === match.params.username}
+        alreadyFollowing={false}
+      />
       <div className="user__favDrinks">
         <h3>Favorite Drinks</h3>
           <div className="user__favDrink__grid">
             {
               user.fav_drinks.drinks.map((fav_drink) => (
-                  <div className="user__favDrink__item">
+                  <div className="user__favDrink__item" key={fav_drink.idDrink}>
                     <DrinkCard drink={fav_drink}/>
                   </div>
                 

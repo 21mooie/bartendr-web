@@ -47,7 +47,7 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
 
   const signOut = () => {
     console.log('clicked');
-    logout({ returnTo: window.location.origin })
+    logout();
     clearState();
     setRedirectVal(<Redirect to="/"/>);
   }
