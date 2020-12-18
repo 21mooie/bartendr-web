@@ -10,20 +10,21 @@ import {url} from "../../../consts";
 import * as mutations from '../../../store/mutations';
 
 
-export function Drink({ favDrinks, match, updateFavDrinks }) {
+export function Drink({ username, favDrinks, match, updateFavDrinks }) {
   const {idDrink} = match.params;
   const [drink, setDrink] = useState(null);
   const [drinkNotFound, setDrinkNotFound] = useState(null);
-  const [isFavDrink, setIsFavDrink] = useState(favDrinks.includes(idDrink));
+  const [isFavDrink, setIsFavDrink] = useState(hasUserFaved());
   const [favDrinkToggled, setFavDrinkToggled] = useState(false);
   const { isAuthenticated } = useAuth0();
 
   useEffect( () => {
+    setIsFavDrink(hasUserFaved());
     if (idDrink && !drink) {
       axios.post(`${url}/query/id`, {idDrink})
         .then(({data}) => {
           console.log(data);
-          // set based of if drink data or ingredient data
+          // set Drink variable for drink data or ingredient variable for ingredient data
           setDrink(data.drinks[0]);
           console.log(data.drinks[0]);
         })
@@ -33,10 +34,20 @@ export function Drink({ favDrinks, match, updateFavDrinks }) {
         });
     }
     if (favDrinkToggled) {
-      updateFavDrinks(drink.idDrink, isFavDrink);
+      updateFavDrinks(username, drink.idDrink, isFavDrink);
     }
-  }, [updateFavDrinks, drink, isFavDrink, match.params, idDrink, favDrinkToggled]);
+  }, [updateFavDrinks, drink, isFavDrink, match.params, idDrink, favDrinkToggled, favDrinks]);
 
+  function hasUserFaved() {
+    // must return negation because every only stops when evaled false
+    // this keeps functionality while allowing logic to make sense
+    return !favDrinks.drinks.every((drink) => {
+      if (drink.idDrink === idDrink) {
+        return false;
+      }
+      return true;
+    });
+  }
   return (
     <div className="drink">
       {
@@ -91,14 +102,15 @@ export function Drink({ favDrinks, match, updateFavDrinks }) {
 
 function mapStateToProps(state) {
   return {
+    username: state.username,
     favDrinks: state.fav_drinks
   }
 }
 
 function mapDispatchToProps (dispatch, ownProps){
   return {
-    updateFavDrinks(idDrink, isFavDrink) {
-      dispatch(mutations.requestUpdateFavDrinks(idDrink, isFavDrink))
+    updateFavDrinks(username, idDrink, isFavDrink) {
+      dispatch(mutations.requestUpdateFavDrinks(username, idDrink, isFavDrink))
     }
   }
 }
