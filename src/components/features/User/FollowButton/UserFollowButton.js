@@ -1,17 +1,19 @@
 import React from 'react'
 import { Button } from '@material-ui/core'
 
-function FollowButton({viewingCurrentUserProfile}) {
+import './UserFollowButton.css';
+
+function UserFollowButton({viewingCurrentUserProfile}) {
     return (
-        <>
+        <div className='userFollowButton'>
             {
                 viewingCurrentUserProfile ?
                     null
                 :
                     <Button>Follow</Button>
             }
-        </>
+        </div>
     )
 }
 
-export default FollowButton
+export default UserFollowButton
