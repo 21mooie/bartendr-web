@@ -1,6 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import Button from "@material-ui/core/Button";
-import TextField from '@material-ui/core/TextField';
 import { connect } from "react-redux";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import axios from "axios";
@@ -8,9 +6,9 @@ import axios from "axios";
 import "./User.css";
 import { requestChangeUsername } from "../../../store/mutations";
 import { url } from '../../../consts';
-import DrinkCard from "../../common/DrinkCard/DrinkCard";
 import UserInfoForm from './UserInfoForm/UserInfoForm';
-import FollowButton from './FollowButton/FollowButton';
+import UserFavDrinks from './UserFavDrinks/UserFavDrinks';
+import UserFollowButton from './FollowButton/UserFollowButton';
 
 export function User({user, changeUsername, match}) {
   const [newUsername, setUsername] = useState('');
@@ -41,24 +39,13 @@ export function User({user, changeUsername, match}) {
         setEditInfoProp={setEditInfoToggled}
         setUsernameProp={setUsername}
       />
-      <FollowButton
+      <UserFollowButton
         viewingCurrentUserProfile={user.username === match.params.username}
         alreadyFollowing={false}
       />
-      <div className="user__favDrinks">
-        <h3>Favorite Drinks</h3>
-          <div className="user__favDrink__grid">
-            {
-              user.fav_drinks.drinks.map((fav_drink) => (
-                  <div className="user__favDrink__item" key={fav_drink.idDrink}>
-                    <DrinkCard drink={fav_drink}/>
-                  </div>
-                
-              ))
-            }
-          </div>
-      </div>
-
+      <UserFavDrinks 
+        fav_drinks={user.fav_drinks}
+      />
     </div>
   )
 }
