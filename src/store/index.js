@@ -5,6 +5,7 @@ import createSagaMiddleWare from "redux-saga";
 
 import * as sagas from './sagas';
 import * as mutations from './mutations';
+import {user} from '../consts/defaultState';
 
 
 const sagaMiddleware = createSagaMiddleWare();
@@ -46,10 +47,10 @@ export const store = createStore(
       }
 
     },
-    fav_drinks(fav_drinks = [], action) {
+    fav_drinks(fav_drinks = user.fav_drinks, action) {
       switch(action.type) {
         case(mutations.SET_STATE):
-          return action.state.fav_drinks || null;
+          return action.state.fav_drinks;
         default:
           return fav_drinks;
       }
