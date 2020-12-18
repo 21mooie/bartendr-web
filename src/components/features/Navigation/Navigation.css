@@ -71,6 +71,10 @@
     display: none;
 }
 
+.header__icon:hover {
+    color: #01BF71;
+}
+
 .header__icon:hover > p {
     display: inline;
 }

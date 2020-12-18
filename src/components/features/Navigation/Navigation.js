@@ -97,8 +97,8 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
               </Link>
 
               <div className="header__icon" onClick={() => signOut()}>
-                <MeetingRoomIcon className="header__icon"/>
-                <p className="header__icon">Sign Out</p>
+                <MeetingRoomIcon />
+                <p >Sign Out</p>
               </div>
             </div>
             <div className="menu__icon">
