@@ -13,38 +13,54 @@ import UserFollowButton from './FollowButton/UserFollowButton';
 export function User({user, changeUsername, match}) {
   const [newUsername, setUsername] = useState('');
   const [editInfoToggled, setEditInfoToggled] = useState(false);
-  const [drink, setDrink] = useState(null);
-
+  const [viewingCurrentUserProfile, setViewingCurrentUserProfile] = useState(user.username === match.params.username);
+  const [viewedUser, setViewedUser] = useState({
+    username: "",
+    fav_drinks: {
+      drinks: [],
+      numDrinks: 0,
+    }
+  });
+  
   useEffect(() => {
-    // will need to refactor on redirect this is causing memory leak
-    function getCocktail() {
-      axios.get(`${url}/cocktail`).then((response) => {
-        setDrink(response.data['drinks'][0]);
+    setViewingCurrentUserProfile(user.username === match.params.username)
+    if (viewingCurrentUserProfile) {
+      setViewedUser({
+        username: user.username,
+        fav_drinks: user.fav_drinks
       });
+    } else {
+      axios.post(`${url}/users`,{username: match.params.username})
+        .then((result) => {
+          setViewedUser({
+            username: result.data.state.username,
+            fav_drinks: result.data.state.fav_drinks,
+          })
+        })
+        .catch((err) => console.log(err))
     }
-    if (!drink) {
-      getCocktail();
-    }
-  }, [drink]);
+  }, [user.fav_drinks, user.username, viewingCurrentUserProfile]);
+
+
 
   return (
     <div className="user">
       <div className="user__photo">
         <AccountCircleIcon  style={{ fontSize: 100 }}/>
       </div>
-      <h3>{match.params.username}</h3>
+      <h3>{viewedUser.username}</h3>
       <UserInfoForm
-        viewingCurrentUserProfile={user.username === match.params.username}
+        viewingCurrentUserProfile={viewingCurrentUserProfile}
         editInfoProp={editInfoToggled}
         setEditInfoProp={setEditInfoToggled}
         setUsernameProp={setUsername}
       />
       <UserFollowButton
-        viewingCurrentUserProfile={user.username === match.params.username}
+        viewingCurrentUserProfile={viewingCurrentUserProfile}
         alreadyFollowing={false}
       />
       <UserFavDrinks 
-        fav_drinks={user.fav_drinks}
+        fav_drinks={viewedUser.fav_drinks}
       />
     </div>
   )
