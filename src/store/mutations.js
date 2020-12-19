@@ -7,6 +7,8 @@ export const FAILED_SET_USER = `FAILED_SET_USER`;
 export const REQUEST_UPDATE_FAV_DRINKS = `REQUEST_UPDATE_FAV_DRINKS`;
 export const SUCCESSFUL_UPDATE_FAV_DRINKS = `SUCCESSFUL_UPDATE_FAV_DRINKS`;
 export const FAILED_UPDATE_FAV_DRINKS = `FAILED_UPDATE_FAV_DRINKS`;
+export const ADD_DRINK_TO_STATE = `ADD_DRINK_TO_STATE`;
+export const REMOVE_DRINK_FROM_STATE = `REMOVE_DRINK_FROM_STATE`;
 
 export const requestChangeUsername = (uid, oldUsername, newUsername) => ({
   type: REQUEST_CHANGE_USERNAME,
@@ -40,10 +42,10 @@ export const failedSetUser = () => ({
   type: FAILED_SET_USER
 });
 
-export const requestUpdateFavDrinks = (username, idDrink, add) => ({
+export const requestUpdateFavDrinks = (username, drink, add) => ({
   type: REQUEST_UPDATE_FAV_DRINKS,
   username,
-  idDrink,
+  drink,
   add,
 });
 
@@ -53,4 +55,14 @@ export const successfulUpdateFavDrinks = () => ({
 
 export const failedUpdateFavDrinks = () => ({
   type: FAILED_UPDATE_FAV_DRINKS
+})
+
+export const addDrinkToState = (drink) => ({
+  type: ADD_DRINK_TO_STATE,
+  drink,
+})
+
+export const removeDrinkFromState = (idDrink) => ({
+  type: REMOVE_DRINK_FROM_STATE,
+  idDrink,
 })

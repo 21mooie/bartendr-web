@@ -34,7 +34,7 @@ export function Drink({ username, favDrinks, match, updateFavDrinks }) {
         });
     }
     if (favDrinkToggled) {
-      updateFavDrinks(username, drink.idDrink, isFavDrink);
+      updateFavDrinks(username, drink, isFavDrink);
     }
   }, [updateFavDrinks, drink, isFavDrink, match.params, idDrink, favDrinkToggled, favDrinks]);
 
@@ -109,8 +109,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps (dispatch, ownProps){
   return {
-    updateFavDrinks(username, idDrink, isFavDrink) {
-      dispatch(mutations.requestUpdateFavDrinks(username, idDrink, isFavDrink))
+    updateFavDrinks(username, drink, isFavDrink) {
+      dispatch(mutations.requestUpdateFavDrinks(username, drink, isFavDrink))
     }
   }
 }

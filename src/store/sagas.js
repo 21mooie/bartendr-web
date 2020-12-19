@@ -50,10 +50,15 @@ export function* unAuthenticateSaga() {
 
 export function* updateFavDrinks() {
   while (true) {
-    const { username, idDrink, add } =  yield take(mutations.REQUEST_UPDATE_FAV_DRINKS);
+    const { username, drink, add } =  yield take(mutations.REQUEST_UPDATE_FAV_DRINKS);
     try {
-      const response = yield axios.post(`${url}/users/fav_drinks`, {username, idDrink, add});
+      const response = yield axios.post(`${url}/users/fav_drinks`, {username, idDrink: drink.idDrink, add});
       yield put(mutations.successfulUpdateFavDrinks());
+      if (add) {
+        yield put(mutations.addDrinkToState(drink));
+      } else {
+        yield put(mutations.removeDrinkFromState(drink.idDrink));
+      }
     } catch (err) {
       console.log(err);
       yield put(mutations.failedUpdateFavDrinks());
