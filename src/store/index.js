@@ -51,6 +51,14 @@ export const store = createStore(
       switch(action.type) {
         case(mutations.SET_STATE):
           return action.state.fav_drinks;
+        case(mutations.ADD_DRINK_TO_STATE):
+          fav_drinks.drinks.push(action.drink);
+          fav_drinks.numDrinks += 1;
+          return {...fav_drinks};
+        case(mutations.REMOVE_DRINK_FROM_STATE):
+          fav_drinks.drinks = fav_drinks.drinks.filter(drink => drink.idDrink !== action.idDrink);
+          fav_drinks.numDrinks -= 1;
+          return {...fav_drinks};
         default:
           return fav_drinks;
       }
