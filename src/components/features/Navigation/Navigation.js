@@ -17,6 +17,7 @@ import {Routes} from "../../../consts/routes";
 import Sidebar from "../Sidebar/Sidebar";
 import { useAuth0 } from "@auth0/auth0-react";
 import CTAButton from "../../common/Button/CTAButton";
+import {DEV_URL, LOCAL_URL,PROD_LOCAL_URL} from "../../../consts";
 
 const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser, history}) => {
   const routerLocation = useLocation();
@@ -47,9 +48,18 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
 
   const signOut = () => {
     console.log('clicked');
-    logout();
+    switch(window.location.origin) {
+      case (LOCAL_URL):
+        logout({returnTo: LOCAL_URL});
+        break;
+      case (PROD_LOCAL_URL):
+        logout({returnTo: PROD_LOCAL_URL});
+        break;
+      default:
+        logout({returnTo: DEV_URL});
+        break;
+    }
     clearState();
-    setRedirectVal(<Redirect to="/"/>);
   }
 
   function performSearch() {
@@ -148,7 +158,7 @@ const NavigationWithRouter = withRouter(Navigation);
 
 const mapDispatchToProps = (dispatch) => ({
   clearState() {
-    dispatch(mutations.requestClearState(null));
+    dispatch(mutations.requestClearState());
   },
   requestUser(username){
     dispatch(mutations.requestUser(username));
