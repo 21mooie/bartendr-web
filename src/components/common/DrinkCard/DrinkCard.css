@@ -8,6 +8,7 @@
 
 .card__content {
     display: flex;
+    padding: 25px 16px !important;
 }
 
 .card__info {
