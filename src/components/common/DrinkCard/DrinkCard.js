@@ -15,9 +15,6 @@ const useStyles = makeStyles({
     maxWidth: 400,
     borderRadius: 30,
   },
-  media: {
-    maxHeight: 450,
-  },
 });
 
 function DrinkCardwithRouter({drink, history}) {
@@ -34,26 +31,27 @@ function DrinkCardwithRouter({drink, history}) {
         >
           <CardMedia
             component="img"
-            alt="drink"
+            alt={`${drink.strDrink}`}
             src={drink['strDrinkThumb']}
-            title="Drink up"/>
-          <CardContent className="card__content">
-            <div className="card__info">
-              <Typography gutterBottom variant="h5" component="h2">
-                {drink.strDrink}
-              </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                Made of {drink.strIngredient1}
-              </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                {drink.strAlcoholic}
-              </Typography>
-            </div>
-            <div className="card__fav__container">
-              <FavoriteIcon fontSize="large" color="secondary"/>
-            </div>
-          </CardContent>
+            title="Drink up"
+          />
         </CardActionArea>
+        <CardContent className="card__content">
+          <div className="card__info">
+            <Typography gutterBottom variant="h5" component="h2">
+              {drink.strDrink}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              Made of {drink.strIngredient1}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              {drink.strAlcoholic}
+            </Typography>
+          </div>
+          <div className="card__fav__container">
+            <FavoriteIcon fontSize="large" color="secondary" />
+          </div>
+        </CardContent>
       </Card>
     </div>
     }
