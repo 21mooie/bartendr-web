@@ -4,11 +4,9 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import Typography from '@material-ui/core/Typography';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import Button from '@material-ui/core/Button';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import { makeStyles } from '@material-ui/core/styles';
-import {Link} from "react-router-dom";
+import { withRouter } from "react-router";
 
 import './DrinkCard.css';
 
@@ -22,7 +20,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function DrinkCard({drink}) {
+function DrinkCardwithRouter({drink, history}) {
   const classes = useStyles();
   return (
     <>
@@ -31,7 +29,8 @@ export default function DrinkCard({drink}) {
       <div className="card">
       <Card className={classes.root}>
         <CardActionArea
-          onClick = {() => {console.log('clicked');}}
+          onClick = {() => history.push({pathname: `/drink/${drink.idDrink}`})
+          }
         >
           <CardMedia
             component="img"
@@ -55,17 +54,13 @@ export default function DrinkCard({drink}) {
             </div>
           </CardContent>
         </CardActionArea>
-        <CardActions>
-          <Button size="small" color="primary">
-            <Link to={`/drink/${drink.idDrink}`} className="card__link">
-              Learn More
-            </Link>
-          </Button>
-
-        </CardActions>
       </Card>
     </div>
     }
     </>
   );
 }
+
+const DrinkCard = withRouter(DrinkCardwithRouter);
+
+export default DrinkCard;
