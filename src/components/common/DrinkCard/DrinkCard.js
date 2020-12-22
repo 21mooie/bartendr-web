@@ -7,6 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import { makeStyles } from '@material-ui/core/styles';
 import { withRouter } from "react-router";
+import { useAuth0 } from '@auth0/auth0-react';
 
 import './DrinkCard.css';
 
@@ -18,6 +19,7 @@ const useStyles = makeStyles({
 });
 
 function DrinkCardwithRouter({drink, history}) {
+  const { isAuthenticated } = useAuth0();
   const classes = useStyles();
   return (
     <>
@@ -48,9 +50,12 @@ function DrinkCardwithRouter({drink, history}) {
               {drink.strAlcoholic}
             </Typography>
           </div>
-          <div className="card__fav__container">
-            <FavoriteIcon fontSize="large" color="secondary" />
-          </div>
+          {
+            isAuthenticated &&
+            <div className="card__fav__container">
+              <FavoriteIcon fontSize="large" color="secondary" />
+            </div>
+          }
         </CardContent>
       </Card>
     </div>
