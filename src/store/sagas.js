@@ -52,7 +52,7 @@ export function* updateFavDrinks() {
   while (true) {
     const { username, drink, add } =  yield take(mutations.REQUEST_UPDATE_FAV_DRINKS);
     try {
-      const response = yield axios.post(`${url}/users/fav_drinks`, {username, idDrink: drink.idDrink, add});
+      yield axios.post(`${url}/users/fav_drinks`, {username, idDrink: drink.idDrink, add});
       yield put(mutations.successfulUpdateFavDrinks());
       if (add) {
         yield put(mutations.addDrinkToState(drink));
