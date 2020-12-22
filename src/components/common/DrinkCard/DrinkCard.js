@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Typography from '@material-ui/core/Typography';
@@ -8,8 +8,10 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import { makeStyles } from '@material-ui/core/styles';
 import { withRouter } from "react-router";
 import { useAuth0 } from '@auth0/auth0-react';
+import {connect} from "react-redux";
 
 import './DrinkCard.css';
+import * as mutations from "../../../store/mutations";
 
 const useStyles = makeStyles({
   root: {
@@ -18,9 +20,28 @@ const useStyles = makeStyles({
   },
 });
 
-function DrinkCardwithRouter({drink, history}) {
+function DrinkCardwithRouter({drink, history, updateFavDrinks, username, favDrinks}) {
   const { isAuthenticated } = useAuth0();
+  const [isFavDrink, setIsFavDrink] = useState(false);
+  const [favDrinkToggled, setFavDrinkToggled] = useState(false);
   const classes = useStyles();
+
+  useEffect(() => {
+    setIsFavDrink(hasUserFaved());
+    if (favDrinkToggled) {
+      updateFavDrinks(username, drink, !isFavDrink);
+      setFavDrinkToggled(false);
+    }
+  }, [drink, favDrinkToggled, hasUserFaved, isFavDrink, updateFavDrinks, username])
+
+  function hasUserFaved() {
+    // must return negation because every only stops when evaled false
+    // this keeps functionality while allowing logic to make sense
+    return !favDrinks.drinks.every((currDrink) => {
+      return currDrink.idDrink !== drink.idDrink;
+    });
+  }
+
   return (
     <>
     {
@@ -53,7 +74,13 @@ function DrinkCardwithRouter({drink, history}) {
           {
             isAuthenticated &&
             <div className="card__fav__container">
-              <FavoriteIcon fontSize="large" color="secondary" />
+              <FavoriteIcon
+                fontSize="large"
+                color={isFavDrink? 'secondary' : 'disabled'}
+                onClick={() => {
+                  setFavDrinkToggled(true);
+                }}
+              />
             </div>
           }
         </CardContent>
@@ -64,6 +91,23 @@ function DrinkCardwithRouter({drink, history}) {
   );
 }
 
-const DrinkCard = withRouter(DrinkCardwithRouter);
+const ConnectedDrinkCard = withRouter(DrinkCardwithRouter);
+
+function mapStateToProps(state) {
+  return {
+    username: state.username,
+    favDrinks: state.fav_drinks
+  }
+}
+
+function mapDispatchToProps (dispatch, ownProps){
+  return {
+    updateFavDrinks(username, drink, isFavDrink) {
+      dispatch(mutations.requestUpdateFavDrinks(username, drink, isFavDrink))
+    }
+  }
+}
+
+const DrinkCard = connect(mapStateToProps, mapDispatchToProps)(ConnectedDrinkCard);
 
 export default DrinkCard;

@@ -24,3 +24,7 @@
 .card__link {
     text-decoration: none;
 }
+
+.card__fav__container > svg {
+    cursor: pointer;
+}
