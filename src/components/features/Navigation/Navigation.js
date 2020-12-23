@@ -143,11 +143,15 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
               }
             </>
       }
-      <Sidebar
-        isOpen={showSidebar}
-        triggerCloseSidebar={() => {setShowSidebar(false)}}
-        triggerLogout={() => signOut()}
-      />
+      {
+        isAuthenticated &&
+        <Sidebar
+          isOpen={showSidebar}
+          triggerCloseSidebar={() => {setShowSidebar(false)}}
+          triggerLogout={() => signOut()}
+          username={user.nickname}
+        />
+      }
       {redirectVal}
       </div>
     </>
