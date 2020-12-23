@@ -26,6 +26,7 @@
 .menu__icon {
     cursor: pointer;
     display: flex;
+    align-items: center;
 }
 
 .Navigation_logo {

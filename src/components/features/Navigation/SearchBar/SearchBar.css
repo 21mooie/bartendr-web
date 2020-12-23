@@ -1,3 +1,7 @@
+.search_bar {
+    display: flex;
+}
+
 .search_bar > .MuiInputBase-root > input {
     color: white;
 }

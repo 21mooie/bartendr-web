@@ -109,7 +109,15 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
               </div>
 
               <div className="menu__icon">
+                <SearchBar
+                  searchVal={searchVal}
+                  setSearchVal={setSearchVal}
+                  performSearch={performSearch}
+                  show={width < 576}
+                  smallScreen={true}
+                />
                 <MenuIcon
+                  style={{paddingLeft: 15}}
                   fontSize="large"
                   onClick={() => setShowSidebar(true)}
                 />
