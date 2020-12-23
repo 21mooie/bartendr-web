@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 
 import './Sidebar.css';
 
-function Sidebar({isOpen, triggerCloseSidebar, triggerLogout}) {
+function Sidebar({isOpen, triggerCloseSidebar, triggerLogout, username}) {
   return (
     <div className={"Sidebar-Container " + (isOpen ? "viewSidebar zeroTop" : "hideSidebar negativeTop")}>
       <div className="cancel">
@@ -14,11 +14,11 @@ function Sidebar({isOpen, triggerCloseSidebar, triggerLogout}) {
         <Link to="/dashboard" onClick={() => {triggerCloseSidebar()}}>
           <p>Dashboard</p>
         </Link>
-        <Link to="/user" onClick={() => {triggerCloseSidebar()}}>
+        <Link to={`/user/${username}`} onClick={() => {triggerCloseSidebar()}}>
           <p>User</p>
         </Link>
-        <Link to="/search" onClick={() => {triggerCloseSidebar()}}>
-          <p>Search</p>
+        <Link to="/explore" onClick={() => {triggerCloseSidebar()}}>
+          <p>Explore</p>
         </Link>
         <div onClick={() => {triggerCloseSidebar(); triggerLogout();}}>
           <p>Sign Out</p>
