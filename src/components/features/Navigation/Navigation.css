@@ -39,20 +39,6 @@
     font-weight: bold;
 }
 
-.navigation__search > .MuiInputBase-root > input {
-    color: white;
-}
-
-.navigation__search > button {
-    color: white;
-    background-color: #01BF71;;
-}
-
-.navigation__search > button:hover {
-    color: #01BF71;
-    background-color: white;
-}
-
 .header__icon {
     color: white;
     display: flex;
