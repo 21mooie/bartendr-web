@@ -2,14 +2,11 @@ import React, {useEffect, useState} from "react";
 import {Link, Redirect, useLocation} from "react-router-dom";
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import PersonIcon from '@material-ui/icons/Person';
-import SearchIcon from '@material-ui/icons/Search';
 import ExploreIcon from '@material-ui/icons/Explore';
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 import MenuIcon from '@material-ui/icons/Menu';
 import {connect} from "react-redux";
 import { withRouter } from "react-router";
-import Button from '@material-ui/core/Button';
-import Input from "@material-ui/core/Input";
 
 import * as mutations from '../../../store/mutations';
 import './Navigation.css';
@@ -19,6 +16,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import CTAButton from "../../common/Button/CTAButton";
 import {DEV_URL, LOCAL_URL,PROD_LOCAL_URL} from "../../../consts";
 import SearchBar from "./SearchBar/SearchBar";
+import useWindowDimensions from "../../../hooks/useWindowDimensions/useWindowDimensions";
 
 const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser, history}) => {
   const routerLocation = useLocation();
@@ -29,6 +27,7 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
   const { user, isAuthenticated, logout, loginWithRedirect } = useAuth0();
   const [authChecked, setAuthChecked] = useState(false);
   const [searchVal, setSearchVal] = useState('');
+  const { width } = useWindowDimensions();
 
   useEffect(() => {
     setLocation(routerLocation.pathname);
@@ -45,7 +44,7 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
       requestUser(user.nickname);
       setAuthChecked(true);
     }
-  }, [authChecked, isAuthenticated, location, requestUser, routerLocation.pathname, showMenuPaths]);
+  }, [authChecked, isAuthenticated, location, requestUser, routerLocation.pathname, showMenuPaths, width]);
 
   const signOut = () => {
     console.log('clicked');
@@ -84,6 +83,7 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
                 searchVal={searchVal}
                 setSearchVal={setSearchVal}
                 performSearch={performSearch}
+                show={width >= 576}
               />
 
               <div className="header__icons">
@@ -109,8 +109,11 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
               </div>
 
               <div className="menu__icon">
-              <MenuIcon fontSize="large" onClick={() => {setShowSidebar(true)}}/>
-            </div>
+                <MenuIcon
+                  fontSize="large"
+                  onClick={() => setShowSidebar(true)}
+                />
+              </div>
             </>
             )
           :
