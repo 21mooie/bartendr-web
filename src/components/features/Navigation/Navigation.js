@@ -18,6 +18,7 @@ import Sidebar from "../Sidebar/Sidebar";
 import { useAuth0 } from "@auth0/auth0-react";
 import CTAButton from "../../common/Button/CTAButton";
 import {DEV_URL, LOCAL_URL,PROD_LOCAL_URL} from "../../../consts";
+import SearchBar from "./SearchBar/SearchBar";
 
 const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser, history}) => {
   const routerLocation = useLocation();
@@ -79,39 +80,35 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
         {
           showMenu && isAuthenticated? (
             <>
-            <div className="navigation__search">
-              <Input
-                placeholder="Search ..."
-                value={searchVal}
-                onChange={(event) => setSearchVal(event.target.value)}
+              <SearchBar
+                searchVal={searchVal}
+                setSearchVal={setSearchVal}
+                performSearch={performSearch}
               />
-              <Button onClick={() => performSearch()}>
-                <SearchIcon />
-              </Button>
-            </div>
 
-            <div className="header__icons">
-              <Link to="/dashboard" className={`header__icon ${location === Routes.DASHBOARD ? 'header__icon-active' : ''}`}>
-                  <DashboardIcon />
-                  <p>Dashboard</p>
-              </Link>
+              <div className="header__icons">
+                <Link to="/dashboard" className={`header__icon ${location === Routes.DASHBOARD ? 'header__icon-active' : ''}`}>
+                    <DashboardIcon />
+                    <p>Dashboard</p>
+                </Link>
 
-              <Link className={`header__icon ${location === `/user/${user.nickname}`  ? 'header__icon-active' : ''}`} to={`/user/${user.nickname}`}>
-                <PersonIcon />
-                <p>Profile</p>
-              </Link>
+                <Link className={`header__icon ${location === `/user/${user.nickname}`  ? 'header__icon-active' : ''}`} to={`/user/${user.nickname}`}>
+                  <PersonIcon />
+                  <p>Profile</p>
+                </Link>
 
-              <Link className={`header__icon ${location === Routes.EXPLORE ? 'header__icon-active' : ''}`} to='/explore'>
-                <ExploreIcon />
-                <p>Explore</p>
-              </Link>
+                <Link className={`header__icon ${location === Routes.EXPLORE ? 'header__icon-active' : ''}`} to='/explore'>
+                  <ExploreIcon />
+                  <p>Explore</p>
+                </Link>
 
-              <div className="header__icon" onClick={() => signOut()}>
-                <MeetingRoomIcon />
-                <p >Sign Out</p>
+                <div className="header__icon" onClick={() => signOut()}>
+                  <MeetingRoomIcon />
+                  <p >Sign Out</p>
+                </div>
               </div>
-            </div>
-            <div className="menu__icon">
+
+              <div className="menu__icon">
               <MenuIcon fontSize="large" onClick={() => {setShowSidebar(true)}}/>
             </div>
             </>
@@ -121,17 +118,11 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
               {
                 location !== Routes.LANDING_PAGE ?
                   <>
-                    <div className="navigation__search">
-                      <Input
-                      placeholder="Search ..."
-                      value={searchVal}
-                      onChange={(event) => setSearchVal(event.target.value)}
-                      />
-
-                      <Button onClick={() => performSearch()}>
-                        <SearchIcon />
-                      </Button>
-                    </div>
+                    <SearchBar
+                      searchVal={searchVal}
+                      setSearchVal={setSearchVal}
+                      performSearch={performSearch}
+                    />
 
                     <CTAButton
                       text="Login/Signup"

@@ -1,0 +1,13 @@
+.search_bar > .MuiInputBase-root > input {
+    color: white;
+}
+
+.search_bar > button {
+    color: white;
+    background-color: #01BF71;;
+}
+
+.search_bar > button:hover {
+    color: #01BF71;
+    background-color: white;
+}
