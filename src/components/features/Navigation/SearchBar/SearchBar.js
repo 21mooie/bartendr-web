@@ -5,18 +5,36 @@ import SearchIcon from "@material-ui/icons/Search";
 
 import './SearchBar.css';
 
-function SearchBar({searchVal, setSearchVal, performSearch}) {
+function SearchBar({searchVal, setSearchVal, performSearch, show, smallScreen}) {
   return (
-    <div className="search_bar">
-      <Input
-        placeholder="Search ..."
-        value={searchVal}
-        onChange={(event) => setSearchVal(event.target.value)}
-      />
-      <Button onClick={() => performSearch()}>
-        <SearchIcon />
-      </Button>
-    </div>
+    <>
+      {
+        show ?
+          <div className="search_bar">
+            {
+              smallScreen ?
+                <SearchIcon />
+                :
+                <>
+                  <Input
+                    placeholder="Search ..."
+                    value={searchVal}
+                    onChange={(event) => setSearchVal(event.target.value)}
+                  />
+
+                  <Button
+                    onClick={() => performSearch()}
+                  >
+
+                    <SearchIcon />
+                  </Button>
+                </>
+            }
+          </div>
+          :
+          null
+      }
+    </>
   );
 }
 

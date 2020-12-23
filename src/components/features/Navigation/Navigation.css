@@ -25,6 +25,7 @@
 
 .menu__icon {
     cursor: pointer;
+    display: flex;
 }
 
 .Navigation_logo {
@@ -70,7 +71,7 @@
     margin-right: auto;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 992px) {
     .header__icons {
         display: flex;
         align-items: center;
