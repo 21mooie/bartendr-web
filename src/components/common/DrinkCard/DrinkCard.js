@@ -16,7 +16,7 @@ import useWindowDimensions from "../../../hooks/useWindowDimensions/useWindowDim
 
 const useStyles = makeStyles({
   card_large: {
-    maxWidth: 400,
+    maxWidth: 350,
     borderRadius: 30,
   },
   card_mini: {
