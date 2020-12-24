@@ -7,7 +7,7 @@ import "./CTAButton.css";
 const useStyles = makeStyles({
   button: {
     marginLeft: 8,
-    fontSize: 20,
+    fontSize: 10,
     marginTop: 2,
   },
 });
