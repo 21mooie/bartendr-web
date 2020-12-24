@@ -29,6 +29,10 @@
     align-items: center;
 }
 
+.menu__icon__full_flex {
+    flex: 1;
+}
+
 .Navigation_logo {
     color: #FFFFFF;
     justify-self: start;
