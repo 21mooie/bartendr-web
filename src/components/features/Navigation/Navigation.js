@@ -125,7 +125,6 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
                 {
                   !showFullSearchBar &&
                   <MenuIcon
-                    style={{paddingLeft: 15}}
                     fontSize="large"
                     onClick={() => setShowSidebar(true)}
                   />
@@ -142,12 +141,28 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
                       searchVal={searchVal}
                       setSearchVal={setSearchVal}
                       performSearch={performSearch}
+                      show={width >= 576}
                     />
 
-                    <CTAButton
-                      text="Login/Signup"
-                      func={loginWithRedirect}
-                    />
+                    <div className={`menu__icon_no_auth ${showFullSearchBar ? 'menu__icon__full_flex' : ''}`}>
+                      <SearchBar
+                        searchVal={searchVal}
+                        setSearchVal={setSearchVal}
+                        performSearch={performSearch}
+                        show={width < 576}
+                        smallScreen={true}
+                        showFullSearchBar={showFullSearchBar}
+                        toggleFullSearchBar={setShowFullSearchBar}
+                      />
+
+                      {
+                        !showFullSearchBar &&
+                        <CTAButton
+                          text="Login/Signup"
+                          func={loginWithRedirect}
+                        />
+                      }
+                    </div>
                   </>
                 :
                 null

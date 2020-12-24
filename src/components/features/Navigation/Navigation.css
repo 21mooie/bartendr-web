@@ -30,6 +30,12 @@
     align-items: center;
 }
 
+.menu__icon_no_auth {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
 .menu__icon__full_flex {
     flex: 1;
 }

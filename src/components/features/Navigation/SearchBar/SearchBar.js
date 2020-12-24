@@ -31,6 +31,7 @@ function SearchBar({searchVal, setSearchVal, performSearch, show, smallScreen, s
                   :
                     <SearchIcon
                       onClick={() => toggleFullSearchBar(true)}
+                      style={{paddingRight: 15}}
                     />
                 }
                 </>

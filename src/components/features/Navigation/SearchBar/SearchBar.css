@@ -23,5 +23,5 @@
 .search_bar__small_screen {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
 }
