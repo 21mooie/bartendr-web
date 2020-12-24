@@ -15,6 +15,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    max-width: 1200px;
+}
+
+.drink__detailed_info {
+    display: flex;
+    flex-direction: column;
+    margin: 0 50px 50px;
+    max-width: 1200px;
 }
 
 .drink__image {
@@ -33,12 +41,6 @@
 
 .drink__title {
     margin-bottom: 50px;
-}
-
-.drink__detailed_info {
-    display: flex;
-    flex-direction: column;
-    margin: 0 50px 50px;
 }
 
 .drink__ingredients {
