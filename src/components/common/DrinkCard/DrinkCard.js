@@ -12,10 +12,15 @@ import {connect} from "react-redux";
 
 import './DrinkCard.css';
 import * as mutations from "../../../store/mutations";
+import useWindowDimensions from "../../../hooks/useWindowDimensions/useWindowDimensions";
 
 const useStyles = makeStyles({
-  root: {
+  card_large: {
     maxWidth: 400,
+    borderRadius: 30,
+  },
+  card_mini: {
+    maxWidth: 300,
     borderRadius: 30,
   },
 });
@@ -25,6 +30,7 @@ function DrinkCardwithRouter({drink, history, updateFavDrinks, username, favDrin
   const [isFavDrink, setIsFavDrink] = useState(false);
   const [favDrinkToggled, setFavDrinkToggled] = useState(false);
   const classes = useStyles();
+  const { width } = useWindowDimensions();
 
   useEffect(() => {
     setIsFavDrink(hasUserFaved());
@@ -47,7 +53,7 @@ function DrinkCardwithRouter({drink, history, updateFavDrinks, username, favDrin
     {
       drink &&
       <div className="card">
-      <Card className={classes.root}>
+      <Card className={width > 1200 ? classes.card_large : classes.card_mini}>
         <CardActionArea
           onClick = {() => history.push({pathname: `/drink/${drink.idDrink}`})
           }
