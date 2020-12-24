@@ -28,6 +28,7 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
   const [authChecked, setAuthChecked] = useState(false);
   const [searchVal, setSearchVal] = useState('');
   const { width } = useWindowDimensions();
+  const [showFullSearchBar, setShowFullSearchBar] = useState(false);
 
   useEffect(() => {
     setLocation(routerLocation.pathname);
@@ -75,7 +76,10 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
   return (
     <>
       <div className="header">
-        <Link to={isAuthenticated ? '/dashboard' : '/'} className="Navigation_logo">Bartendr</Link>
+        {
+          !showFullSearchBar &&
+          <Link to={isAuthenticated ? '/dashboard' : '/'} className="Navigation_logo">Bartendr</Link>
+        }
         {
           showMenu && isAuthenticated? (
             <>
@@ -108,19 +112,24 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
                 </div>
               </div>
 
-              <div className="menu__icon">
+              <div className={`menu__icon ${showFullSearchBar ? 'menu__icon__full_flex' : ''}`}>
                 <SearchBar
                   searchVal={searchVal}
                   setSearchVal={setSearchVal}
                   performSearch={performSearch}
                   show={width < 576}
                   smallScreen={true}
+                  showFullSearchBar={showFullSearchBar}
+                  toggleFullSearchBar={setShowFullSearchBar}
                 />
-                <MenuIcon
-                  style={{paddingLeft: 15}}
-                  fontSize="large"
-                  onClick={() => setShowSidebar(true)}
-                />
+                {
+                  !showFullSearchBar &&
+                  <MenuIcon
+                    style={{paddingLeft: 15}}
+                    fontSize="large"
+                    onClick={() => setShowSidebar(true)}
+                  />
+                }
               </div>
             </>
             )

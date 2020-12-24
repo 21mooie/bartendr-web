@@ -1,7 +1,8 @@
 .header {
     color: white;
     display: flex;
-    padding: 20px;
+    height: 85px;
+    padding: 0 20px;
     background-color: black;
     justify-content: space-between;
     align-items: center;
@@ -41,7 +42,6 @@
     font-size: 1.5rem;
     display: flex;
     align-items: center;
-    margin-bottom: 16px;
     font-weight: bold;
 }
 
