@@ -2,6 +2,10 @@
     display: flex;
 }
 
+.search_bar__full_flex {
+    flex: 1;
+}
+
 .search_bar > .MuiInputBase-root > input {
     color: white;
 }
@@ -14,4 +18,9 @@
 .search_bar > button:hover {
     color: #01BF71;
     background-color: white;
+}
+
+.search_bar__small_screen {
+    display: flex;
+    align-items: center;
 }
