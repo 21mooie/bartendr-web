@@ -1,3 +1,8 @@
+.userFavDrinks > h3 {
+    margin-bottom: 20px;
+    margin-left: 20px;
+}
+
 .userFavDrinks__empty {
     display: flex;
     flex-direction: column;

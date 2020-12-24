@@ -53,7 +53,7 @@ function DrinkCardwithRouter({drink, history, updateFavDrinks, username, favDrin
     {
       drink &&
       <div className="card">
-      <Card className={width > 1200 ? classes.card_large : classes.card_mini}>
+      <Card className={width > 800 ? classes.card_large : classes.card_mini}>
         <CardActionArea
           onClick = {() => history.push({pathname: `/drink/${drink.idDrink}`})
           }
