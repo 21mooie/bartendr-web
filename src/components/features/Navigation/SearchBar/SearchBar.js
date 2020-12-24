@@ -6,8 +6,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
 import './SearchBar.css';
 
-function SearchBar({searchVal, setSearchVal, performSearch, show, smallScreen}) {
-  const [showFullSearchBar, setShowFullSearchBar] = useState(false);
+function SearchBar({searchVal, setSearchVal, performSearch, show, smallScreen, showFullSearchBar, toggleFullSearchBar}) {
   return (
     <>
       {
@@ -20,7 +19,7 @@ function SearchBar({searchVal, setSearchVal, performSearch, show, smallScreen}) 
                   showFullSearchBar ?
                     <div className="search_bar__small_screen search_bar__full_flex">
                       <ChevronLeftIcon
-                        onClick={() => setShowFullSearchBar(false)}
+                        onClick={() => toggleFullSearchBar(false)}
                       />
                       <SearchBar
                         searchVal={searchVal}
@@ -31,7 +30,7 @@ function SearchBar({searchVal, setSearchVal, performSearch, show, smallScreen}) 
                     </div>
                   :
                     <SearchIcon
-                      onClick={() => setShowFullSearchBar(true)}
+                      onClick={() => toggleFullSearchBar(true)}
                     />
                 }
                 </>
