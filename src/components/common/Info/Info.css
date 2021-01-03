@@ -77,7 +77,6 @@
 }
 
 .Info_subtitle_dark {
-    max-width: 440px;
     margin-bottom: 35px;
     font-size: 18px;
     line-height: 24px;
@@ -85,7 +84,6 @@
 }
 
 .Info_subtitle_light {
-    max-width: 440px;
     margin-bottom: 35px;
     font-size: 18px;
     line-height: 24px;
