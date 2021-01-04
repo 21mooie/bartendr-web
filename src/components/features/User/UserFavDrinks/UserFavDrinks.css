@@ -13,14 +13,14 @@
     padding-bottom: 5px;
 }
 
-.user__favDrink__grid {
+.userFavDrinks__grid {
     display: grid;
     grid-template-columns: auto;
     grid-gap: 30px;
 }
 
 @media only screen and (min-width: 680px) {
-    .user__favDrink__grid {
+    .userFavDrinks__grid {
         display: grid;
         grid-template-columns: auto auto;
         grid-gap: 30px 30px;
@@ -28,7 +28,7 @@
 }
 
 @media only screen and (min-width: 1200px) {
-    .user__favDrink__grid {
+    .userFavDrinks__grid {
         display: grid;
         grid-template-columns: auto auto auto;
         grid-gap: 40px 40px;

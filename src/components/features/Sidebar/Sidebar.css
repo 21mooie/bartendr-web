@@ -55,6 +55,14 @@
     transition: 0.2s ease-in-out;
 }
 
+.sideBar__menu > a > p:hover {
+    color: #01BF71;
+}
+
+.sideBar__menu > div > p:hover {
+    color: #01BF71;
+}
+
 .sideBar__menu > div > p {
     color: #FFFFFF;
     font-size: 1.5rem;
