@@ -6,11 +6,11 @@ import './Sidebar.css';
 
 function Sidebar({isOpen, triggerCloseSidebar, triggerLogout, username}) {
   return (
-    <div className={"Sidebar-Container " + (isOpen ? "viewSidebar zeroTop" : "hideSidebar negativeTop")}>
-      <div className="cancel">
+    <div className={"sideBar " + (isOpen ? "sideBar--viewSidebar sideBar--zeroTop" : "sideBar--hideSidebar sideBar--negativeTop")}>
+      <div className="sideBar__cancel">
         <CloseIcon fontSize="large" onClick={() => {triggerCloseSidebar()}}/>
       </div>
-      <div className="menu">
+      <div className="sideBar__menu">
         <Link to="/dashboard" onClick={() => {triggerCloseSidebar()}}>
           <p>Dashboard</p>
         </Link>
