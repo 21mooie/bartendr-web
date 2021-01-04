@@ -1,4 +1,4 @@
-.btn {
+.ctaButton {
     border-radius: 50px;
     background: #01BF71;
     white-space: nowrap;
@@ -15,7 +15,7 @@
     text-decoration: none;
 }
 
-.btn:hover {
+.ctaButton:hover {
     transition: all 0.2s ease-in-out;
     background: #FFFFFF;
 }

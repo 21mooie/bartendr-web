@@ -16,7 +16,7 @@ const CTAButton = ({text, icon, func}) => {
   const classes = useStyles();
 
   return (
-    <button className="btn" onClick={() => {func()}}>
+    <button className="ctaButton" onClick={() => {func()}}>
       {text}
       {
        icon &&
