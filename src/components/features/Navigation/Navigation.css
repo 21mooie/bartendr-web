@@ -1,4 +1,4 @@
-.header {
+.navigation {
     color: white;
     display: flex;
     height: 85px;
@@ -10,37 +10,37 @@
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
-.header::-webkit-scrollbar {
+.navigation::-webkit-scrollbar {
     display: none;
 }
 
 /* Hide scrollbar for IE, Edge and Firefox */
-.header {
+.navigation {
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
 }
 
-.header__icons {
+.navigation__icons {
     display: none;
 }
 
-.menu__icon {
+.navigation__menu_icon {
     cursor: pointer;
     display: flex;
     align-items: center;
 }
 
-.menu__icon_no_auth {
+.navigation__menu_icon--no_auth {
     cursor: pointer;
     display: flex;
     align-items: center;
 }
 
-.menu__icon__full_flex {
+.navigation__menu_icon--full_flex {
     flex: 1;
 }
 
-.Navigation_logo {
+.navigation__logo {
     color: #FFFFFF;
     justify-self: start;
     cursor: pointer;
@@ -51,7 +51,7 @@
     font-weight: bold;
 }
 
-.header__icon {
+.navigation__icon {
     color: white;
     display: flex;
     flex-direction: column;
@@ -60,35 +60,35 @@
     text-decoration: none;
 }
 
-.header__icon-active > p {
+.navigation__icon--active > p {
     display: inline !important;
 }
 
-.header__icon > p {
+.navigation__icon > p {
     font-size: small;
     display: none;
 }
 
-.header__icon:hover {
+.navigation__icon:hover {
     color: #01BF71;
 }
 
-.header__icon:hover > p {
+.navigation__icon:hover > p {
     display: inline;
 }
 
-.header__icon > .MuiSvgIcon-root{
+.navigation__icon > .MuiSvgIcon-root{
     margin-left: auto;
     margin-right: auto;
 }
 
 @media screen and (min-width: 992px) {
-    .header__icons {
+    .navigation__icons {
         display: flex;
         align-items: center;
         text-align: center;
     }
-    .menu__icon {
+    .navigation__menu_icon {
         display: none;
     }
 }

@@ -9,6 +9,7 @@
 .card__content {
     display: flex;
     padding: 25px 16px !important;
+    min-height: 110px;
 }
 
 .card__info {

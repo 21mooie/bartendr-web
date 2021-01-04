@@ -1,17 +1,8 @@
-.main {
+.landingPage {
     text-align: center
 }
 
-.title {
-    margin-bottom: 50px;
-}
-
-.button {
-    margin-left: 10px;
-}
-
-
-.content_LandingPage {
+.landingPage__content {
     justify-content: center;
     color: black;
 }

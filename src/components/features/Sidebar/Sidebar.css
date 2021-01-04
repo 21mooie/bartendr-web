@@ -1,4 +1,4 @@
-.Sidebar-Container {
+.sideBar {
     position: fixed;
     z-index: 999;
     width: 100%;
@@ -9,23 +9,23 @@
     transition: 0.3s ease-in-out;
 }
 
-.viewSidebar {
+.sideBar--viewSidebar {
     opacity: 1.0;
 }
 
-.hideSidebar {
+.sideBar--hideSidebar {
     opacity: 0;
 }
 
-.zeroTop {
+.sideBar--zeroTop {
     top: 0;
 }
 
-.negativeTop {
+.sideBar--negativeTop {
     top: -100%;
 }
 
-.cancel {
+.sideBar__cancel {
     position: absolute;
     top: 1.2rem;
     right:1.5rem;
@@ -35,7 +35,7 @@
     outline: none;
 }
 
-.menu {
+.sideBar__menu {
     color: #FFFFFF;
     margin-top: 200px;
     align-items: center;
@@ -45,23 +45,25 @@
     justify-content: space-around;
 }
 
-.middle-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows:repeat(6, 80px);
-}
-
-.menu > a {
+.sideBar__menu > a {
     text-decoration: none;
 }
 
-.menu > a > p {
+.sideBar__menu > a > p {
     color: #FFFFFF;
     font-size: 1.5rem;
     transition: 0.2s ease-in-out;
 }
 
-.menu > div > p {
+.sideBar__menu > a > p:hover {
+    color: #01BF71;
+}
+
+.sideBar__menu > div > p:hover {
+    color: #01BF71;
+}
+
+.sideBar__menu > div > p {
     color: #FFFFFF;
     font-size: 1.5rem;
     transition: 0.2s ease-in-out;

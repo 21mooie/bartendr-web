@@ -12,11 +12,11 @@
     padding: 50px 0;
 }
 
-.search__notfound__image {
+.search__notfound_image {
     height: 200px;
 }
 
-.search__notfound__text {
+.search__notfound_text {
     margin: 20px;
 }
 

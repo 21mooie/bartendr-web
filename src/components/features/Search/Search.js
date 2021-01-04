@@ -75,8 +75,8 @@ class Search extends Component {
 
             this.state.drinkResults.drinks.length === 0 && this.state.searchPerformed ?
               <div className='search__emptyResultsContainer'>
-                <img className='search__notfound__image' src={image} alt='Data not found'/>
-                <p className='search__notfound__text'>Sorry, we couldn't find "{this.props.location.state.searchVal}"</p>
+                <img className='search__notfound_image' src={image} alt='Data not found'/>
+                <p className='search__notfound_text'>Sorry, we couldn't find "{this.props.location.state.searchVal}"</p>
               </div>
             :
               this.state.searchInProgress ?
