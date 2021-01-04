@@ -34,7 +34,7 @@ const LandingPage = () => {
 
   return (
 
-    <div className="main">
+    <div className="landingPage">
       {
         autoLoginUser()
       }
@@ -42,7 +42,7 @@ const LandingPage = () => {
       {
         drink
         &&
-          <div className="content_LandingPage">
+          <div className="landingPage__content">
             <Info
               drink={drink}
               dark={true}

@@ -22,7 +22,6 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
   const routerLocation = useLocation();
   const [location, setLocation] = useState('');
   const [showMenu, setShowMenu] = useState(false);
-  const [redirectVal, setRedirectVal] = useState(null);
   const [showSidebar, setShowSidebar] = useState(false);
   const { user, isAuthenticated, logout, loginWithRedirect } = useAuth0();
   const [authChecked, setAuthChecked] = useState(false);
@@ -74,11 +73,10 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
   }
 
   return (
-    <>
-      <div className="header">
+      <div className="navigation">
         {
           !showFullSearchBar &&
-          <Link to={isAuthenticated ? '/dashboard' : '/'} className="Navigation_logo">Bartendr</Link>
+          <Link to={isAuthenticated ? '/dashboard' : '/'} className="navigation__logo">Bartendr</Link>
         }
         {
           showMenu && isAuthenticated? (
@@ -90,29 +88,29 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
                 show={width >= 576}
               />
 
-              <div className="header__icons">
-                <Link to="/dashboard" className={`header__icon ${location === Routes.DASHBOARD ? 'header__icon-active' : ''}`}>
+              <div className="navigation__icons">
+                <Link to="/dashboard" className={`navigation__icon ${location === Routes.DASHBOARD ? 'navigation__icon--active' : ''}`}>
                     <DashboardIcon />
                     <p>Dashboard</p>
                 </Link>
 
-                <Link className={`header__icon ${location === `/user/${user.nickname}`  ? 'header__icon-active' : ''}`} to={`/user/${user.nickname}`}>
+                <Link className={`navigation__icon ${location === `/user/${user.nickname}`  ? 'navigation__icon--active' : ''}`} to={`/user/${user.nickname}`}>
                   <PersonIcon />
                   <p>Profile</p>
                 </Link>
 
-                <Link className={`header__icon ${location === Routes.EXPLORE ? 'header__icon-active' : ''}`} to='/explore'>
+                <Link className={`navigation__icon ${location === Routes.EXPLORE ? 'navigation__icon--active' : ''}`} to='/explore'>
                   <ExploreIcon />
                   <p>Explore</p>
                 </Link>
 
-                <div className="header__icon" onClick={() => signOut()}>
+                <div className="navigation__icon" onClick={() => signOut()}>
                   <MeetingRoomIcon />
                   <p >Sign Out</p>
                 </div>
               </div>
 
-              <div className={`menu__icon ${showFullSearchBar ? 'menu__icon__full_flex' : ''}`}>
+              <div className={`navigation__menu_icon ${showFullSearchBar ? 'navigation__menu_icon--full_flex' : ''}`}>
                 <SearchBar
                   searchVal={searchVal}
                   setSearchVal={setSearchVal}
@@ -144,7 +142,7 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
                       show={width >= 576}
                     />
 
-                    <div className={`menu__icon_no_auth ${showFullSearchBar ? 'menu__icon__full_flex' : ''}`}>
+                    <div className={`navigation__menu_icon--no_auth ${showFullSearchBar ? 'navigation__menu_icon--full_flex' : ''}`}>
                       <SearchBar
                         searchVal={searchVal}
                         setSearchVal={setSearchVal}
@@ -178,9 +176,7 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
           username={user.nickname}
         />
       }
-      {redirectVal}
       </div>
-    </>
   )
 }
 
