@@ -21,7 +21,7 @@ export function User({user, changeUsername, match}) {
       numDrinks: 0,
     }
   });
-  
+
   useEffect(() => {
     setViewingCurrentUserProfile(user.username === match.params.username)
     if (viewingCurrentUserProfile) {
@@ -39,7 +39,7 @@ export function User({user, changeUsername, match}) {
         })
         .catch((err) => console.log(err))
     }
-  }, [user.fav_drinks, user.username, viewingCurrentUserProfile]);
+  }, [match.params.username, user.fav_drinks, user.username, viewingCurrentUserProfile]);
 
 
 
@@ -59,7 +59,7 @@ export function User({user, changeUsername, match}) {
         viewingCurrentUserProfile={viewingCurrentUserProfile}
         alreadyFollowing={false}
       />
-      <UserFavDrinks 
+      <UserFavDrinks
         fav_drinks={viewedUser.fav_drinks}
       />
     </div>
