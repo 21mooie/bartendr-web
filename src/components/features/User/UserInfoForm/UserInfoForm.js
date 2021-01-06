@@ -4,7 +4,7 @@ import TextField from '@material-ui/core/TextField';
 
 import './UserInfoForm.css';
 
-function UserInfoForm({ viewingCurrentUserProfile, editInfoProp, setEditInfoProp, setUsernameProp}) {
+function UserInfoForm({ viewingCurrentUserProfile, editInfoProp, setEditInfoProp}) {
     return (
         <>
             {
@@ -13,9 +13,9 @@ function UserInfoForm({ viewingCurrentUserProfile, editInfoProp, setEditInfoProp
                         {
                             editInfoProp ?
                                 <div>
-                                    <h2>Change your username here</h2>
+                                    <h2>Edit your information</h2>
                                     <form noValidate autoComplete="off">
-                                    <TextField id="newUsername " label="New Username" onChange={event => setUsernameProp(event.target.value)}/>
+                                    <TextField id="information " label="New information" onChange={event => console.log(event.target.value)}/>
                                     </form>
                                     <Button onClick={() => {setEditInfoProp(!editInfoProp)}}>Cancel</Button>
                                     <Button onClick={() => {setEditInfoProp(!editInfoProp)}}>Submit</Button>
@@ -31,4 +31,4 @@ function UserInfoForm({ viewingCurrentUserProfile, editInfoProp, setEditInfoProp
     )
 }
 
-export default UserInfoForm
+export default UserInfoForm;

@@ -4,14 +4,12 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import axios from "axios";
 
 import "./User.css";
-import { requestChangeUsername } from "../../../store/mutations";
 import { url } from '../../../consts';
 import UserInfoForm from './UserInfoForm/UserInfoForm';
 import UserFavDrinks from './UserFavDrinks/UserFavDrinks';
 import UserFollowButton from './FollowButton/UserFollowButton';
 
-export function User({user, changeUsername, match}) {
-  const [newUsername, setUsername] = useState('');
+export function User({user, match}) {
   const [editInfoToggled, setEditInfoToggled] = useState(false);
   const [viewingCurrentUserProfile, setViewingCurrentUserProfile] = useState(user.username === match.params.username);
   const [viewedUser, setViewedUser] = useState({
@@ -53,7 +51,6 @@ export function User({user, changeUsername, match}) {
         viewingCurrentUserProfile={viewingCurrentUserProfile}
         editInfoProp={editInfoToggled}
         setEditInfoProp={setEditInfoToggled}
-        setUsernameProp={setUsername}
       />
       <UserFollowButton
         viewingCurrentUserProfile={viewingCurrentUserProfile}
@@ -72,13 +69,4 @@ function mapStateToProps(state) {
   }
 }
 
-function mapDispatchToProps (dispatch, ownProps){
-  return {
-    changeUsername(uid, oldUsername, newUsername) {
-      console.log('changing username', uid, oldUsername, newUsername);
-      dispatch(requestChangeUsername(uid, oldUsername, newUsername))
-    }
-  }
-}
-
-export const ConnectedUser = connect(mapStateToProps, mapDispatchToProps)(User);
+export const ConnectedUser = connect(mapStateToProps)(User);
