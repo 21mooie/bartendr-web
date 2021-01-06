@@ -5,18 +5,6 @@ import { url } from '../consts';
 import * as mutations from './mutations';
 import {user} from '../consts/defaultState';
 
-export function* changeUsernameSaga() {
-  while (true) {
-    const {uid, oldUsername, newUsername} = yield take(mutations.REQUEST_CHANGE_USERNAME);
-    yield put(mutations.changeUsername(uid,oldUsername, newUsername))
-    const { res } = yield axios.patch(url + `/users`, {
-      uid,
-      oldUsername,
-      newUsername,
-    });
-  }
-}
-
 export function* getUserSaga() {
   while (true) {
     const {username} = yield take(mutations.REQUEST_USER);

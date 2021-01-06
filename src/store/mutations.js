@@ -10,19 +10,6 @@ export const FAILED_UPDATE_FAV_DRINKS = `FAILED_UPDATE_FAV_DRINKS`;
 export const ADD_DRINK_TO_STATE = `ADD_DRINK_TO_STATE`;
 export const REMOVE_DRINK_FROM_STATE = `REMOVE_DRINK_FROM_STATE`;
 
-export const requestChangeUsername = (uid, oldUsername, newUsername) => ({
-  type: REQUEST_CHANGE_USERNAME,
-  uid,
-  oldUsername,
-  newUsername
-});
-
-export const changeUsername = (uid, oldUsername, newUsername) => ({
-  type: CHANGE_USERNAME,
-  uid,
-  oldUsername,
-  newUsername
-});
 
 export const requestUser = (username) => ({
   type: REQUEST_USER,
