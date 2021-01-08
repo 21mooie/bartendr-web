@@ -14,7 +14,6 @@ import {Routes} from "../../../consts/routes";
 import Sidebar from "../Sidebar/Sidebar";
 import { useAuth0 } from "@auth0/auth0-react";
 import CTAButton from "../../common/Button/CTAButton";
-import {DEV_URL, LOCAL_URL,PROD_LOCAL_URL} from "../../../consts";
 import SearchBar from "./SearchBar/SearchBar";
 import useWindowDimensions from "../../../hooks/useWindowDimensions/useWindowDimensions";
 
@@ -48,17 +47,7 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
 
   const signOut = () => {
     console.log('clicked');
-    switch(window.location.origin) {
-      case (LOCAL_URL):
-        logout({returnTo: LOCAL_URL});
-        break;
-      case (PROD_LOCAL_URL):
-        logout({returnTo: PROD_LOCAL_URL});
-        break;
-      default:
-        logout({returnTo: DEV_URL});
-        break;
-    }
+    logout({returnTo: window.location.origin});
     clearState();
   }
 
