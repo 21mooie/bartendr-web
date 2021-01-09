@@ -9,15 +9,19 @@ import UserInfoForm from './UserInfoForm/UserInfoForm';
 import UserFavDrinks from './UserFavDrinks/UserFavDrinks';
 import UserFollowButton from './FollowButton/UserFollowButton';
 
-export function User({user, match}) {
+export function User({user, match, updateFollowUser}) {
   const [editInfoToggled, setEditInfoToggled] = useState(false);
   const [viewingCurrentUserProfile, setViewingCurrentUserProfile] = useState(user.username === match.params.username);
+  const [isFollowing, setIsFollowing] = useState(false);
   const [viewedUser, setViewedUser] = useState({
     username: "",
     fav_drinks: {
       drinks: [],
       numDrinks: 0,
-    }
+    },
+    uid: "",
+    following: [],
+    followers: [],
   });
 
   useEffect(() => {
@@ -25,7 +29,10 @@ export function User({user, match}) {
     if (viewingCurrentUserProfile) {
       setViewedUser({
         username: user.username,
-        fav_drinks: user.fav_drinks
+        fav_drinks: user.fav_drinks,
+        uid: user.uid,
+        following: user.following,
+        followers: user.followers,
       });
     } else {
       axios.post(`${url}/users`,{username: match.params.username})
@@ -33,13 +40,26 @@ export function User({user, match}) {
           setViewedUser({
             username: result.data.state.username,
             fav_drinks: result.data.state.fav_drinks,
+            uid: result.data.state.uid,
+            following: result.data.state.following,
+            followers: result.data.state.followers,
           })
+          determineIsFollowing(user.following, viewedUser.uid);
         })
         .catch((err) => console.log(err))
     }
-  }, [match.params.username, user.fav_drinks, user.username, viewingCurrentUserProfile]);
+  }, [match.params.username, user.fav_drinks, user.followers, user.following, user.uid, user.username, viewedUser.uid, viewingCurrentUserProfile]);
 
+  function determineIsFollowing(following, viewedUserUid){
+    if (following.find(element => element === viewedUserUid)) {
+      setIsFollowing(true);
+    }
+  }
 
+  function updateFollowing() {
+    updateFollowUser(user.uid, viewedUser.uid, !isFollowing);
+    setIsFollowing(!isFollowing);
+  }
 
   return (
     <div className="user">
@@ -50,11 +70,12 @@ export function User({user, match}) {
       <UserInfoForm
         viewingCurrentUserProfile={viewingCurrentUserProfile}
         editInfoProp={editInfoToggled}
-        setEditInfoProp={setEditInfoToggled}
+        updateInfo={() => setEditInfoToggled(!editInfoToggled)}
       />
       <UserFollowButton
         viewingCurrentUserProfile={viewingCurrentUserProfile}
-        alreadyFollowing={false}
+        alreadyFollowing={isFollowing}
+        updateFollowing={() => updateFollowing()}
       />
       <UserFavDrinks
         fav_drinks={viewedUser.fav_drinks}
@@ -69,4 +90,12 @@ function mapStateToProps(state) {
   }
 }
 
-export const ConnectedUser = connect(mapStateToProps)(User);
+function mapDispatchToProps (dispatch, ownProps){
+  return {
+    updateFollowUser(currentUserUid, followedUserUid, follow) {
+      console.log('function triggered');
+    }
+  }
+}
+
+export const ConnectedUser = connect(mapStateToProps, mapDispatchToProps)(User);
