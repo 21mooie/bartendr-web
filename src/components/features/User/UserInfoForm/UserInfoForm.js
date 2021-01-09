@@ -4,7 +4,7 @@ import TextField from '@material-ui/core/TextField';
 
 import './UserInfoForm.css';
 
-function UserInfoForm({ viewingCurrentUserProfile, editInfoProp, setEditInfoProp}) {
+function UserInfoForm({ viewingCurrentUserProfile, editInfoProp, updateInfo}) {
     return (
         <>
             {
@@ -17,11 +17,11 @@ function UserInfoForm({ viewingCurrentUserProfile, editInfoProp, setEditInfoProp
                                     <form noValidate autoComplete="off">
                                     <TextField id="information " label="New information" onChange={event => console.log(event.target.value)}/>
                                     </form>
-                                    <Button onClick={() => {setEditInfoProp(!editInfoProp)}}>Cancel</Button>
-                                    <Button onClick={() => {setEditInfoProp(!editInfoProp)}}>Submit</Button>
+                                    <Button onClick={updateInfo}>Cancel</Button>
+                                    <Button onClick={updateInfo}>Submit</Button>
                                 </div>
                             :
-                                <Button onClick={() => {setEditInfoProp(!editInfoProp)}}>Edit info</Button>
+                                <Button onClick={updateInfo}>Edit info</Button>
                         }
                     </div>
                 :
