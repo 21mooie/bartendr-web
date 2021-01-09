@@ -9,6 +9,9 @@ export const SUCCESSFUL_UPDATE_FAV_DRINKS = `SUCCESSFUL_UPDATE_FAV_DRINKS`;
 export const FAILED_UPDATE_FAV_DRINKS = `FAILED_UPDATE_FAV_DRINKS`;
 export const ADD_DRINK_TO_STATE = `ADD_DRINK_TO_STATE`;
 export const REMOVE_DRINK_FROM_STATE = `REMOVE_DRINK_FROM_STATE`;
+export const REQUEST_UPDATE_WHO_CURRENT_USER_FOLLOWS = `REQUEST_UPDATE_WHO_CURRENT_USER_FOLLOWS`;
+export const SUCCESSFUL_UPDATE_WHO_CURRENT_USER_FOLLOWS = `SUCCESSFUL_UPDATE_WHO_CURRENT_USER_FOLLOWS`;
+export const FAILED_UPDATE_WHO_CURRENT_USER_FOLLOWS = `FAILED_UPDATE_WHO_CURRENT_USER_FOLLOWS`;
 
 
 export const requestUser = (username) => ({
@@ -53,3 +56,18 @@ export const removeDrinkFromState = (idDrink) => ({
   type: REMOVE_DRINK_FROM_STATE,
   idDrink,
 })
+
+export const requestUpdateWhoCurrentUserFollows = (currentUserUid, followedUserUid, wantsToFollow) => ({
+  type: REQUEST_UPDATE_WHO_CURRENT_USER_FOLLOWS,
+  currentUserUid,
+  followedUserUid,
+  wantsToFollow,
+});
+
+export const successfulUpdateWhoCurrentUserFollows = () => ({
+  type: SUCCESSFUL_UPDATE_WHO_CURRENT_USER_FOLLOWS
+});
+
+export const failedUpdateWhoCurrentUserFollows = () => ({
+  type: FAILED_UPDATE_WHO_CURRENT_USER_FOLLOWS
+});

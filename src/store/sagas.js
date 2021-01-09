@@ -53,3 +53,16 @@ export function* updateFavDrinks() {
     }
   }
 }
+
+
+export function* updateFollowersSaga() {
+  while(true) {
+    const { currentUserUid, followedUserUid, wantsToFollow } = yield take(mutations.REQUEST_UPDATE_WHO_CURRENT_USER_FOLLOWS);
+    try {
+      yield axios.post(`${url}/users/followers`, { currentUserUid, followedUserUid, wantsToFollow });
+      yield put(mutations.successfulUpdateWhoCurrentUserFollows());
+    } catch (err) {
+      yield put(mutations.failedUpdateWhoCurrentUserFollows());
+    }
+  }
+}

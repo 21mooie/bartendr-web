@@ -8,8 +8,9 @@ import { url } from '../../../consts';
 import UserInfoForm from './UserInfoForm/UserInfoForm';
 import UserFavDrinks from './UserFavDrinks/UserFavDrinks';
 import UserFollowButton from './FollowButton/UserFollowButton';
+import { requestUpdateWhoCurrentUserFollows } from "../../../store/mutations";
 
-export function User({user, match, updateFollowUser}) {
+export function User({user, match, updateWhoCurrentUserFollows}) {
   const [editInfoToggled, setEditInfoToggled] = useState(false);
   const [viewingCurrentUserProfile, setViewingCurrentUserProfile] = useState(user.username === match.params.username);
   const [isFollowing, setIsFollowing] = useState(false);
@@ -57,8 +58,8 @@ export function User({user, match, updateFollowUser}) {
   }
 
   function updateFollowing() {
-    updateFollowUser(user.uid, viewedUser.uid, !isFollowing);
-    setIsFollowing(!isFollowing);
+    updateWhoCurrentUserFollows(user.uid, viewedUser.uid, !isFollowing);
+    // setIsFollowing(!isFollowing);
   }
 
   return (
@@ -90,10 +91,10 @@ function mapStateToProps(state) {
   }
 }
 
-function mapDispatchToProps (dispatch, ownProps){
+function mapDispatchToProps (dispatch){
   return {
-    updateFollowUser(currentUserUid, followedUserUid, follow) {
-      console.log('function triggered');
+    updateWhoCurrentUserFollows(currentUserUid, followedUserUid, wantsToFollow) {
+      dispatch(requestUpdateWhoCurrentUserFollows(currentUserUid, followedUserUid, wantsToFollow));
     }
   }
 }
