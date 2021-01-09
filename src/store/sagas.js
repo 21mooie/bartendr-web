@@ -1,7 +1,8 @@
 import {take,  put} from "redux-saga/effects";
 import axios from "axios";
-import { url } from '../consts';
+import { store } from 'react-notifications-component';
 
+import { url } from '../consts';
 import * as mutations from './mutations';
 import {user} from '../consts/defaultState';
 
@@ -50,6 +51,19 @@ export function* updateFavDrinks() {
     } catch (err) {
       console.log(err);
       yield put(mutations.failedUpdateFavDrinks());
+      store.addNotification({
+        title: "Uh-oh!",
+        message: "This action cannot be completed at this time. Try again later.",
+        type: "danger",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 3500,
+          onScreen: true
+        }
+      });
     }
   }
 }
@@ -59,10 +73,23 @@ export function* updateFollowersSaga() {
   while(true) {
     const { currentUserUid, followedUserUid, wantsToFollow } = yield take(mutations.REQUEST_UPDATE_WHO_CURRENT_USER_FOLLOWS);
     try {
-      yield axios.post(`${url}/users/followers`, { currentUserUid, followedUserUid, wantsToFollow });
+      yield axios.post(`${url}/users/following`, { currentUserUid, followedUserUid, wantsToFollow });
       yield put(mutations.successfulUpdateWhoCurrentUserFollows());
     } catch (err) {
       yield put(mutations.failedUpdateWhoCurrentUserFollows());
+      store.addNotification({
+        title: "Uh-oh!",
+        message: "This action cannot be completed at this time. Try again later.",
+        type: "danger",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 3500,
+          onScreen: true
+        }
+      });
     }
   }
 }
