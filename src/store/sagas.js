@@ -75,6 +75,11 @@ export function* updateFollowersSaga() {
     try {
       yield axios.post(`${url}/users/following`, { currentUserUid, followedUserUid, wantsToFollow });
       yield put(mutations.successfulUpdateWhoCurrentUserFollows());
+      if(wantsToFollow) {
+        yield put(mutations.addToFollowing(followedUserUid));
+      } else {
+        yield put(mutations.removeFromFollowing(followedUserUid));
+      }
     } catch (err) {
       yield put(mutations.failedUpdateWhoCurrentUserFollows());
       store.addNotification({

@@ -12,6 +12,8 @@ export const REMOVE_DRINK_FROM_STATE = `REMOVE_DRINK_FROM_STATE`;
 export const REQUEST_UPDATE_WHO_CURRENT_USER_FOLLOWS = `REQUEST_UPDATE_WHO_CURRENT_USER_FOLLOWS`;
 export const SUCCESSFUL_UPDATE_WHO_CURRENT_USER_FOLLOWS = `SUCCESSFUL_UPDATE_WHO_CURRENT_USER_FOLLOWS`;
 export const FAILED_UPDATE_WHO_CURRENT_USER_FOLLOWS = `FAILED_UPDATE_WHO_CURRENT_USER_FOLLOWS`;
+export const ADD_USER_TO_FOLLOWING = `ADD_USER_TO_FOLLOWING`;
+export const REMOVE_USER_FROM_FOLLOWING = `REMOVE_USER_FROM_FOLLOWING`;
 
 
 export const requestUser = (username) => ({
@@ -71,3 +73,13 @@ export const successfulUpdateWhoCurrentUserFollows = () => ({
 export const failedUpdateWhoCurrentUserFollows = () => ({
   type: FAILED_UPDATE_WHO_CURRENT_USER_FOLLOWS
 });
+
+export const addToFollowing = (followedUserUid) => ({
+  type: ADD_USER_TO_FOLLOWING,
+  followedUserUid,
+});
+
+export const removeFromFollowing = (followedUserUid) => ({
+  type: REMOVE_USER_FROM_FOLLOWING,
+  followedUserUid,
+})
