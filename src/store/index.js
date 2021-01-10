@@ -75,6 +75,12 @@ export const store = createStore(
       switch(action.type) {
         case(mutations.SET_STATE):
           return action.state.following || null;
+        case(mutations.ADD_USER_TO_FOLLOWING):
+          following.push(action.followedUserUid);
+          return [...following];
+        case(mutations.REMOVE_USER_FROM_FOLLOWING):
+          following = following.filter(uid => uid !== action.followedUserUid)
+          return [...following];
         default:
           return following;
       }
