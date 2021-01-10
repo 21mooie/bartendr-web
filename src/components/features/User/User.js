@@ -54,12 +54,13 @@ export function User({user, match, updateWhoCurrentUserFollows}) {
   function determineIsFollowing(following, viewedUserUid){
     if (following.find(element => element === viewedUserUid)) {
       setIsFollowing(true);
+    } else {
+      setIsFollowing(false);
     }
   }
 
   function updateFollowing() {
     updateWhoCurrentUserFollows(user.uid, viewedUser.uid, !isFollowing);
-    // setIsFollowing(!isFollowing);
   }
 
   return (
