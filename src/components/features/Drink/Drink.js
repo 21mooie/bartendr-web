@@ -76,8 +76,11 @@ export function Drink({ username, favDrinks, match, updateFavDrinks }) {
               <div className="drink__ingredients">
                 <p className="drink__ingredients__label">Ingredients</p>
                 <ul>
-                  <li>{ drink.strMeasure1 } {drink.strIngredient1}</li>
-                  <li>{ drink.strMeasure2 } {drink.strIngredient2}</li>
+                  {
+                    drink.strIngredientsArray.map(val => (
+                      <li key={val.ingredient}>{ val.measure } { val.ingredient }</li>
+                    ))
+                  }
                 </ul>
               </div>
               <div className="drink__instructions">
