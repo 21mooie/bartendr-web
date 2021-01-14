@@ -1,6 +1,6 @@
 .searchResult {
     display: flex;
-    margin: 0 10px 50px 10px;
+    margin: 0 10px 50px 20px;
 }
 
 .searchResult__image {
@@ -55,5 +55,11 @@
 
     .searchResult__desc {
         margin-right: 50px;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    .searchResult {
+        margin: 0 50px 50px 200px ;
     }
 }
