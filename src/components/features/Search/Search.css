@@ -3,13 +3,11 @@
     color: #FFFFFF;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items:center;
     min-height: 500px;
 }
 
 .search__resultsContainer {
-    padding: 50px 0;
+    padding: 50px 0 0;
 }
 
 .search__notfound_image {
@@ -20,11 +18,14 @@
     margin: 20px;
 }
 
-.search__loading {
-    display: flex;
-    flex-direction: column;
+.search__loadingContainer {
+    margin: auto;
 }
 
 .search__loading_text {
     margin: 20px 0;
+}
+
+.search__emptyResultsContainer {
+    margin: auto;
 }
