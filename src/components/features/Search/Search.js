@@ -6,7 +6,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import './Search.css';
 import { url } from "../../../consts";
 import image from "../../../images/undraw_wine_tasting_30vw.svg";
-import SearchResult from "./SearchResult/SearchResult";
+import ConnectedSearchResult from "./SearchResult/SearchResult";
 
 
 class Search extends Component {
@@ -28,7 +28,7 @@ class Search extends Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState, snapshot) {
     console.log(this.props);
     if (this.props.location.state.searchVal !== prevProps.location.state.searchVal) {
       this.sendQuery(this.props.location.state.searchVal);
@@ -55,7 +55,7 @@ class Search extends Component {
             searchInProgress: false
           });
         }
-      }).catch((err) => {
+      }).catch(() => {
         this.setState({
           drinkResults: {
             drinks: [],
@@ -90,7 +90,7 @@ class Search extends Component {
               <div className='search__resultsContainer'>
                 {
                   this.state.drinkResults.drinks.map(drink => (
-                    <SearchResult key={drink.idDrink} result={drink} />
+                    <ConnectedSearchResult key={drink.idDrink} result={drink} />
                   ))
                 }
               </div>

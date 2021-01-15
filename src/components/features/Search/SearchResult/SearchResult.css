@@ -24,6 +24,10 @@
     display: none;
 }
 
+.searchResult__desc > svg {
+    cursor: pointer;
+}
+
 @media only screen and (min-width: 576px) {
     .searchResults__ingredient {
         margin-bottom: 10px;

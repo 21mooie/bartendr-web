@@ -1,15 +1,39 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link} from "react-router-dom";
 
 import './SearchResult.css'
 import FavoriteIcon from "@material-ui/icons/Favorite";
+import * as mutations from "../../../../store/mutations";
+import {connect} from "react-redux";
 
 
-function SearchResult({result}) {
+function SearchResult({result, updateFavDrinks, username, favDrinks}) {
+  const [isFavDrink, setIsFavDrink] = useState(false);
+  const [favDrinkToggled, setFavDrinkToggled] = useState(false);
+
+  useEffect(() => {
+    setIsFavDrink(hasUserFaved());
+    if (favDrinkToggled) {
+      updateFavDrinks(username, result, !isFavDrink);
+      setFavDrinkToggled(false);
+    }
+  }, [result, favDrinkToggled, hasUserFaved, isFavDrink, updateFavDrinks, username]);
+
+  function hasUserFaved() {
+    // must return negation because every only stops when evaled false
+    // this keeps functionality while allowing logic to make sense
+
+    return !favDrinks.drinks.every((currDrink) => {
+      return currDrink.idDrink !== result.idDrink;
+    });
+  }
+
+
+
   return (
     <div className="searchResult">
         <Link to={`/drink/${result.idDrink}`}>
-          <img  className="searchResult__image" src={result['strDrinkThumb']} alt/>
+          <img  className="searchResult__image" src={result['strDrinkThumb']} alt={result.strDrink} />
         </Link>
         <div className="searchResult__desc">
           <h3>{result.strDrink}</h3>
@@ -26,7 +50,10 @@ function SearchResult({result}) {
           <p className="searchResult__numLikes">x Likes</p>
           <FavoriteIcon
             style={{ fontSize: 40 }}
-            color='secondary'
+            color={isFavDrink? 'secondary' : 'action'}
+            onClick={() => {
+              setFavDrinkToggled(true);
+            }}
           />
 
         </div>
@@ -34,4 +61,21 @@ function SearchResult({result}) {
   );
 }
 
-export default SearchResult;
+function mapStateToProps(state) {
+  return {
+    username: state.username,
+    favDrinks: state.fav_drinks
+  }
+}
+
+function mapDispatchToProps (dispatch){
+  return {
+    updateFavDrinks(username, drink, isFavDrink) {
+      dispatch(mutations.requestUpdateFavDrinks(username, drink, isFavDrink))
+    }
+  }
+}
+
+const ConnectedSearchResult = connect(mapStateToProps, mapDispatchToProps)(SearchResult);
+
+export default ConnectedSearchResult;
