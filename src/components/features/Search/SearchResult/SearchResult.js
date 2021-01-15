@@ -5,11 +5,13 @@ import './SearchResult.css'
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import * as mutations from "../../../../store/mutations";
 import {connect} from "react-redux";
+import useWindowDimensions from "../../../../hooks/useWindowDimensions/useWindowDimensions";
 
 
 function SearchResult({result, updateFavDrinks, username, favDrinks}) {
   const [isFavDrink, setIsFavDrink] = useState(false);
   const [favDrinkToggled, setFavDrinkToggled] = useState(false);
+  const { width } = useWindowDimensions();
 
   useEffect(() => {
     setIsFavDrink(hasUserFaved());
@@ -17,7 +19,7 @@ function SearchResult({result, updateFavDrinks, username, favDrinks}) {
       updateFavDrinks(username, result, !isFavDrink);
       setFavDrinkToggled(false);
     }
-  }, [result, favDrinkToggled, hasUserFaved, isFavDrink, updateFavDrinks, username]);
+  }, [result, favDrinkToggled, hasUserFaved, isFavDrink, updateFavDrinks, username, width]);
 
   function hasUserFaved() {
     // must return negation because every only stops when evaled false
@@ -41,10 +43,16 @@ function SearchResult({result, updateFavDrinks, username, favDrinks}) {
           <p className="searchResults__ingredient">Made with {result.strIngredient1}</p>
           <div className="searchResults__instructions">
             {
-              result.strInstructions.length < 50 ?
-                <p>{result.strInstructions}</p>
+              width > 1200 ?
+                result.strInstructions.length < 55 ?
+                  <p>{result.strInstructions}</p>
+                :
+                  <p>{result.strInstructions.substr(0, 55)} ...</p>
               :
-                <p>{result.strInstructions.substr(0, 45)} ...</p>
+                result.strInstructions.length < 45 ?
+                  <p>{result.strInstructions}</p>
+                :
+                  <p>{result.strInstructions.substr(0, 45)} ...</p>
             }
           </div>
           <p className="searchResult__numLikes">x Likes</p>
