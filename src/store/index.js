@@ -12,14 +12,6 @@ const sagaMiddleware = createSagaMiddleWare();
 
 export const store = createStore(
   combineReducers({
-    email(email = '', action) {
-      switch(action.type) {
-        case mutations.SET_STATE:
-          return action.state.email;
-        default:
-          return email;
-      }
-    },
     username(username = '', action) {
       switch(action.type) {
         case (mutations.SET_STATE):
@@ -30,6 +22,14 @@ export const store = createStore(
           return username;
       }
     },
+    email(email = '', action) {
+      switch(action.type) {
+        case mutations.SET_STATE:
+          return action.state.email;
+        default:
+          return email;
+      }
+    },
     uid(uid = '', action) {
       switch(action.type) {
         case(mutations.SET_STATE):
@@ -38,14 +38,13 @@ export const store = createStore(
           return uid;
       }
     },
-    photo(photo = '', action) {
+    avi(avi = '', action) {
       switch(action.type) {
         case(mutations.SET_STATE):
-          return action.state.photo || null;
+          return action.state.avi || '';
         default:
-          return photo;
+          return avi;
       }
-
     },
     fav_drinks(fav_drinks = user.fav_drinks, action) {
       switch(action.type) {
@@ -83,22 +82,6 @@ export const store = createStore(
           return [...following];
         default:
           return following;
-      }
-    },
-    numFollowers(numFollowers = 0, action) {
-      switch(action.type) {
-        case(mutations.SET_STATE):
-          return action.state.numFollowers;
-        default:
-          return numFollowers;
-      }
-    },
-    numFollowing(numFollowing = 0, action) {
-      switch(action.type) {
-        case(mutations.SET_STATE):
-          return action.state.numFollowing;
-        default:
-          return numFollowing;
       }
     },
   }),

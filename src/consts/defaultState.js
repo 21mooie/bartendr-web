@@ -6,9 +6,7 @@ export const user = {
     numDrinks: 0,
   },
   uid : "",
-  photo: null,
+  avi: "",
   followers: [],
-  following: [],
-  numFollowers: 0,
-  numFollowing: 0,
+  following: []
 }
