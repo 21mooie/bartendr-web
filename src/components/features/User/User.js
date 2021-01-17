@@ -5,7 +5,7 @@ import axios from "axios";
 
 import "./User.css";
 import { url } from '../../../consts';
-import UserInfoForm from './UserInfoForm/UserInfoForm';
+import EditUserInfo from './EditUserInfo/EditUserInfo';
 import UserFavDrinks from './UserFavDrinks/UserFavDrinks';
 import UserFollowButton from './FollowButton/UserFollowButton';
 import { requestUpdateWhoCurrentUserFollows } from "../../../store/mutations";
@@ -69,7 +69,7 @@ export function User({user, match, updateWhoCurrentUserFollows}) {
         <AccountCircleIcon  style={{ fontSize: 100 }}/>
       </div>
       <h3>{viewedUser.username}</h3>
-      <UserInfoForm
+      <EditUserInfo
         viewingCurrentUserProfile={viewingCurrentUserProfile}
         editInfoProp={editInfoToggled}
         updateInfo={() => setEditInfoToggled(!editInfoToggled)}
