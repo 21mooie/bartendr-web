@@ -13,10 +13,9 @@ function UserInfoForm({toggleUpdateInfoForm, updateAvi}) {
 
   function clickedSubmit(e) {
     e.preventDefault();
-    console.log('this was clicked');
     if (avi.length === 1) {
       // turn into blob and send mutation for adding to payload
-      updateAvi(avi[0].data_url);
+      updateAvi(avi[0].file);
       toggleUpdateInfoForm();
     }
   }

@@ -98,3 +98,36 @@ export function* updateFollowersSaga() {
     }
   }
 }
+
+export function* updateAviSaga() {
+  while (true) {
+    const { uid, avi } = yield take(mutations.REQUEST_UPDATE_AVI);
+    try {
+      const formData = new FormData();
+      formData.append('uid', uid);
+      formData.append('avi', avi);
+      yield axios({
+        method: 'post',
+        url: `${url}/users/avi`,
+        data: formData,
+        headers: {'Content-Type': 'multipart/form-data' }
+      });
+      yield put (mutations.successfulUpdateAvi());
+    } catch (err) {
+      yield put(mutations.failedUpdateAvi());
+      store.addNotification({
+        title: "Uh-oh!",
+        message: "This action cannot be completed at this time. Try again later.",
+        type: "danger",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 3500,
+          onScreen: true
+        }
+      });
+    }
+  }
+}

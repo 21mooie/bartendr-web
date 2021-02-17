@@ -14,6 +14,9 @@ export const SUCCESSFUL_UPDATE_WHO_CURRENT_USER_FOLLOWS = `SUCCESSFUL_UPDATE_WHO
 export const FAILED_UPDATE_WHO_CURRENT_USER_FOLLOWS = `FAILED_UPDATE_WHO_CURRENT_USER_FOLLOWS`;
 export const ADD_USER_TO_FOLLOWING = `ADD_USER_TO_FOLLOWING`;
 export const REMOVE_USER_FROM_FOLLOWING = `REMOVE_USER_FROM_FOLLOWING`;
+export const REQUEST_UPDATE_AVI =  `REQUEST_UPDATE_AVI`;
+export const SUCCESSFUL_UPDATE_AVI = `SUCCESSFUL_UPDATE_AVI`;
+export const FAILED_UPDATE_AVI = `FAILED_UPDATE_AVI`;
 
 
 export const requestUser = (username) => ({
@@ -82,4 +85,18 @@ export const addToFollowing = (followedUserUid) => ({
 export const removeFromFollowing = (followedUserUid) => ({
   type: REMOVE_USER_FROM_FOLLOWING,
   followedUserUid,
+})
+
+export const requestUpdateAvi = (uid, avi) => ({
+  type: REQUEST_UPDATE_AVI,
+  uid,
+  avi,
+})
+
+export const successfulUpdateAvi = () => ({
+  type: SUCCESSFUL_UPDATE_AVI
+})
+
+export const failedUpdateAvi = () => ({
+  type: FAILED_UPDATE_AVI
 })
