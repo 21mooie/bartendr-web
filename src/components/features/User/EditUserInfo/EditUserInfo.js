@@ -4,7 +4,7 @@ import Button from "@material-ui/core/Button";
 import './EditUserInfo.css';
 import UserInfoForm from "./UserInfoForm/UserInfoForm";
 
-function EditUserInfo({ viewingCurrentUserProfile, editInfoProp, updateInfo}) {
+function EditUserInfo({ viewingCurrentUserProfile, editInfoProp, toggleUpdateInfoForm, updateAvi}) {
 
     return (
         <>
@@ -13,9 +13,9 @@ function EditUserInfo({ viewingCurrentUserProfile, editInfoProp, updateInfo}) {
                     <div className="editUserInfo">
                         {
                             editInfoProp ?
-                                <UserInfoForm updateInfo={updateInfo}/>
+                                <UserInfoForm toggleUpdateInfoForm={toggleUpdateInfoForm} updateAvi={updateAvi}/>
                             :
-                                <Button onClick={updateInfo}>Edit info</Button>
+                                <Button onClick={toggleUpdateInfoForm}>Edit info</Button>
                         }
                     </div>
                 :

@@ -8,9 +8,12 @@ import { url } from '../../../consts';
 import EditUserInfo from './EditUserInfo/EditUserInfo';
 import UserFavDrinks from './UserFavDrinks/UserFavDrinks';
 import UserFollowButton from './FollowButton/UserFollowButton';
-import { requestUpdateWhoCurrentUserFollows } from "../../../store/mutations";
+import {
+  requestUpdateWhoCurrentUserFollows,
+  requestUpdateAvi,
+} from "../../../store/mutations";
 
-export function User({user, match, updateWhoCurrentUserFollows}) {
+export function User({user, match, updateWhoCurrentUserFollows, updateAvi}) {
   const [editInfoToggled, setEditInfoToggled] = useState(false);
   const [viewingCurrentUserProfile, setViewingCurrentUserProfile] = useState(user.username === match.params.username);
   const [isFollowing, setIsFollowing] = useState(false);
@@ -72,7 +75,8 @@ export function User({user, match, updateWhoCurrentUserFollows}) {
       <EditUserInfo
         viewingCurrentUserProfile={viewingCurrentUserProfile}
         editInfoProp={editInfoToggled}
-        updateInfo={() => setEditInfoToggled(!editInfoToggled)}
+        toggleUpdateInfoForm={() => setEditInfoToggled(!editInfoToggled)}
+        updateAvi={(dataUrl) => updateAvi(user.uid, dataUrl)}
       />
       <UserFollowButton
         viewingCurrentUserProfile={viewingCurrentUserProfile}
@@ -96,6 +100,9 @@ function mapDispatchToProps (dispatch){
   return {
     updateWhoCurrentUserFollows(currentUserUid, followedUserUid, wantsToFollow) {
       dispatch(requestUpdateWhoCurrentUserFollows(currentUserUid, followedUserUid, wantsToFollow));
+    },
+    updateAvi(uid, newAvi) {
+      dispatch(requestUpdateAvi(uid, newAvi));
     }
   }
 }

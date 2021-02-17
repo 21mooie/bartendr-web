@@ -3,23 +3,33 @@ import ImageUploading from "react-images-uploading";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 
-function UserInfoForm({updateInfo}) {
+function UserInfoForm({toggleUpdateInfoForm, updateAvi}) {
   const [avi, setAvi] = React.useState([]);
   const onChange = (imageList, addUpdateIndex) => {
     // data for submit
     console.log(imageList, addUpdateIndex);
     setAvi(imageList);
   };
+
+  function clickedSubmit(e) {
+    e.preventDefault();
+    console.log('this was clicked');
+    if (avi.length === 1) {
+      // turn into blob and send mutation for adding to payload
+      updateAvi(avi[0].data_url);
+      toggleUpdateInfoForm();
+    }
+  }
   return (
     <div className='userInfoForm'>
       <h2>Edit your information</h2>
-      <form noValidate onSubmit={(e) => e.preventDefault()}>
+      <form noValidate onSubmit={(e) => clickedSubmit(e)}>
         <ImageUploading
           value={avi}
           onChange={onChange}
           dataURLKey="data_url"
           acceptType={['jpg','png']}
-          maxFileSize={5000}
+          maxFileSize={2000000}
         >
           {({
               imageList,
@@ -44,7 +54,7 @@ function UserInfoForm({updateInfo}) {
                 <div>
                   {errors.maxNumber && <span>Number of selected images exceed maxNumber</span>}
                   {errors.acceptType && <span>Your selected file type is not allow</span>}
-                  {errors.maxFileSize && <span>Selected file size exceed maxFileSize</span>}
+                  {errors.maxFileSize && <span>Please pick an image under 2 mb</span>}
                   {errors.resolution && <span>Selected file is not match your desired resolution</span>}
                 </div>
               }
@@ -62,9 +72,10 @@ function UserInfoForm({updateInfo}) {
           )}
         </ImageUploading>
         <TextField id="information " label="New information" onChange={event => console.log(event.target.value)}/>
+        <Button onClick={toggleUpdateInfoForm}>Cancel</Button>
+        <Button type="submit">Submit</Button>
       </form>
-      <Button onClick={updateInfo}>Cancel</Button>
-      <Button onClick={updateInfo}>Submit</Button>
+
     </div>
   );
 }
