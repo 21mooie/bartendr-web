@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import { connect } from "react-redux";
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import axios from "axios";
 
 import "./User.css";
@@ -8,6 +7,7 @@ import { url } from '../../../consts';
 import EditUserInfo from './EditUserInfo/EditUserInfo';
 import UserFavDrinks from './UserFavDrinks/UserFavDrinks';
 import UserFollowButton from './FollowButton/UserFollowButton';
+import UserAvi from './UserAvi/UserAvi';
 import {
   requestUpdateWhoCurrentUserFollows,
   requestUpdateAvi,
@@ -18,14 +18,15 @@ export function User({user, match, updateWhoCurrentUserFollows, updateAvi}) {
   const [viewingCurrentUserProfile, setViewingCurrentUserProfile] = useState(user.username === match.params.username);
   const [isFollowing, setIsFollowing] = useState(false);
   const [viewedUser, setViewedUser] = useState({
-    username: "",
+    username: '',
     fav_drinks: {
       drinks: [],
       numDrinks: 0,
     },
-    uid: "",
+    uid: '',
     following: [],
     followers: [],
+    avi: '',
   });
 
   useEffect(() => {
@@ -37,6 +38,7 @@ export function User({user, match, updateWhoCurrentUserFollows, updateAvi}) {
         uid: user.uid,
         following: user.following,
         followers: user.followers,
+        avi: user.avi,
       });
     } else {
       axios.post(`${url}/users`,{username: match.params.username})
@@ -47,11 +49,13 @@ export function User({user, match, updateWhoCurrentUserFollows, updateAvi}) {
             uid: result.data.state.uid,
             following: result.data.state.following,
             followers: result.data.state.followers,
+            avi: result.data.state.avi,
           })
           determineIsFollowing(user.following, viewedUser.uid);
         })
         .catch((err) => console.log(err))
     }
+    console.log(viewedUser);
   }, [match.params.username, user.fav_drinks, user.followers, user.following, user.uid, user.username, viewedUser.uid, viewingCurrentUserProfile]);
 
   function determineIsFollowing(following, viewedUserUid){
@@ -68,9 +72,10 @@ export function User({user, match, updateWhoCurrentUserFollows, updateAvi}) {
 
   return (
     <div className="user">
-      <div className="user__photo">
-        <AccountCircleIcon  style={{ fontSize: 100 }}/>
-      </div>
+      <UserAvi
+        avi={viewedUser.avi}
+        username={viewedUser.username}
+      />
       <h3>{viewedUser.username}</h3>
       <EditUserInfo
         viewingCurrentUserProfile={viewingCurrentUserProfile}
