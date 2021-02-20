@@ -42,6 +42,10 @@ export const store = createStore(
       switch(action.type) {
         case(mutations.SET_STATE):
           return action.state.avi || '';
+        case (mutations.CLEAR_AVI):
+          return '';
+        case(mutations.SUCCESSFUL_UPDATE_AVI):
+          return action.state.avi;
         default:
           return avi;
       }

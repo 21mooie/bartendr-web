@@ -17,6 +17,7 @@ export const REMOVE_USER_FROM_FOLLOWING = `REMOVE_USER_FROM_FOLLOWING`;
 export const REQUEST_UPDATE_AVI =  `REQUEST_UPDATE_AVI`;
 export const SUCCESSFUL_UPDATE_AVI = `SUCCESSFUL_UPDATE_AVI`;
 export const FAILED_UPDATE_AVI = `FAILED_UPDATE_AVI`;
+export const CLEAR_AVI = `CLEAR_AVI`;
 
 
 export const requestUser = (username) => ({
@@ -44,8 +45,9 @@ export const requestUpdateFavDrinks = (username, drink, add) => ({
   add,
 });
 
-export const successfulUpdateFavDrinks = () => ({
-  type: SUCCESSFUL_UPDATE_FAV_DRINKS
+export const successfulUpdateFavDrinks = (avi) => ({
+  type: SUCCESSFUL_UPDATE_FAV_DRINKS,
+  avi,
 });
 
 export const failedUpdateFavDrinks = () => ({
@@ -85,18 +87,23 @@ export const addToFollowing = (followedUserUid) => ({
 export const removeFromFollowing = (followedUserUid) => ({
   type: REMOVE_USER_FROM_FOLLOWING,
   followedUserUid,
-})
+});
 
 export const requestUpdateAvi = (uid, avi) => ({
   type: REQUEST_UPDATE_AVI,
   uid,
   avi,
-})
+});
 
-export const successfulUpdateAvi = () => ({
-  type: SUCCESSFUL_UPDATE_AVI
-})
+export const successfulUpdateAvi = (state) => ({
+  type: SUCCESSFUL_UPDATE_AVI,
+  state,
+});
 
 export const failedUpdateAvi = () => ({
   type: FAILED_UPDATE_AVI
-})
+});
+
+export const clearAvi = () => ({
+  type : CLEAR_AVI
+});

@@ -7,7 +7,6 @@ function UserInfoForm({toggleUpdateInfoForm, updateAvi}) {
   const [avi, setAvi] = React.useState([]);
   const onChange = (imageList, addUpdateIndex) => {
     // data for submit
-    console.log(imageList, addUpdateIndex);
     setAvi(imageList);
   };
 

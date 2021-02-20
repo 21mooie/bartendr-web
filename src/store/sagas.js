@@ -106,13 +106,15 @@ export function* updateAviSaga() {
       const formData = new FormData();
       formData.append('uid', uid);
       formData.append('avi', avi);
-      yield axios({
+      let response = yield axios({
         method: 'post',
         url: `${url}/users/avi`,
         data: formData,
         headers: {'Content-Type': 'multipart/form-data' }
       });
-      yield put (mutations.successfulUpdateAvi());
+      const { data } = response;
+      yield put (mutations.clearAvi());
+      yield put (mutations.successfulUpdateAvi(data.state));
     } catch (err) {
       yield put(mutations.failedUpdateAvi());
       store.addNotification({

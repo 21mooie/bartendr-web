@@ -55,7 +55,6 @@ export function User({user, match, updateWhoCurrentUserFollows, updateAvi}) {
         })
         .catch((err) => console.log(err))
     }
-    console.log(viewedUser);
   }, [match.params.username, user.fav_drinks, user.followers, user.following, user.uid, user.username, viewedUser.uid, viewingCurrentUserProfile]);
 
   function determineIsFollowing(following, viewedUserUid){
