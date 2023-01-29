@@ -14,6 +14,9 @@ export const SUCCESSFUL_UPDATE_WHO_CURRENT_USER_FOLLOWS = `SUCCESSFUL_UPDATE_WHO
 export const FAILED_UPDATE_WHO_CURRENT_USER_FOLLOWS = `FAILED_UPDATE_WHO_CURRENT_USER_FOLLOWS`;
 export const ADD_USER_TO_FOLLOWING = `ADD_USER_TO_FOLLOWING`;
 export const REMOVE_USER_FROM_FOLLOWING = `REMOVE_USER_FROM_FOLLOWING`;
+export const REGISTER = `REGISTER`;
+export const REGISTER_SUCCESS = `REGISTER_SUCCESS`;
+export const REGISTER_FAILED = `REGISTER_FAILED`;
 
 
 export const requestUser = (username) => ({
@@ -82,4 +85,18 @@ export const addToFollowing = (followedUserUid) => ({
 export const removeFromFollowing = (followedUserUid) => ({
   type: REMOVE_USER_FROM_FOLLOWING,
   followedUserUid,
-})
+});
+
+export const requestRegistration = (username, email) => ({
+  type: REGISTER,
+  username,
+  email
+});
+
+export const successfulRegistration = () => ({
+  type: REGISTER_SUCCESS
+});
+
+export const failedRegistration = () => ({
+  type: REGISTER_FAILED
+});

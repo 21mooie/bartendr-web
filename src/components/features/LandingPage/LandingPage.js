@@ -1,43 +1,58 @@
 import React, {useEffect, useState} from "react";
-import { Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
-import {useAuth0} from "@auth0/auth0-react";
-import {url} from '../../../consts';
+
 
 import './LandingPage.css';
 import Hero from "../../common/Hero/Hero";
 import Info from "../../common/Info/Info";
 import party from "../../../images/undraw_having_fun_iais.svg";
+import UserPool from "../../../services/UserPool";
+import { connect } from "react-redux";
+import { requestUser } from "../../../store/mutations";
+import {url} from '../../../consts';
 
-const LandingPage = () => {
+const LandingPage = ({isAuthenticated, requestUser}) => {
+  const history = useHistory();
+
   const [drink, setDrink] = useState(null);
-  const { isAuthenticated } = useAuth0();
 
   useEffect(() => {
-    // will need to refactor on redirect this is causing memory leak
-    function getCocktail() {
-      axios.get(`${url}/cocktail`).then((response) => {
-        setDrink(response.data['drinks'][0]);
-      });
+    if (!isAuthenticated){
+      if (!autoLoginUser()){
+        getCocktail();
+      };
     }
-    if (!drink) {
-      getCocktail();
+    
+    if (isAuthenticated) {
+      history.push('/dashboard');
     }
-  }, [drink]);
+
+  }, [isAuthenticated]);
+
+  function getCocktail() {
+    axios.get(`${url}/cocktail`).then((response) => {
+       setDrink(response.data['drinks'][0]);
+    }).catch((err) => {
+      console.error(err);
+    });
+  }
 
   function autoLoginUser() {
-    console.log(`isAuthenticated: ${isAuthenticated}`);
-    if (isAuthenticated) {
-      return <Redirect to="/dashboard"/>
+    console.log('running autologinuser');
+    const cognitoUser = UserPool.getCurrentUser();
+    if (cognitoUser !== null) {
+      let username = cognitoUser.getUsername();
+      console.log(`username: ${username}`);
+      requestUser(username);
+      return true;
     }
+    return false;
   }
 
   return (
 
     <div className="landingPage">
-      {
-        autoLoginUser()
-      }
       <Hero />
       {
         drink
@@ -66,6 +81,21 @@ const LandingPage = () => {
   )
 }
 
+function mapStateToProps(user) {
+  return {
+    isAuthenticated: user.isAuthenticated,
+  }
+}
+
+function mapDispatchToProps (dispatch){
+  return {
+    requestUser(username) {
+      dispatch(requestUser(username));
+    }
+  }
+}
+
+const ConnectedLandingPage = connect(mapStateToProps, mapDispatchToProps)(LandingPage)
 
 
-export default LandingPage;
+export default ConnectedLandingPage;

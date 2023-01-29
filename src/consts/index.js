@@ -1,2 +1,2 @@
-export const url = 'https://bartender-api-dev.com';
+export const url = 'https://bartendr-api-dev.herokuapp.com';
 export * from './urls';

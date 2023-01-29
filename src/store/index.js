@@ -84,6 +84,17 @@ export const store = createStore(
           return following;
       }
     },
+    isAuthenticated(isAuthenticated = false, action) {
+      switch(action.type) {
+        case(mutations.SET_STATE):
+          // have to change api schema to add authentication to true for isAuthenticated
+          if (action.state.hasOwnProperty("isAuthenticated"))
+            return action.state.isAuthenticated
+          return true
+        default:
+          return isAuthenticated;
+      }
+    }
   }),
   applyMiddleware(createLogger(), sagaMiddleware)
 );

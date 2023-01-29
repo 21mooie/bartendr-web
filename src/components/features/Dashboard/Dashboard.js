@@ -8,13 +8,14 @@ export const Dashboard = ({user}) => {
      <div>
        <h2>{user.username}</h2>
        <p>{user.email}</p>
+       <p>hello world</p>
      </div>
    );
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(user) {
   return {
-    user: state
+    user
   }
 }
 

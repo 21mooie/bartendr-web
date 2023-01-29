@@ -12,18 +12,17 @@ import * as mutations from '../../../store/mutations';
 import './Navigation.css';
 import {Routes} from "../../../consts/routes";
 import Sidebar from "../Sidebar/Sidebar";
-import { useAuth0 } from "@auth0/auth0-react";
 import CTAButton from "../../common/Button/CTAButton";
 import SearchBar from "./SearchBar/SearchBar";
 import useWindowDimensions from "../../../hooks/useWindowDimensions/useWindowDimensions";
+import UserPool from "../../../services/UserPool";
 
-const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser, history}) => {
+const Navigation = ({showMenuPaths, clearState, requestUser, history, isAuthenticated, username}) => {
   const routerLocation = useLocation();
   const [location, setLocation] = useState('');
   const [showMenu, setShowMenu] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
-  const { user, isAuthenticated, logout, loginWithRedirect } = useAuth0();
-  const [authChecked, setAuthChecked] = useState(false);
+  const [signOutClicked, setSignOutClicked] = useState(false);
   const [searchVal, setSearchVal] = useState('');
   const { width } = useWindowDimensions();
   const [showFullSearchBar, setShowFullSearchBar] = useState(false);
@@ -39,16 +38,18 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
       }
       return true;
     });
-    if (isAuthenticated && !authChecked) {
-      requestUser(user.nickname);
-      setAuthChecked(true);
+    if (!isAuthenticated && signOutClicked) {
+      setSignOutClicked(false);
+      history.push('/');
     }
-  }, [authChecked, isAuthenticated, location, requestUser, routerLocation.pathname, showMenuPaths, width]);
+  }, [location, routerLocation.pathname, showMenuPaths, width, isAuthenticated]);
 
   const signOut = () => {
     console.log('clicked');
-    logout({returnTo: window.location.origin});
+    const cognitoUser = UserPool.getCurrentUser();
+    cognitoUser.signOut();
     clearState();
+    setSignOutClicked(true);
   }
 
   function performSearch() {
@@ -64,11 +65,12 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
   return (
       <div className="navigation">
         {
-          !showFullSearchBar &&
+          !showFullSearchBar 
+          &&
           <Link to={isAuthenticated ? '/dashboard' : '/'} className="navigation__logo">Bartendr</Link>
         }
         {
-          showMenu && isAuthenticated? (
+          showMenu && isAuthenticated ? (
             <>
               <SearchBar
                 searchVal={searchVal}
@@ -83,7 +85,7 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
                     <p>Dashboard</p>
                 </Link>
 
-                <Link className={`navigation__icon ${location === `/user/${user.nickname}`  ? 'navigation__icon--active' : ''}`} to={`/user/${user.nickname}`}>
+                <Link className={`navigation__icon ${location === `/user/${username}`  ? 'navigation__icon--active' : ''}`} to={`/user/${username}`}>
                   <PersonIcon />
                   <p>Profile</p>
                 </Link>
@@ -146,7 +148,7 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
                         !showFullSearchBar &&
                         <CTAButton
                           text="Login/Signup"
-                          func={loginWithRedirect}
+                          func={()=> {history.push('/login')}}
                         />
                       }
                     </div>
@@ -162,23 +164,24 @@ const Navigation = ({showMenuPaths, clearState, requestUser, requestRegisterUser
           isOpen={showSidebar}
           triggerCloseSidebar={() => {setShowSidebar(false)}}
           triggerLogout={() => signOut()}
-          username={user.nickname}
         />
       }
       </div>
   )
-}
+};
 
 const NavigationWithRouter = withRouter(Navigation);
+
+const mapStateToProps = (user) => ({
+  username: user.username,
+  isAuthenticated: user.isAuthenticated
+});
 
 const mapDispatchToProps = (dispatch) => ({
   clearState() {
     dispatch(mutations.requestClearState());
-  },
-  requestUser(username){
-    dispatch(mutations.requestUser(username));
   }
 });
 
-export const ConnectedNavigation = connect(null, mapDispatchToProps)(NavigationWithRouter);
+export const ConnectedNavigation = connect(mapStateToProps, mapDispatchToProps)(NavigationWithRouter);
 
