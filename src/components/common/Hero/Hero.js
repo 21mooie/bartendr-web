@@ -3,10 +3,10 @@ import React from 'react';
 import './Hero.css'
 import video from "../../../videos/production ID_4694341.mp4";
 import CTAButton from "../Button/CTAButton";
-import { useAuth0 } from "@auth0/auth0-react";
+import { useHistory } from "react-router-dom";
 
 const Hero = () => {
-  const { loginWithRedirect } = useAuth0();
+  const history = useHistory();
   return (
     <div className="hero">
       <div className="hero__background">
@@ -18,7 +18,7 @@ const Hero = () => {
         <h1>Order the perfect drink, every time</h1>
         <p>Join a community of drinking enthusiasts and share recipes</p>
         <div className="hero__btnWrapper">
-          <CTAButton text="Get started" func={loginWithRedirect} icon={true}/>
+          <CTAButton text="Get started" icon={true} func={() => history.push('/login')}/>
         </div>
       </div>
     </div>

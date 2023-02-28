@@ -8,5 +8,6 @@ export const user = {
   uid : "",
   avi: "",
   followers: [],
-  following: []
+  following: [],
+  isAuthenticated: false
 }

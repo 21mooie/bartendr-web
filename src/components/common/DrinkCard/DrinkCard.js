@@ -7,7 +7,6 @@ import CardContent from '@material-ui/core/CardContent';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import { makeStyles } from '@material-ui/core/styles';
 import { withRouter } from "react-router";
-import { useAuth0 } from '@auth0/auth0-react';
 import {connect} from "react-redux";
 
 import './DrinkCard.css';
@@ -25,8 +24,7 @@ const useStyles = makeStyles({
   },
 });
 
-function DrinkCardwithRouter({drink, history, updateFavDrinks, username, favDrinks}) {
-  const { isAuthenticated } = useAuth0();
+function DrinkCardwithRouter({drink, history, updateFavDrinks, username, favDrinks, isAuthenticated}) {
   const [isFavDrink, setIsFavDrink] = useState(false);
   const [favDrinkToggled, setFavDrinkToggled] = useState(false);
   const classes = useStyles();
@@ -78,7 +76,7 @@ function DrinkCardwithRouter({drink, history, updateFavDrinks, username, favDrin
             </Typography>
           </div>
           {
-            isAuthenticated &&
+            isAuthenticated && 
             <div className="card__fav__container">
               <FavoriteIcon
                 fontSize="large"
@@ -91,7 +89,7 @@ function DrinkCardwithRouter({drink, history, updateFavDrinks, username, favDrin
           }
         </CardContent>
       </Card>
-    </div>
+      </div>
     }
     </>
   );
@@ -99,10 +97,11 @@ function DrinkCardwithRouter({drink, history, updateFavDrinks, username, favDrin
 
 const ConnectedDrinkCard = withRouter(DrinkCardwithRouter);
 
-function mapStateToProps(state) {
+function mapStateToProps(user) {
   return {
-    username: state.username,
-    favDrinks: state.fav_drinks
+    username: user.username,
+    favDrinks: user.fav_drinks,
+    isAuthenticated: user.isAuthenticated
   }
 }
 
