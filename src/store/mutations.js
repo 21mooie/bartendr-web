@@ -87,10 +87,9 @@ export const removeFromFollowing = (followedUserUid) => ({
   followedUserUid,
 });
 
-export const requestRegistration = (username, email) => ({
+export const requestRegistration = (registration) => ({
   type: REGISTER,
-  username,
-  email
+  registration
 });
 
 export const successfulRegistration = () => ({

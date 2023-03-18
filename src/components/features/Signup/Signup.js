@@ -18,7 +18,7 @@ const Signup = ({requestRegistration, isAuthenticated}) => {
   const [name, setName] = useState("");
   const [picture, setPicture] = useState("");
   const [gender, setGender] = useState("");
-  const [birthdate, setBirthdate] = useState("");
+  const [dob, setDateOfBirth] = useState("");
   const [phone_number, setPhoneNumber] = useState("");
 
   const [confirmationCode, setConfirmationCode] = useState("");
@@ -72,7 +72,11 @@ const Signup = ({requestRegistration, isAuthenticated}) => {
       cognitoUser.authenticateUser(authDetails,{
         onSuccess: (data) => {
           console.log("onSuccess: ", data);
-          requestRegistration(username, email);
+          const registration = {
+            username,
+            email
+          };
+          requestRegistration(registration);
         },
         onFailure: (err) => {
           console.error("onFailure: ", err);
@@ -113,7 +117,7 @@ const Signup = ({requestRegistration, isAuthenticated}) => {
             <TextField id="name" label="name" onChange={(event) => setName(event.target.value)} />          
             <TextField id="picture" label="picture" onChange={(event) => setPicture(event.target.value)} />
             <TextField id="gender" label="gender" onChange={(event) => setGender(event.target.value)} />
-            <TextField id="birthdate" label="birthdate" onChange={(event) => setBirthdate(event.target.value)} />          
+            <TextField id="dob" label="birth date" onChange={(event) => setDateOfBirth(event.target.value)} />          
             <TextField id="phone_number" label="phone_number" onChange={(event) => setPhoneNumber(event.target.value)} />
             <button type="submit " onClick={() => console.log('clicked')}>Sign up</button>
           </form>
@@ -141,8 +145,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps (dispatch){
   return {
-    requestRegistration(username, email) {
-      dispatch(requestRegistration(username, email));
+    requestRegistration(registration) {
+      dispatch(requestRegistration(registration));
     }
   }
 }
