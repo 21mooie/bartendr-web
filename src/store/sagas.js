@@ -114,8 +114,8 @@ export function* updateFollowersSaga() {
 export function* registerUser() {
   while(true) {
     try {
-      const { username, email } =  yield take(mutations.REGISTER);
-      let response  = yield axios.post(`${url}/register`, { username, email });
+      const { registration } =  yield take(mutations.REGISTER);
+      let response  = yield axios.post(`${url}/register`, { registration });
       let {data} = response;
       if (!data) {
         throw new Error('failed registration');
