@@ -20,7 +20,7 @@ const CTAButton = ({text, icon, func}) => {
       {text}
       {
        icon &&
-       <ArrowRightAltIcon className={classes.button} />
+       <ArrowRightAltIcon title="arrow" className={classes.button} />
       }
     </button>
   );
