@@ -1,0 +1,53 @@
+version: 2.1
+orbs:
+  node: circleci/node@5.1.0
+  aws-s3: circleci/aws-s3@3.1.1 # use the AWS S3 orb in your configuration
+jobs:
+  BLT:
+    executor:
+      name: node/default
+    steps:
+      - checkout
+      - run:
+          command: npm i
+          name: Build app
+      - run:
+          command: npm run lint
+          name: Lint app
+      - run:
+          command: npm run test
+          name: Run tests
+  deploy: # this can be any name you choose
+    docker: # Use the Docker executor for the deploy job
+        - image: innovatorjapan/awscli:latest
+    steps:
+        - checkout
+        - run:
+            command: npm run build
+            name: Build prod files
+        - aws-s3/sync:
+            arguments: |
+              --acl public-read \
+              --cache-control "max-age=86400"
+            from: bucket
+            to: 's3:::bartender-web-dev/*'
+            
+workflows:
+  build_workflow:
+    jobs:
+      - BLT:
+          filters:
+            branches:
+              ignore:
+                - develop
+                - master
+  dev_workflow:
+    jobs:
+      - BLT:
+          filters:
+            branches:
+              only:
+                - develop
+      - deploy:
+          requires:
+            - BLT

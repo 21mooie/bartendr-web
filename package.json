@@ -14,7 +14,7 @@
     "md5": "^2.3.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-notifications-component": "^3.0.3",
+    "react-notifications-component": "~3.0.3",
     "react-redux": "^7.2.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
@@ -35,6 +35,10 @@
   "eslintConfig": {
     "extends": "react-app"
   },
+  "eslintIgnore": [
+    "node_modules",
+    "build/*"
+  ],
   "browserslist": {
     "production": [
       ">0.2%",
