@@ -17,10 +17,16 @@ jobs:
       - run:
           command: npm run test
           name: Run tests
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
   deploy: # this can be any name you choose
     docker: # Use the Docker executor for the deploy job
         - image: innovatorjapan/awscli:latest
     steps:
+        - attach_workspace:
+              at: .
         - checkout
         - run:
             command: npm run build
@@ -29,7 +35,7 @@ jobs:
             arguments: |
               --acl public-read \
               --cache-control "max-age=86400"
-            from: bucket
+            from: '.'
             to: 's3:::bartender-web-dev/*'
             
 workflows:
@@ -41,6 +47,10 @@ workflows:
               ignore:
                 - develop
                 - master
+      - deploy:
+          requires:
+            - BLT
+
   dev_workflow:
     jobs:
       - BLT:
