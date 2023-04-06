@@ -31,6 +31,8 @@ jobs:
         - run:
             command: npm run build
             name: Build prod files
+            environment:
+              CI: false
         - aws-s3/sync:
             arguments: |
               --acl public-read \
