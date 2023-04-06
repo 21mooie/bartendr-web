@@ -29,10 +29,8 @@ jobs:
               at: .
         - checkout
         - run:
-            command: npm run build
+            command: CI = false && npm run build
             name: Build prod files
-            environment:
-              CI: false
         - aws-s3/sync:
             arguments: |
               --acl public-read \
