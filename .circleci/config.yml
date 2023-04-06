@@ -22,7 +22,8 @@ jobs:
           paths:
             - .
   deploy: # this can be any name you choose
-    executor: aws-cli/default
+    docker: # Use the Docker executor for the deploy job
+        - image: node:10.15.3
     steps:
         - attach_workspace:
               at: .
