@@ -23,7 +23,7 @@ jobs:
             - .
   deploy: # this can be any name you choose
     docker: # Use the Docker executor for the deploy job
-        - image: innovatorjapan/awscli:latest
+        - image: node:10.15.3
     steps:
         - attach_workspace:
               at: .
