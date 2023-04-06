@@ -17,16 +17,13 @@ jobs:
       - run:
           command: npm run test
           name: Run tests
-      - run:
-          command: export CI=false && npm run build
-          name: Build prod files
       - persist_to_workspace:
           root: .
           paths:
             - .
   build_prod:
-    executor:
-      name: node/default
+    docker: # Use the Docker executor for the deploy job
+        - image: node:10.15.3
     steps:
         - attach_workspace:
               at: .
