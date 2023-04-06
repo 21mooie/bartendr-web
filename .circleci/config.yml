@@ -44,7 +44,7 @@ jobs:
         - checkout
         - run:
             name: Upload file to S3
-            command: aws s3 sync ./build/ s3:::bartender-web-dev/* --delete
+            command: aws s3 sync ./build/ s3:::bartender-web-dev/ --delete
             
 workflows:
   build_workflow:
