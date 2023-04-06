@@ -17,13 +17,16 @@ jobs:
       - run:
           command: npm run test
           name: Run tests
+      - run:
+          command: export CI=false && npm run build
+          name: Build prod files
       - persist_to_workspace:
           root: .
           paths:
             - .
-  deploy: # this can be any name you choose
-    docker: # Use the Docker executor for the deploy job
-        - image: node:10.15.3
+  build_prod:
+    executor:
+      name: node/default
     steps:
         - attach_workspace:
               at: .
@@ -31,6 +34,17 @@ jobs:
         - run:
             command: export CI=false && npm run build
             name: Build prod files
+        - persist_to_workspace:
+            root: .
+            paths:
+              - .
+  deploy: # this can be any name you choose
+    docker: # Use the Docker executor for the deploy job
+        - image: innovatorjapan/awscli:latest
+    steps:
+        - attach_workspace:
+              at: .
+        - checkout
         - run:
             name: Upload file to S3
             command: aws s3 sync ./build/ s3:::bartender-web-dev/* --delete
@@ -55,6 +69,9 @@ workflows:
             branches:
               only:
                 - develop
-      - deploy:
+      - build_prod:
           requires:
             - BLT
+      - deploy:
+          requires:
+            - build_prod
