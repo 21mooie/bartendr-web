@@ -55,6 +55,9 @@ workflows:
               ignore:
                 - develop
                 - master
+      - build_prod:
+          requires:
+            - BLT
       - deploy:
           requires:
             - BLT
