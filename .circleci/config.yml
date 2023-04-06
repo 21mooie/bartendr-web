@@ -60,7 +60,7 @@ workflows:
             - BLT
       - deploy:
           requires:
-            - BLT
+            - build_prod
 
   dev_workflow:
     jobs:
