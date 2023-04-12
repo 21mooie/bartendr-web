@@ -6,8 +6,8 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import { makeStyles } from '@material-ui/core/styles';
-import { withRouter } from "react-router";
 import {connect} from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import './DrinkCard.css';
 import * as mutations from "../../../store/mutations";
@@ -24,11 +24,12 @@ const useStyles = makeStyles({
   },
 });
 
-function DrinkCardwithRouter({drink, history, updateFavDrinks, username, favDrinks, isAuthenticated}) {
+function DrinkCard({drink, updateFavDrinks, username, favDrinks, isAuthenticated}) {
   const [isFavDrink, setIsFavDrink] = useState(false);
   const [favDrinkToggled, setFavDrinkToggled] = useState(false);
   const classes = useStyles();
   const { width } = useWindowDimensions();
+  const history = useHistory();
 
   useEffect(() => {
     setIsFavDrink(hasUserFaved());
@@ -84,6 +85,7 @@ function DrinkCardwithRouter({drink, history, updateFavDrinks, username, favDrin
                 onClick={() => {
                   setFavDrinkToggled(true);
                 }}
+                title="Favorite Icon"
               />
             </div>
           }
@@ -94,8 +96,6 @@ function DrinkCardwithRouter({drink, history, updateFavDrinks, username, favDrin
     </>
   );
 }
-
-const ConnectedDrinkCard = withRouter(DrinkCardwithRouter);
 
 function mapStateToProps(user) {
   return {
@@ -113,6 +113,6 @@ function mapDispatchToProps (dispatch, ownProps){
   }
 }
 
-const DrinkCard = connect(mapStateToProps, mapDispatchToProps)(ConnectedDrinkCard);
+const ConnectedDrinkCard = connect(mapStateToProps, mapDispatchToProps)(DrinkCard);
 
-export default DrinkCard;
+export default ConnectedDrinkCard;

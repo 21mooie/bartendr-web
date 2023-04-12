@@ -1,7 +1,9 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import CTAButton from './CTAButton';
 import userEvent from '@testing-library/user-event';
+
+import CTAButton from './CTAButton';
+
 
 describe('CTAButton', () => {
     test('should render given text.', () => {

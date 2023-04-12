@@ -2,7 +2,7 @@ import React from 'react';
 import LocalBarIcon from '@material-ui/icons/LocalBar';
 
 import './UserFavDrinks.css';
-import DrinkCard from '../../../common/DrinkCard/DrinkCard';
+import ConnectedDrinkCard from '../../../common/DrinkCard/DrinkCard';
 
 
 function UserFavDrinks({fav_drinks}) {
@@ -16,7 +16,7 @@ function UserFavDrinks({fav_drinks}) {
                             {
                                 fav_drinks.drinks.map((fav_drink) => (
                                     <div className="userFavDrinks__item" key={fav_drink.idDrink}>
-                                        <DrinkCard drink={fav_drink}/>
+                                        <ConnectedDrinkCard drink={fav_drink}/>
                                     </div>
                                 ))
                             }
