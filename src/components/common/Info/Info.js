@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './Info.css';
-import DrinkCard from "../DrinkCard/DrinkCard";
+import ConnectedDrinkCard from "../DrinkCard/DrinkCard";
 
 function Info({drink, img, topline, heading, subtitle, imgLeft, dark}) {
   return (
@@ -23,7 +23,7 @@ function Info({drink, img, topline, heading, subtitle, imgLeft, dark}) {
               }
               {
                 drink &&
-                <DrinkCard drink={drink} />
+                <ConnectedDrinkCard drink={drink} />
               }
             </div>
           </div>
