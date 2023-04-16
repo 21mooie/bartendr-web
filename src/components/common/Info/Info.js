@@ -19,7 +19,10 @@ function Info({drink, img, topline, heading, subtitle, imgLeft, dark}) {
             <div className="info__img_wrap">
               {
                 img &&
-                  <img src={img} />
+                <img
+                src={img}
+                alt= "Friends enjoying a drink."
+                />
               }
               {
                 drink &&

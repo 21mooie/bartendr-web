@@ -25,3 +25,7 @@
 .card__fav__container > svg {
     cursor: pointer;
 }
+
+.hide-card {
+    display: none
+}
