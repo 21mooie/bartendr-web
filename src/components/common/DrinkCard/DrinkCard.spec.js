@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
@@ -101,6 +101,7 @@ describe('ConnectedDrinkCard', () => {
         };
         store = mockStore({
             username: 'test_username',
+            // see if the reason fav wasn't working because this drink was already in the fav_drinks
             fav_drinks: {drinks: [drink], numDrinks: 1},
             isAuthenticated: true
         });
@@ -124,5 +125,12 @@ describe('ConnectedDrinkCard', () => {
       // store.dispatch(mutations.requestUpdateFavDrinks('test_username', drink, false))
       // console.log(store.getActions());
       // expect(updateFavDrinksMock).resolves.toHaveBeenCalledTimes(1);
+    });
+
+    test('should test of on image load function is triggered.', () => {
+      render(<Provider store={store} ><ConnectedDrinkCard drink={drink}/></Provider>);
+      const image = screen.getByAltText("Applecar");
+      fireEvent.load(image);
+      expect(image).toBeInTheDocument();
     });
 });

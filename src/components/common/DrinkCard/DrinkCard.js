@@ -27,6 +27,7 @@ const useStyles = makeStyles({
 function DrinkCard({drink, updateFavDrinks, username, favDrinks, isAuthenticated}) {
   const [isFavDrink, setIsFavDrink] = useState(false);
   const [favDrinkToggled, setFavDrinkToggled] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
   const classes = useStyles();
   const { width } = useWindowDimensions();
   const history = useHistory();
@@ -51,46 +52,47 @@ function DrinkCard({drink, updateFavDrinks, username, favDrinks, isAuthenticated
     <>
     {
       drink &&
-      <div className="card">
-      <Card className={width > 800 ? classes.card_large : classes.card_mini}>
-        <CardActionArea
-          onClick = {() => history.push({pathname: `/drink/${drink.idDrink}`})
-          }
-        >
-          <CardMedia
-            component="img"
-            alt={`${drink.strDrink}`}
-            src={drink['strDrinkThumb']}
-            title="Drink up"
-          />
-        </CardActionArea>
-        <CardContent className="card__content">
-          <div className="card__info">
-            <Typography gutterBottom variant="h5" component="h2">
-              {drink.strDrink}
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-              Made of {drink.strIngredient1}
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-              {drink.strAlcoholic}
-            </Typography>
-          </div>
-          {
-            isAuthenticated && 
-            <div className="card__fav__container">
-              <FavoriteIcon
-                fontSize="large"
-                color={isFavDrink? 'secondary' : 'disabled'}
-                onClick={() => {
-                  setFavDrinkToggled(true);
-                }}
-                title="Favorite Icon"
-              />
+      <div className={imageLoaded ? "card" : "hide-card"}>
+        <Card className={width > 800 ? classes.card_large : classes.card_mini}>
+          <CardActionArea
+            onClick = {() => history.push({pathname: `/drink/${drink.idDrink}`})
+            }
+          >
+            <CardMedia
+              component="img"
+              alt={`${drink.strDrink}`}
+              src={drink['strDrinkThumb']}
+              onLoad={() => setImageLoaded(true)}
+              title="Drink up"
+            />
+          </CardActionArea>
+          <CardContent className="card__content">
+            <div className="card__info">
+              <Typography gutterBottom variant="h5" component="h2">
+                {drink.strDrink}
+              </Typography>
+              <Typography variant="body2" color="textSecondary" component="p">
+                Made of {drink.strIngredient1}
+              </Typography>
+              <Typography variant="body2" color="textSecondary" component="p">
+                {drink.strAlcoholic}
+              </Typography>
             </div>
-          }
-        </CardContent>
-      </Card>
+            {
+              isAuthenticated && 
+              <div className="card__fav__container">
+                <FavoriteIcon
+                  fontSize="large"
+                  color={isFavDrink? 'secondary' : 'disabled'}
+                  onClick={() => {
+                    setFavDrinkToggled(true);
+                  }}
+                  title="Favorite Icon"
+                />
+              </div>
+            }
+          </CardContent>
+        </Card>
       </div>
     }
     </>
