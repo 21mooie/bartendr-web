@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import { connect } from "react-redux";
-import { useAuth0 } from "@auth0/auth0-react";
 
 import './Drink.css';
 import NotFound from "../NotFound/NotFound";
@@ -10,13 +9,12 @@ import {url} from "../../../consts";
 import * as mutations from '../../../store/mutations';
 
 
-export function Drink({ username, favDrinks, match, updateFavDrinks }) {
+export function Drink({ username, favDrinks, match, updateFavDrinks, isAuthenticated }) {
   const {idDrink} = match.params;
   const [drink, setDrink] = useState(null);
   const [drinkNotFound, setDrinkNotFound] = useState(null);
   const [isFavDrink, setIsFavDrink] = useState(false);
   const [favDrinkToggled, setFavDrinkToggled] = useState(false);
-  const { isAuthenticated } = useAuth0();
 
   useEffect( () => {
     setIsFavDrink(hasUserFaved());
@@ -59,14 +57,15 @@ export function Drink({ username, favDrinks, match, updateFavDrinks }) {
                 <p>Category: {drink.strCategory}</p>
                 <div className="drink__fav__icon">
                   {
-                    isAuthenticated ?
+                      isAuthenticated ?
                       <FavoriteIcon
                         fontSize="large"
                         color={isFavDrink? 'secondary' : 'disabled'}
                         onClick={() => {
                           setFavDrinkToggled(true);
                         }}
-                      /> :
+                      /> 
+                      :
                       null
                   }
                 </div>
@@ -98,10 +97,11 @@ export function Drink({ username, favDrinks, match, updateFavDrinks }) {
   )
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(user) {
   return {
-    username: state.username,
-    favDrinks: state.fav_drinks
+    username: user.username,
+    favDrinks: user.fav_drinks,
+    isAuthenticated: user.isAuthenticated
   }
 }
 

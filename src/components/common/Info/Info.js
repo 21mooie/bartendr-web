@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './Info.css';
-import DrinkCard from "../DrinkCard/DrinkCard";
+import ConnectedDrinkCard from "../DrinkCard/DrinkCard";
 
 function Info({drink, img, topline, heading, subtitle, imgLeft, dark}) {
   return (
@@ -19,11 +19,14 @@ function Info({drink, img, topline, heading, subtitle, imgLeft, dark}) {
             <div className="info__img_wrap">
               {
                 img &&
-                  <img src={img} />
+                <img
+                src={img}
+                alt= "Friends enjoying a drink."
+                />
               }
               {
                 drink &&
-                <DrinkCard drink={drink} />
+                <ConnectedDrinkCard drink={drink} />
               }
             </div>
           </div>

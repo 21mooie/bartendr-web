@@ -18,6 +18,9 @@ export const REQUEST_UPDATE_AVI =  `REQUEST_UPDATE_AVI`;
 export const SUCCESSFUL_UPDATE_AVI = `SUCCESSFUL_UPDATE_AVI`;
 export const FAILED_UPDATE_AVI = `FAILED_UPDATE_AVI`;
 export const CLEAR_AVI = `CLEAR_AVI`;
+export const REGISTER = `REGISTER`;
+export const REGISTER_SUCCESS = `REGISTER_SUCCESS`;
+export const REGISTER_FAILED = `REGISTER_FAILED`;
 
 
 export const requestUser = (username) => ({
@@ -106,4 +109,15 @@ export const failedUpdateAvi = () => ({
 
 export const clearAvi = () => ({
   type : CLEAR_AVI
+export const requestRegistration = (registration) => ({
+  type: REGISTER,
+  registration
+});
+
+export const successfulRegistration = () => ({
+  type: REGISTER_SUCCESS
+});
+
+export const failedRegistration = () => ({
+  type: REGISTER_FAILED
 });

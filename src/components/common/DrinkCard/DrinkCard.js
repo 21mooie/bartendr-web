@@ -6,9 +6,8 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import { makeStyles } from '@material-ui/core/styles';
-import { withRouter } from "react-router";
-import { useAuth0 } from '@auth0/auth0-react';
 import {connect} from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import './DrinkCard.css';
 import * as mutations from "../../../store/mutations";
@@ -25,12 +24,13 @@ const useStyles = makeStyles({
   },
 });
 
-function DrinkCardwithRouter({drink, history, updateFavDrinks, username, favDrinks}) {
-  const { isAuthenticated } = useAuth0();
+function DrinkCard({drink, updateFavDrinks, username, favDrinks, isAuthenticated}) {
   const [isFavDrink, setIsFavDrink] = useState(false);
   const [favDrinkToggled, setFavDrinkToggled] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
   const classes = useStyles();
   const { width } = useWindowDimensions();
+  const history = useHistory();
 
   useEffect(() => {
     setIsFavDrink(hasUserFaved());
@@ -52,57 +52,58 @@ function DrinkCardwithRouter({drink, history, updateFavDrinks, username, favDrin
     <>
     {
       drink &&
-      <div className="card">
-      <Card className={width > 800 ? classes.card_large : classes.card_mini}>
-        <CardActionArea
-          onClick = {() => history.push({pathname: `/drink/${drink.idDrink}`})
-          }
-        >
-          <CardMedia
-            component="img"
-            alt={`${drink.strDrink}`}
-            src={drink['strDrinkThumb']}
-            title="Drink up"
-          />
-        </CardActionArea>
-        <CardContent className="card__content">
-          <div className="card__info">
-            <Typography gutterBottom variant="h5" component="h2">
-              {drink.strDrink}
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-              Made of {drink.strIngredient1}
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-              {drink.strAlcoholic}
-            </Typography>
-          </div>
-          {
-            isAuthenticated &&
-            <div className="card__fav__container">
-              <FavoriteIcon
-                fontSize="large"
-                color={isFavDrink? 'secondary' : 'disabled'}
-                onClick={() => {
-                  setFavDrinkToggled(true);
-                }}
-              />
+      <div className={imageLoaded ? "card" : "hide-card"}>
+        <Card className={width > 800 ? classes.card_large : classes.card_mini}>
+          <CardActionArea
+            onClick = {() => history.push({pathname: `/drink/${drink.idDrink}`})
+            }
+          >
+            <CardMedia
+              component="img"
+              alt={`${drink.strDrink}`}
+              src={drink['strDrinkThumb']}
+              onLoad={() => setImageLoaded(true)}
+              title="Drink up"
+            />
+          </CardActionArea>
+          <CardContent className="card__content">
+            <div className="card__info">
+              <Typography gutterBottom variant="h5" component="h2">
+                {drink.strDrink}
+              </Typography>
+              <Typography variant="body2" color="textSecondary" component="p">
+                Made of {drink.strIngredient1}
+              </Typography>
+              <Typography variant="body2" color="textSecondary" component="p">
+                {drink.strAlcoholic}
+              </Typography>
             </div>
-          }
-        </CardContent>
-      </Card>
-    </div>
+            {
+              isAuthenticated && 
+              <div className="card__fav__container">
+                <FavoriteIcon
+                  fontSize="large"
+                  color={isFavDrink? 'secondary' : 'disabled'}
+                  onClick={() => {
+                    setFavDrinkToggled(true);
+                  }}
+                  title="Favorite Icon"
+                />
+              </div>
+            }
+          </CardContent>
+        </Card>
+      </div>
     }
     </>
   );
 }
 
-const ConnectedDrinkCard = withRouter(DrinkCardwithRouter);
-
-function mapStateToProps(state) {
+function mapStateToProps(user) {
   return {
-    username: state.username,
-    favDrinks: state.fav_drinks
+    username: user.username,
+    favDrinks: user.fav_drinks,
+    isAuthenticated: user.isAuthenticated
   }
 }
 
@@ -114,6 +115,6 @@ function mapDispatchToProps (dispatch, ownProps){
   }
 }
 
-const DrinkCard = connect(mapStateToProps, mapDispatchToProps)(ConnectedDrinkCard);
+const ConnectedDrinkCard = connect(mapStateToProps, mapDispatchToProps)(DrinkCard);
 
-export default DrinkCard;
+export default ConnectedDrinkCard;

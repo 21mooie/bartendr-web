@@ -17,11 +17,22 @@ export function* getUserSaga() {
         throw new Error();
       }
       yield put(mutations.setState(data.state));
-
     } catch(err) {
       yield put(mutations.failedSetUser());
       yield put(mutations.requestClearState());
-      yield put(mutations.setState(user));
+      store.addNotification({
+        title: "Uh-oh!",
+        message: "Could not load user data",
+        type: "danger",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 3500,
+          onScreen: true
+        }
+      });
     }
   }
 }
@@ -119,7 +130,42 @@ export function* updateAviSaga() {
       yield put(mutations.failedUpdateAvi());
       store.addNotification({
         title: "Uh-oh!",
-        message: "This action cannot be completed at this time. Try again later.",
+        message: "Registration was unsuccessful",
+        type: "danger",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 3500,
+          onScreen: true
+        }
+      });
+    }
+  }
+}
+
+// this creates user document on api
+export function* registerUser() {
+  while(true) {
+    try {
+      const { registration } =  yield take(mutations.REGISTER);
+      let response  = yield axios.post(`${url}/register`, { registration });
+      let {data} = response;
+      if (!data) {
+        throw new Error('failed registration');
+      };
+      console.log('registration succeeded')
+      yield put(mutations.setState(data.state));
+      console.log('set state succeeded');
+      
+    } catch (err) {
+      if (err.message === 'failed registration') {
+        console.error('registration failed');
+      }
+      store.addNotification({
+        title: "Uh-oh!",
+        message: "Registration was unsuccessful",
         type: "danger",
         insert: "top",
         container: "top-right",

@@ -1,0 +1,71 @@
+version: 2.1
+orbs:
+  node: circleci/node@5.1.0
+  aws-cli: circleci/aws-cli@3.1.5
+jobs:
+  BLT:
+    executor:
+      name: node/default
+    steps:
+      - checkout
+      - run:
+          command: npm i
+          name: Build app
+      - run:
+          command: npm run lint
+          name: Lint app
+      - run:
+          command: npm run test
+          name: Run tests
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+  build_prod:
+    docker: # Use the Docker executor for the deploy job
+        - image: node:10.15.3
+    steps:
+        - attach_workspace:
+              at: .
+        - checkout
+        - run:
+            command: export CI=false && npm run build
+            name: Build prod files
+        - persist_to_workspace:
+            root: .
+            paths:
+              - .
+  deploy: # this can be any name you choose
+    docker: # Use the Docker executor for the deploy job
+        - image: innovatorjapan/awscli:latest
+    steps:
+        - attach_workspace:
+              at: .
+        - checkout
+        - run:
+            name: Upload file to S3
+            command: aws s3 sync build s3://bartender-web-dev --delete
+            
+workflows:
+  build_workflow:
+    jobs:
+      - BLT:
+          filters:
+            branches:
+              ignore:
+                - develop
+                - master
+
+  dev_workflow:
+    jobs:
+      - BLT:
+          filters:
+            branches:
+              only:
+                - develop
+      - build_prod:
+          requires:
+            - BLT
+      - deploy:
+          requires:
+            - build_prod

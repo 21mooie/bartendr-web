@@ -14,6 +14,8 @@ import {Footer} from "./components/features/Footer/Footer";
 import ProtectedRoute from "./components/common/ProtectedRoute/ProtectedRoute";
 import Explore from "./components/features/Explore/Explore";
 import ConnectedDrink from "./components/features/Drink/Drink";
+import ConnectedSignup from './components/features/Signup/Signup';
+import ConnectedLogin from './components/features/Login/Login';
 
 
 
@@ -37,6 +39,8 @@ function App() {
             <Route path="/drink/:idDrink" component={ConnectedDrink} />
             <Route path="/ingredient" component={ConnectedDrink} />
             <Route path="/explore" component={Explore} />
+            <Route path="/login" component={ConnectedLogin} />
+            <Route path="/signup" component={ConnectedSignup} />
             <Route component={NotFound} />
           </Switch>
           <Footer />
