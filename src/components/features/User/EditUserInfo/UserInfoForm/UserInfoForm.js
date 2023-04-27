@@ -1,12 +1,111 @@
-import React from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import ImageUploading from "react-images-uploading";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
+import ReactCrop, {
+  centerCrop,
+  makeAspectCrop,
+  Crop,
+  PixelCrop,
+} from 'react-image-crop'
+import 'react-image-crop/dist/ReactCrop.css'
 
 function UserInfoForm({toggleUpdateInfoForm, updateAvi}) {
-  const [avi, setAvi] = React.useState([]);
+  const [avi, setAvi] = useState([]);
+  const [crop, setCrop] = useState({
+    unit: 'px', // Can be 'px' or '%'
+    x: 25,
+    y: 25,
+    width: 300,
+    height: 300
+  });
+  const [completedCrop, setCompletedCrop] = useState();
+  const imgRef = useRef(null);
+  const previewCanvasRef = useRef(null);
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (
+        completedCrop?.width &&
+        completedCrop?.height &&
+        imgRef.current &&
+        previewCanvasRef.current
+      ) {
+        // We use canvasPreview as it's much faster than imgPreview.
+        canvasPreview(
+          imgRef.current,
+          previewCanvasRef.current,
+          completedCrop
+        )
+      }
+    },100);
+  }, [completedCrop]);
+
+  function canvasPreview(
+    image,
+    canvas,
+    crop,
+    scale = 1,
+    rotate = 0,
+  ) {
+    const ctx = canvas.getContext('2d')
+  
+    if (!ctx) {
+      throw new Error('No 2d context')
+    }
+  
+    const scaleX = image.naturalWidth / image.width
+    const scaleY = image.naturalHeight / image.height
+    // devicePixelRatio slightly increases sharpness on retina devices
+    // at the expense of slightly slower render times and needing to
+    // size the image back down if you want to download/upload and be
+    // true to the images natural size.
+    const pixelRatio = window.devicePixelRatio
+    // const pixelRatio = 1
+  
+    canvas.width = Math.floor(crop.width * scaleX * pixelRatio)
+    canvas.height = Math.floor(crop.height * scaleY * pixelRatio)
+  
+    ctx.scale(pixelRatio, pixelRatio)
+    ctx.imageSmoothingQuality = 'high'
+  
+    const cropX = crop.x * scaleX
+    const cropY = crop.y * scaleY
+  
+    const rotateRads = rotate * Math.PI / 180
+    const centerX = image.naturalWidth / 2
+    const centerY = image.naturalHeight / 2
+  
+    ctx.save()
+  
+    // 5) Move the crop origin to the canvas origin (0,0)
+    ctx.translate(-cropX, -cropY)
+    // 4) Move the origin to the center of the original position
+    ctx.translate(centerX, centerY)
+    // 3) Rotate around the origin
+    ctx.rotate(rotateRads)
+    // 2) Scale the image
+    ctx.scale(scale, scale)
+    // 1) Move the center of the image to the origin (0,0)
+    ctx.translate(-centerX, -centerY)
+    ctx.drawImage(
+      image,
+      0,
+      0,
+      image.naturalWidth,
+      image.naturalHeight,
+      0,
+      0,
+      image.naturalWidth,
+      image.naturalHeight,
+    )
+  
+    ctx.restore()
+  }
+
   const onChange = (imageList, addUpdateIndex) => {
     // data for submit
+    console.log('imagelist ', imageList);
     setAvi(imageList);
   };
 
@@ -14,10 +113,15 @@ function UserInfoForm({toggleUpdateInfoForm, updateAvi}) {
     e.preventDefault();
     if (avi.length === 1) {
       // turn into blob and send mutation for adding to payload
-      updateAvi(avi[0].file);
-      toggleUpdateInfoForm();
+      // updateAvi(avi[0].file);
+      // toggleUpdateInfoForm();
+      console.log(completedCrop);
+      // completedCrop?.width &&
+      //   completedCrop?.height &&
+      //   imgRef.current &&
     }
   }
+
   return (
     <div className='userInfoForm'>
       <h2>Edit your information</h2>
@@ -69,9 +173,42 @@ function UserInfoForm({toggleUpdateInfoForm, updateAvi}) {
             </div>
           )}
         </ImageUploading>
+
+        {
+          avi.length > 0 &&
+          <ReactCrop
+            crop={crop} 
+            onChange={c => setCrop(c)} 
+            onComplete={(c) => setCompletedCrop(c)}
+            circularCrop={true}
+            locked={true}
+            maxWidth="300"
+            maxHeight="300"
+          >
+            <img 
+              src={avi[0].data_url}
+              alt="Avi preview"
+              style={{maxWidth: 700 }}
+              ref={imgRef}
+            />
+          </ReactCrop>
+        }
         <TextField id="information " label="New information" onChange={event => console.log(event.target.value)}/>
         <Button onClick={toggleUpdateInfoForm}>Cancel</Button>
         <Button type="submit">Submit</Button>
+        {
+          completedCrop &&
+          <canvas
+          ref={previewCanvasRef}
+          style={{
+            border: '1px solid black',
+            objectFit: 'contain',
+            width: completedCrop.width,
+            height: completedCrop.height,
+          }}
+        />
+        }
+        
       </form>
 
     </div>

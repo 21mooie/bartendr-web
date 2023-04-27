@@ -109,6 +109,8 @@ export const failedUpdateAvi = () => ({
 
 export const clearAvi = () => ({
   type : CLEAR_AVI
+});
+
 export const requestRegistration = (registration) => ({
   type: REGISTER,
   registration
