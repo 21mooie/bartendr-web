@@ -130,7 +130,7 @@ export function* updateAviSaga() {
       yield put(mutations.failedUpdateAvi());
       store.addNotification({
         title: "Uh-oh!",
-        message: "Registration was unsuccessful",
+        message: "Avi upload was unsuccessful!",
         type: "danger",
         insert: "top",
         container: "top-right",

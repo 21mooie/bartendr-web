@@ -2,16 +2,12 @@ import React, {useEffect, useRef, useState} from 'react';
 import ImageUploading from "react-images-uploading";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import ReactCrop, {
-  centerCrop,
-  makeAspectCrop,
-  Crop,
-  PixelCrop,
-} from 'react-image-crop'
+import ReactCrop from 'react-image-crop'
 import 'react-image-crop/dist/ReactCrop.css'
 
 function UserInfoForm({toggleUpdateInfoForm, updateAvi}) {
-  const [avi, setAvi] = useState([]);
+  const [upload, setUpload] = useState(null);
+  const [avi, setAvi] = useState(null);
   const [crop, setCrop] = useState({
     unit: 'px', // Can be 'px' or '%'
     x: 25,
@@ -22,6 +18,8 @@ function UserInfoForm({toggleUpdateInfoForm, updateAvi}) {
   const [completedCrop, setCompletedCrop] = useState();
   const imgRef = useRef(null);
   const previewCanvasRef = useRef(null);
+  const blobUrlRef = useRef('');
+  const hiddenAnchorRef = useRef(null);
 
   useEffect(() => {
     setTimeout(() => {
@@ -39,7 +37,14 @@ function UserInfoForm({toggleUpdateInfoForm, updateAvi}) {
         )
       }
     },100);
-  }, [completedCrop]);
+
+    if(avi){
+      console.log('avi ', avi);
+      console.log('upload ', upload);
+      updateAvi(avi);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [completedCrop, avi, upload]);
 
   function canvasPreview(
     image,
@@ -106,19 +111,17 @@ function UserInfoForm({toggleUpdateInfoForm, updateAvi}) {
   const onChange = (imageList, addUpdateIndex) => {
     // data for submit
     console.log('imagelist ', imageList);
-    setAvi(imageList);
+    setUpload(imageList[0]);
   };
 
   function clickedSubmit(e) {
     e.preventDefault();
-    if (avi.length === 1) {
+    if (completedCrop) {
       // turn into blob and send mutation for adding to payload
-      // updateAvi(avi[0].file);
-      // toggleUpdateInfoForm();
       console.log(completedCrop);
-      // completedCrop?.width &&
-      //   completedCrop?.height &&
-      //   imgRef.current &&
+      previewCanvasRef.current.toBlob((blob) => {
+        setAvi(blob);
+      });
     }
   }
 
@@ -127,7 +130,6 @@ function UserInfoForm({toggleUpdateInfoForm, updateAvi}) {
       <h2>Edit your information</h2>
       <form noValidate onSubmit={(e) => clickedSubmit(e)}>
         <ImageUploading
-          value={avi}
           onChange={onChange}
           dataURLKey="data_url"
           acceptType={['jpg','png']}
@@ -175,7 +177,7 @@ function UserInfoForm({toggleUpdateInfoForm, updateAvi}) {
         </ImageUploading>
 
         {
-          avi.length > 0 &&
+          upload &&
           <ReactCrop
             crop={crop} 
             onChange={c => setCrop(c)} 
@@ -186,8 +188,8 @@ function UserInfoForm({toggleUpdateInfoForm, updateAvi}) {
             maxHeight="300"
           >
             <img 
-              src={avi[0].data_url}
-              alt="Avi preview"
+              src={upload.data_url}
+              alt="Uncropped Preview"
               style={{maxWidth: 700 }}
               ref={imgRef}
             />
@@ -197,7 +199,7 @@ function UserInfoForm({toggleUpdateInfoForm, updateAvi}) {
         <Button onClick={toggleUpdateInfoForm}>Cancel</Button>
         <Button type="submit">Submit</Button>
         {
-          completedCrop &&
+          !!completedCrop &&
           <canvas
           ref={previewCanvasRef}
           style={{
