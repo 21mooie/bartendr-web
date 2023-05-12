@@ -1,0 +1,16 @@
+.userAvi {
+    margin-bottom: 20px;
+}
+
+.userAvi__image {
+    height: 150px;
+    width: 150px;
+    border-radius: 200px;
+}
+
+@media only screen and (min-width: 768px) {
+    .userAvi__image {
+        height: 200px;
+        width: 200px;
+    }
+}

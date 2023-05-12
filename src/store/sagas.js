@@ -110,6 +110,41 @@ export function* updateFollowersSaga() {
   }
 }
 
+export function* updateAviSaga() {
+  while (true) {
+    const { uid, avi } = yield take(mutations.REQUEST_UPDATE_AVI);
+    try {
+      const formData = new FormData();
+      formData.append('uid', uid);
+      formData.append('avi', avi);
+      let response = yield axios({
+        method: 'post',
+        url: `${url}/users/avi`,
+        data: formData,
+        headers: {'Content-Type': 'multipart/form-data' }
+      });
+      const { data } = response;
+      yield put (mutations.clearAvi());
+      yield put (mutations.successfulUpdateAvi(data.state));
+    } catch (err) {
+      yield put(mutations.failedUpdateAvi());
+      store.addNotification({
+        title: "Uh-oh!",
+        message: "Avi upload was unsuccessful!",
+        type: "danger",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 3500,
+          onScreen: true
+        }
+      });
+    }
+  }
+}
+
 // this creates user document on api
 export function* registerUser() {
   while(true) {
@@ -143,6 +178,4 @@ export function* registerUser() {
       });
     }
   }
-  
- 
 }

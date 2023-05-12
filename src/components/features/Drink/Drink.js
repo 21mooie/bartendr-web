@@ -33,7 +33,7 @@ export function Drink({ username, favDrinks, match, updateFavDrinks, isAuthentic
       updateFavDrinks(username, drink, !isFavDrink);
       setFavDrinkToggled(false);
     }
-  }, [updateFavDrinks, drink, isFavDrink, idDrink, favDrinkToggled, hasUserFaved, username]);
+  }, [updateFavDrinks, drink, isFavDrink, idDrink, favDrinkToggled, hasUserFaved, username, favDrinks]);
 
   function hasUserFaved() {
     // must return negation because every only stops when evaled false
