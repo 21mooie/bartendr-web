@@ -9,99 +9,127 @@ import {user} from '../consts/defaultState';
 
 
 const sagaMiddleware = createSagaMiddleWare();
-
+// combineReducers({
+//   username(username = '', action) {
+//     switch(action.type) {
+//       case (mutations.SET_STATE):
+//         return action.state.username;
+//       case mutations.CHANGE_USERNAME:
+//         return username = action.newUsername;
+//       default:
+//         return username;
+//     }
+//   },
+//   email(email = '', action) {
+//     switch(action.type) {
+//       case mutations.SET_STATE:
+//         return action.state.email;
+//       default:
+//         return email;
+//     }
+//   },
+//   uid(uid = '', action) {
+//     switch(action.type) {
+//       case(mutations.SET_STATE):
+//         return action.state.uid;
+//       default:
+//         return uid;
+//     }
+//   },
+//   avi: aviReducer,
+//   fav_drinks(fav_drinks = user.fav_drinks, action) {
+//     switch(action.type) {
+//       case(mutations.SET_STATE):
+//         return action.state.fav_drinks;
+//       case(mutations.ADD_DRINK_TO_STATE):
+//         fav_drinks.drinks.push(action.drink);
+//         fav_drinks.numDrinks += 1;
+//         return {...fav_drinks};
+//       case(mutations.REMOVE_DRINK_FROM_STATE):
+//         fav_drinks.drinks = fav_drinks.drinks.filter(drink => drink.idDrink !== action.idDrink);
+//         fav_drinks.numDrinks -= 1;
+//         return {...fav_drinks};
+//       default:
+//         return fav_drinks;
+//     }
+//   },
+//   followers(followers = [], action) {
+//     switch(action.type) {
+//       case(mutations.SET_STATE):
+//         return action.state.followers || null;
+//       default:
+//         return followers;
+//     }
+//   },
+//   following(following = [], action) {
+//     switch(action.type) {
+//       case(mutations.SET_STATE):
+//         return action.state.following || null;
+//       case(mutations.ADD_USER_TO_FOLLOWING):
+//         following.push(action.followedUserUid);
+//         return [...following];
+//       case(mutations.REMOVE_USER_FROM_FOLLOWING):
+//         following = following.filter(uid => uid !== action.followedUserUid)
+//         return [...following];
+//       default:
+//         return following;
+//     }
+//   },
+//   isAuthenticated(isAuthenticated = false, action) {
+//     switch(action.type) {
+//       case(mutations.SET_STATE):
+//         // have to change api schema to add authentication to true for isAuthenticated
+//         if (action.state.hasOwnProperty("isAuthenticated"))
+//           return action.state.isAuthenticated
+//         return true
+//       default:
+//         return isAuthenticated;
+//     }
+//   }
+// }),
 export const store = createStore(
-  combineReducers({
-    username(username = '', action) {
-      switch(action.type) {
-        case (mutations.SET_STATE):
-          return action.state.username;
-        case mutations.CHANGE_USERNAME:
-          return username = action.newUsername;
-        default:
-          return username;
-      }
-    },
-    email(email = '', action) {
-      switch(action.type) {
-        case mutations.SET_STATE:
-          return action.state.email;
-        default:
-          return email;
-      }
-    },
-    uid(uid = '', action) {
-      switch(action.type) {
-        case(mutations.SET_STATE):
-          return action.state.uid;
-        default:
-          return uid;
-      }
-    },
-    avi(avi = '', action) {
-      switch(action.type) {
-        case(mutations.SET_STATE):
-          return action.state.avi || '';
-        case (mutations.CLEAR_AVI):
-          return '';
-        case(mutations.SUCCESSFUL_UPDATE_AVI):
-          return action.state.avi;
-        default:
-          return avi;
-      }
-    },
-    fav_drinks(fav_drinks = user.fav_drinks, action) {
-      switch(action.type) {
-        case(mutations.SET_STATE):
-          return action.state.fav_drinks;
-        case(mutations.ADD_DRINK_TO_STATE):
-          fav_drinks.drinks.push(action.drink);
-          fav_drinks.numDrinks += 1;
-          return {...fav_drinks};
-        case(mutations.REMOVE_DRINK_FROM_STATE):
-          fav_drinks.drinks = fav_drinks.drinks.filter(drink => drink.idDrink !== action.idDrink);
-          fav_drinks.numDrinks -= 1;
-          return {...fav_drinks};
-        default:
-          return fav_drinks;
-      }
-    },
-    followers(followers = [], action) {
-      switch(action.type) {
-        case(mutations.SET_STATE):
-          return action.state.followers || null;
-        default:
-          return followers;
-      }
-    },
-    following(following = [], action) {
-      switch(action.type) {
-        case(mutations.SET_STATE):
-          return action.state.following || null;
-        case(mutations.ADD_USER_TO_FOLLOWING):
-          following.push(action.followedUserUid);
-          return [...following];
-        case(mutations.REMOVE_USER_FROM_FOLLOWING):
-          following = following.filter(uid => uid !== action.followedUserUid)
-          return [...following];
-        default:
-          return following;
-      }
-    },
-    isAuthenticated(isAuthenticated = false, action) {
-      switch(action.type) {
-        case(mutations.SET_STATE):
-          // have to change api schema to add authentication to true for isAuthenticated
-          if (action.state.hasOwnProperty("isAuthenticated"))
-            return action.state.isAuthenticated
-          return true
-        default:
-          return isAuthenticated;
-      }
-    }
-  }),
+  rootReducer,
   applyMiddleware(createLogger(), sagaMiddleware)
 );
+
+function rootReducer(user1=user, action) {
+  console.log('avi reducer ', user);
+  console.log('action.type ', action.type);
+  switch(action.type) {
+    case(mutations.SET_STATE):
+      return { ...action.state, isAuthenticated: true};
+    case(mutations.REQUEST_UPDATE_FAV_DRINKS):
+      return user1;
+    case(mutations.ADD_DRINK_TO_STATE):
+      const add_fav = user1.fav_drinks;
+      add_fav.drinks.push(action.drink);
+      add_fav.numDrinks += 1;
+      return { ...user1, fav_drinks: add_fav};
+    case(mutations.REMOVE_DRINK_FROM_STATE):
+      const remove_fav = user1.fav_drinks;
+      remove_fav.drinks = remove_fav.drinks.filter(drink => drink.idDrink !== action.idDrink);
+      remove_fav.numDrinks -= 1;
+      return {...user1, fav_drinks: remove_fav};
+    case(mutations.REQUEST_UPDATE_WHO_CURRENT_USER_FOLLOWS):
+      return user;
+    case(mutations.ADD_USER_TO_FOLLOWING):
+      const add_following = user1.following;
+      add_following.push(action.followedUserUid);
+      return {...user1, following: add_following};
+  case(mutations.REMOVE_USER_FROM_FOLLOWING):
+      let remove_following = user1.following;
+      remove_following = remove_following.filter(uid => uid !== action.followedUserUid);
+      return {...user1, following: remove_following};
+    case (mutations.CLEAR_AVI):
+      return {...user1, avi: ''};
+    case(mutations.SUCCESSFUL_UPDATE_AVI):
+      return {...user1, avi: action.state.avi};
+    case(mutations.REQUEST_UPDATE_AVI):
+      return user1;
+    default:
+      return user1;
+  }
+}
 
 for (let saga in sagas) {
   sagaMiddleware.run(sagas[saga]);

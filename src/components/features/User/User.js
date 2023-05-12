@@ -13,7 +13,7 @@ import {
   requestUpdateAvi,
 } from "../../../store/mutations";
 
-export function User({user, match, updateWhoCurrentUserFollows, updateAvi}) {
+export function User({user, match, updateWhoCurrentUserFollows, updateAvi, avi}) {
   const [editInfoToggled, setEditInfoToggled] = useState(false);
   const [viewingCurrentUserProfile, setViewingCurrentUserProfile] = useState(user.username === match.params.username);
   const [isFollowing, setIsFollowing] = useState(false);
@@ -38,7 +38,7 @@ export function User({user, match, updateWhoCurrentUserFollows, updateAvi}) {
         uid: user.uid,
         following: user.following,
         followers: user.followers,
-        avi: user.avi,
+        avi,
       });
     } else {
       axios.post(`${url}/users`,{username: match.params.username})
@@ -55,7 +55,7 @@ export function User({user, match, updateWhoCurrentUserFollows, updateAvi}) {
         })
         .catch((err) => console.log(err))
     }
-  }, [match.params.username, user.fav_drinks, user.followers, user.following, user.uid, user.username, viewedUser.uid, viewingCurrentUserProfile]);
+  }, [avi, match.params.username, user.fav_drinks, user.followers, user.following, user.uid, user.username, viewedUser.uid, viewingCurrentUserProfile]);
 
   function determineIsFollowing(following, viewedUserUid){
     if (following.find(element => element === viewedUserUid)) {
@@ -96,7 +96,8 @@ export function User({user, match, updateWhoCurrentUserFollows, updateAvi}) {
 
 function mapStateToProps(state) {
   return {
-    user: state
+    user: state,
+    avi: state.avi
   }
 }
 
