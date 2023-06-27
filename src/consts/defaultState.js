@@ -1,10 +1,7 @@
 export const user = {
   email: "",
   username : "",
-  fav_drinks : {
-    drinks: [],
-    numDrinks: 0,
-  },
+  favDrinks : [],
   uid : "",
   avi: "",
   followers: [],

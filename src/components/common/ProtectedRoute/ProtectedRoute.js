@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Redirect, Route } from "react-router-dom";
-import { store } from '../../../store/index';
+import { store } from '../../../store/store';
 
 const ProtectedRoute = ({ component, ...args }) => {
   const [isAuthenticated, setAuthenticated] = useState(store.getState().isAuthenticated)

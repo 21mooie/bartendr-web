@@ -1,11 +1,13 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux';
 import {createLogger} from "redux-logger";
 import createSagaMiddleWare from "redux-saga";
+import { configureStore } from '@reduxjs/toolkit'
 
 
 import * as sagas from './sagas';
 import * as mutations from './mutations';
 import {user} from '../consts/defaultState';
+import userReducer from "./reducers/userReducer";
+import favDrinksReducer from "./reducers/favDrinksReducer";
 
 
 const sagaMiddleware = createSagaMiddleWare();
@@ -87,10 +89,17 @@ const sagaMiddleware = createSagaMiddleWare();
 //     }
 //   }
 // }),
-export const store = createStore(
-  rootReducer,
-  applyMiddleware(createLogger(), sagaMiddleware)
-);
+export const store = configureStore({
+  reducer: {
+    user: userReducer,
+    favDrinks: favDrinksReducer,
+    // follows:,
+    // authenticated:
+  },
+  middleware: (getDefaultMiddleware) =>
+    // adding the saga middleware here
+    getDefaultMiddleware().concat(createLogger(), sagaMiddleware),
+});
 
 function rootReducer(user1=user, action) {
   console.log('avi reducer ', user);
