@@ -10,6 +10,11 @@ import { clearFollowing } from "../reducers/followsReducer";
 import { clearAuthentication } from "../reducers/authenticatedReducer";
 import { clearFavDrinks } from "../reducers/favDrinksReducer";
 
+import { setUser } from "../reducers/userReducer";
+import { setFollows } from "../reducers/followsReducer";
+import { setAuthentication } from "../reducers/authenticatedReducer.js";
+import { setFavDrinks } from "../reducers/favDrinksReducer";
+
 // export function* getUserSaga() {
 //   while (true) {
 //     const {username} = yield take(mutations.REQUEST_USER);
@@ -153,7 +158,7 @@ export function* updateAviSaga() {
 }
 
 // this creates user document on api
-export function* registerUser() {
+export function* registerUserSaga() {
   while(true) {
     try {
       const { registration } =  yield take(mutations.REGISTER);
@@ -163,8 +168,7 @@ export function* registerUser() {
         throw new Error('failed registration');
       };
       console.log('registration succeeded')
-      yield put(mutations.setState(data.state));
-      console.log('set state succeeded');
+      yield put(mutations.setState(data));
       
     } catch (err) {
       if (err.message === 'failed registration') {
@@ -185,4 +189,34 @@ export function* registerUser() {
       });
     }
   }
+}
+
+export function* setUserSaga() {
+  console.log('calling setUserSaga');
+  const { data } = yield take(mutations.SET_STATE);
+  console.log('data ', data);
+  yield put(
+    setUser({
+        email    : data.state.email,
+        username : data.state.username,
+        uid      : data.state.uid,
+        avi      : data.state.avi,
+    })
+  );
+  yield put(
+    setFollows({
+        following: data.state.following,
+        followers: data.state.followers
+    })
+  );
+  yield put(
+    setFavDrinks({
+        favDrinks: data.state.fav_drinks.drinks
+    })
+  );
+  yield put(
+    setAuthentication({
+        status: data.state.isAuthenticated,
+    })
+  );
 }

@@ -28,9 +28,9 @@ export const requestUser = (username) => ({
   username,
 });
 
-export const setState = (state = {}) => ({
+export const setState = (data = {}) => ({
   type: SET_STATE,
-  state,
+  data,
 });
 
 export const requestClearState = () => ({

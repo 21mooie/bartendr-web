@@ -5,9 +5,7 @@ import { store as notificationsModule } from 'react-notifications-component';
 
 import { url } from '../../consts';
 import * as mutations from '../mutations';
-import { setUser } from "../reducers/userReducer";
-import { setFollows } from "../reducers/followsReducer";
-import { setAuthentication } from "../reducers/authenticatedReducer.js";
+
 
 export function *getUserSaga() {
     // there probably is a way to get the string from action creator
@@ -18,26 +16,8 @@ export function *getUserSaga() {
         if (!data){
             throw new Error();
         }
-        console.log(data);
-        yield put(
-            setUser({
-                email    : data.state.email,
-                username : data.state.username,
-                uid      : data.state.uid,
-                avi      : data.state.avi,
-            })
-        );
-        yield put(
-            setFollows({
-                following: data.state.following,
-                followers: data.state.followers
-            })
-        );
-        yield put(
-            setAuthentication({
-                status: data.state.isAuthenticated,
-            })
-        );
+        console.log('data before ', data);
+        yield put(mutations.setState(data));
     } catch(err) {
         // turn into a better name
         yield put(mutations.failedSetUser());
