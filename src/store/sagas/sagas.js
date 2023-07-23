@@ -2,46 +2,53 @@ import {take,  put} from "redux-saga/effects";
 import axios from "axios";
 import { store } from 'react-notifications-component';
 
-import { url } from '../consts';
-import * as mutations from './mutations';
-import {user} from '../consts/defaultState';
+import { url } from '../../consts';
+import * as mutations from '../mutations';
+import { user } from '../../consts/defaultState';
+import { clearUser } from '../reducers/userReducer';
+import { clearFollowing } from "../reducers/followsReducer";
+import { clearAuthentication } from "../reducers/authenticatedReducer";
+import { clearFavDrinks } from "../reducers/favDrinksReducer";
 
-export function* getUserSaga() {
-  while (true) {
-    const {username} = yield take(mutations.REQUEST_USER);
-    try {
-      let response;
-      response = yield axios.post(url + `/users`, {username})
-      let {data} = response;
-      if (!data) {
-        throw new Error();
-      }
-      yield put(mutations.setState(data.state));
-    } catch(err) {
-      yield put(mutations.failedSetUser());
-      yield put(mutations.requestClearState());
-      store.addNotification({
-        title: "Uh-oh!",
-        message: "Could not load user data",
-        type: "danger",
-        insert: "top",
-        container: "top-right",
-        animationIn: ["animate__animated", "animate__fadeIn"],
-        animationOut: ["animate__animated", "animate__fadeOut"],
-        dismiss: {
-          duration: 3500,
-          onScreen: true
-        }
-      });
-    }
-  }
-}
+// export function* getUserSaga() {
+//   while (true) {
+//     const {username} = yield take(mutations.REQUEST_USER);
+//     try {
+//       let response;
+//       response = yield axios.post(url + `/users`, {username})
+//       let {data} = response;
+//       if (!data) {
+//         throw new Error();
+//       }
+//       yield put(mutations.setState(data.state));
+//     } catch(err) {
+//       yield put(mutations.failedSetUser());
+//       yield put(mutations.requestClearState());
+//       store.addNotification({
+//         title: "Uh-oh!",
+//         message: "Could not load user data",
+//         type: "danger",
+//         insert: "top",
+//         container: "top-right",
+//         animationIn: ["animate__animated", "animate__fadeIn"],
+//         animationOut: ["animate__animated", "animate__fadeOut"],
+//         dismiss: {
+//           duration: 3500,
+//           onScreen: true
+//         }
+//       });
+//     }
+//   }
+// }
 
 export function* unAuthenticateSaga() {
   while (true) {
     yield take(mutations.REQUEST_CLEAR_STATE);
     try {
-      yield put(mutations.setState(user));
+      yield put(clearUser());
+      yield put(clearFavDrinks());
+      yield put(clearFollowing());
+      yield put(clearAuthentication());
     } catch (err) {
       console.log(`Clear state failed: ${err}`);
     }

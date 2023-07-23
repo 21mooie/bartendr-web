@@ -1,11 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const initialState = []
+const initialState = [];
 
 const favDrinks = createSlice({
   name: 'favDrinks',
   initialState,
-  reducers: {}
-})
+  reducers: {
+    clearFavDrinks(state, action) {
+      return initialState;
+    }
+  }
+});
+
+export const { clearFavDrinks } = favDrinks.actions;
 
 export default favDrinks.reducer

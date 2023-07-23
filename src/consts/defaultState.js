@@ -6,5 +6,7 @@ export const user = {
   avi: "",
   followers: [],
   following: [],
-  isAuthenticated: false
+  authentication: {
+    status: false
+  }
 }

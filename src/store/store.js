@@ -3,11 +3,14 @@ import createSagaMiddleWare from "redux-saga";
 import { configureStore } from '@reduxjs/toolkit'
 
 
-import * as sagas from './sagas';
+import * as sagas from './sagas/sagas';
+import * as userSagas from './sagas/userSagas';
 import * as mutations from './mutations';
 import {user} from '../consts/defaultState';
 import userReducer from "./reducers/userReducer";
 import favDrinksReducer from "./reducers/favDrinksReducer";
+import authenticatedReducer from "./reducers/authenticatedReducer";
+import followsReducer from "./reducers/followsReducer";
 
 
 const sagaMiddleware = createSagaMiddleWare();
@@ -93,8 +96,8 @@ export const store = configureStore({
   reducer: {
     user: userReducer,
     favDrinks: favDrinksReducer,
-    // follows:,
-    // authenticated:
+    follows: followsReducer,
+    authenticated: authenticatedReducer,
   },
   middleware: (getDefaultMiddleware) =>
     // adding the saga middleware here
@@ -139,7 +142,7 @@ function rootReducer(user1=user, action) {
       return user1;
   }
 }
-
+Object.assign(sagas, userSagas);
 for (let saga in sagas) {
   sagaMiddleware.run(sagas[saga]);
 }

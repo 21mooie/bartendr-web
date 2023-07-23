@@ -27,7 +27,7 @@ const LandingPage = ({isAuthenticated, requestUser}) => {
     if (isAuthenticated) {
       history.push('/dashboard');
     }
-
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated]);
 
   function getCocktail() {
@@ -83,7 +83,7 @@ const LandingPage = ({isAuthenticated, requestUser}) => {
 
 function mapStateToProps(user) {
   return {
-    isAuthenticated: user.isAuthenticated,
+    isAuthenticated: user.authenticated.status,
   }
 }
 
