@@ -102,7 +102,7 @@ describe('ConnectedDrinkCard', () => {
         store = mockStore({
             username: 'test_username',
             // see if the reason fav wasn't working because this drink was already in the fav_drinks
-            fav_drinks: {drinks: [drink], numDrinks: 1},
+            favDrinks: [drink],
             isAuthenticated: true
         });
     })

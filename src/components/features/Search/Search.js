@@ -29,7 +29,7 @@ class Search extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    console.log(this.props);
+    // console.log(this.props);
     if (this.props.location.state.searchVal !== prevProps.location.state.searchVal) {
       this.sendQuery(this.props.location.state.searchVal);
     }

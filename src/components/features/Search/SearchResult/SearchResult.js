@@ -25,7 +25,7 @@ function SearchResult({result, updateFavDrinks, username, favDrinks}) {
     // must return negation because every only stops when evaled false
     // this keeps functionality while allowing logic to make sense
 
-    return !favDrinks.drinks.every((currDrink) => {
+    return !favDrinks.every((currDrink) => {
       return currDrink.idDrink !== result.idDrink;
     });
   }
@@ -71,8 +71,8 @@ function SearchResult({result, updateFavDrinks, username, favDrinks}) {
 
 function mapStateToProps(state) {
   return {
-    username: state.username,
-    favDrinks: state.fav_drinks
+    username: state.user.username,
+    favDrinks: state.favDrinks
   }
 }
 
