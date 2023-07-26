@@ -192,31 +192,33 @@ export function* registerUserSaga() {
 }
 
 export function* setUserSaga() {
-  console.log('calling setUserSaga');
-  const { data } = yield take(mutations.SET_STATE);
-  console.log('data ', data);
-  yield put(
-    setUser({
-        email    : data.state.email,
-        username : data.state.username,
-        uid      : data.state.uid,
-        avi      : data.state.avi,
-    })
-  );
-  yield put(
-    setFollows({
-        following: data.state.following,
-        followers: data.state.followers
-    })
-  );
-  yield put(
-    setFavDrinks({
-        favDrinks: data.state.fav_drinks.drinks
-    })
-  );
-  yield put(
-    setAuthentication({
-        status: data.state.isAuthenticated,
-    })
-  );
+  while (true) {
+    console.log('calling setUserSaga');
+    const { data } = yield take(mutations.SET_STATE);
+    console.log('data ', data);
+    yield put(
+      setUser({
+          email    : data.state.email,
+          username : data.state.username,
+          uid      : data.state.uid,
+          avi      : data.state.avi,
+      })
+    );
+    yield put(
+      setFollows({
+          following: data.state.following,
+          followers: data.state.followers
+      })
+    );
+    yield put(
+      setFavDrinks({
+          favDrinks: data.state.fav_drinks.drinks
+      })
+    );
+    yield put(
+      setAuthentication({
+          status: data.state.isAuthenticated,
+      })
+    );
+  }
 }
