@@ -5,10 +5,7 @@ export const REQUEST_CLEAR_STATE = `REQUEST_CLEAR_STATE`;
 export const REQUEST_USER = `REQUEST_USER`;
 export const FAILED_SET_USER = `FAILED_SET_USER`;
 export const REQUEST_UPDATE_FAV_DRINKS = `REQUEST_UPDATE_FAV_DRINKS`;
-export const SUCCESSFUL_UPDATE_FAV_DRINKS = `SUCCESSFUL_UPDATE_FAV_DRINKS`;
 export const FAILED_UPDATE_FAV_DRINKS = `FAILED_UPDATE_FAV_DRINKS`;
-export const ADD_DRINK_TO_STATE = `ADD_DRINK_TO_STATE`;
-export const REMOVE_DRINK_FROM_STATE = `REMOVE_DRINK_FROM_STATE`;
 export const REQUEST_UPDATE_WHO_CURRENT_USER_FOLLOWS = `REQUEST_UPDATE_WHO_CURRENT_USER_FOLLOWS`;
 export const SUCCESSFUL_UPDATE_WHO_CURRENT_USER_FOLLOWS = `SUCCESSFUL_UPDATE_WHO_CURRENT_USER_FOLLOWS`;
 export const FAILED_UPDATE_WHO_CURRENT_USER_FOLLOWS = `FAILED_UPDATE_WHO_CURRENT_USER_FOLLOWS`;
@@ -47,25 +44,6 @@ export const requestUpdateFavDrinks = (username, drink, add) => ({
   drink,
   add,
 });
-
-export const successfulUpdateFavDrinks = (avi) => ({
-  type: SUCCESSFUL_UPDATE_FAV_DRINKS,
-  avi,
-});
-
-export const failedUpdateFavDrinks = () => ({
-  type: FAILED_UPDATE_FAV_DRINKS
-})
-
-export const addDrinkToState = (drink) => ({
-  type: ADD_DRINK_TO_STATE,
-  drink,
-})
-
-export const removeDrinkFromState = (idDrink) => ({
-  type: REMOVE_DRINK_FROM_STATE,
-  idDrink,
-})
 
 export const requestUpdateWhoCurrentUserFollows = (currentUserUid, followedUserUid, wantsToFollow) => ({
   type: REQUEST_UPDATE_WHO_CURRENT_USER_FOLLOWS,

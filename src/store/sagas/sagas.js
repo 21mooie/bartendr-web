@@ -15,36 +15,6 @@ import { setFollows } from "../reducers/followsReducer";
 import { setAuthentication } from "../reducers/authenticatedReducer.js";
 import { setFavDrinks } from "../reducers/favDrinksReducer";
 
-// export function* getUserSaga() {
-//   while (true) {
-//     const {username} = yield take(mutations.REQUEST_USER);
-//     try {
-//       let response;
-//       response = yield axios.post(url + `/users`, {username})
-//       let {data} = response;
-//       if (!data) {
-//         throw new Error();
-//       }
-//       yield put(mutations.setState(data.state));
-//     } catch(err) {
-//       yield put(mutations.failedSetUser());
-//       yield put(mutations.requestClearState());
-//       store.addNotification({
-//         title: "Uh-oh!",
-//         message: "Could not load user data",
-//         type: "danger",
-//         insert: "top",
-//         container: "top-right",
-//         animationIn: ["animate__animated", "animate__fadeIn"],
-//         animationOut: ["animate__animated", "animate__fadeOut"],
-//         dismiss: {
-//           duration: 3500,
-//           onScreen: true
-//         }
-//       });
-//     }
-//   }
-// }
 
 export function* unAuthenticateSaga() {
   while (true) {
@@ -59,38 +29,6 @@ export function* unAuthenticateSaga() {
     }
   }
 }
-
-export function* updateFavDrinks() {
-  while (true) {
-    const { username, drink, add } =  yield take(mutations.REQUEST_UPDATE_FAV_DRINKS);
-    try {
-      yield axios.post(`${url}/users/fav_drinks`, {username, idDrink: drink.idDrink, add});
-      yield put(mutations.successfulUpdateFavDrinks());
-      if (add) {
-        yield put(mutations.addDrinkToState(drink));
-      } else {
-        yield put(mutations.removeDrinkFromState(drink.idDrink));
-      }
-    } catch (err) {
-      console.log(err);
-      yield put(mutations.failedUpdateFavDrinks());
-      store.addNotification({
-        title: "Uh-oh!",
-        message: "This action cannot be completed at this time. Try again later.",
-        type: "danger",
-        insert: "top",
-        container: "top-right",
-        animationIn: ["animate__animated", "animate__fadeIn"],
-        animationOut: ["animate__animated", "animate__fadeOut"],
-        dismiss: {
-          duration: 3500,
-          onScreen: true
-        }
-      });
-    }
-  }
-}
-
 
 export function* updateFollowersSaga() {
   while(true) {

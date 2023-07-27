@@ -7,14 +7,28 @@ const favDrinks = createSlice({
   initialState,
   reducers: {
     setFavDrinks(state, action) {
-      state = action.payload.favDrinks;
+      return action.payload.favDrinks;
     },
     clearFavDrinks(state, action) {
       return initialState;
-    }
+    },
+    addDrink(state, action) {
+      state.push(action.payload);
+    },
+    removeDrink(state, action) {
+      state = state.filter(drink => drink.idDrink !== action.payload.idDrink);
+      return state;
+    },
+    failedUpdateFavDrinks(){}
   }
 });
 
-export const { setFavDrinks, clearFavDrinks } = favDrinks.actions;
+export const { 
+  setFavDrinks,
+  clearFavDrinks,
+  addDrink,
+  removeDrink,
+  failedUpdateFavDrinks
+} = favDrinks.actions;
 
 export default favDrinks.reducer

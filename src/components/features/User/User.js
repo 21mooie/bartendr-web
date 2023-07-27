@@ -13,16 +13,13 @@ import {
   requestUpdateAvi,
 } from "../../../store/mutations";
 
-export function User({user, match, updateWhoCurrentUserFollows, updateAvi, avi}) {
+export function User({user, match, updateWhoCurrentUserFollows, updateAvi, avi, favDrinks}) {
   const [editInfoToggled, setEditInfoToggled] = useState(false);
   const [viewingCurrentUserProfile, setViewingCurrentUserProfile] = useState(user.username === match.params.username);
   const [isFollowing, setIsFollowing] = useState(false);
   const [viewedUser, setViewedUser] = useState({
     username: '',
-    fav_drinks: {
-      drinks: [],
-      numDrinks: 0,
-    },
+    favDrinks: [],
     uid: '',
     following: [],
     followers: [],
@@ -34,7 +31,7 @@ export function User({user, match, updateWhoCurrentUserFollows, updateAvi, avi})
     if (viewingCurrentUserProfile) {
       setViewedUser({
         username: user.username,
-        fav_drinks: user.fav_drinks,
+        favDrinks: favDrinks,
         uid: user.uid,
         following: user.following,
         followers: user.followers,
@@ -45,7 +42,7 @@ export function User({user, match, updateWhoCurrentUserFollows, updateAvi, avi})
         .then((result) => {
           setViewedUser({
             username: result.data.state.username,
-            fav_drinks: result.data.state.fav_drinks,
+            favDrinks: result.data.state.fav_drinks.drinks,
             uid: result.data.state.uid,
             following: result.data.state.following,
             followers: result.data.state.followers,
@@ -55,7 +52,7 @@ export function User({user, match, updateWhoCurrentUserFollows, updateAvi, avi})
         })
         .catch((err) => console.log(err))
     }
-  }, [avi, match.params.username, user.fav_drinks, user.followers, user.following, user.uid, user.username, viewedUser.uid, viewingCurrentUserProfile]);
+  }, [avi, favDrinks, match.params.username, user.favDrinks, user.followers, user.following, user.uid, user.username, viewedUser.uid, viewingCurrentUserProfile]);
 
   function determineIsFollowing(following, viewedUserUid){
     if (following.find(element => element === viewedUserUid)) {
@@ -88,7 +85,7 @@ export function User({user, match, updateWhoCurrentUserFollows, updateAvi, avi})
         updateFollowing={() => updateFollowing()}
       />
       <UserFavDrinks
-        fav_drinks={viewedUser.fav_drinks}
+        favDrinks={viewedUser.favDrinks}
       />
     </div>
   )
@@ -96,8 +93,9 @@ export function User({user, match, updateWhoCurrentUserFollows, updateAvi, avi})
 
 function mapStateToProps(state) {
   return {
-    user: state,
-    avi: state.avi
+    user: state.user,
+    avi: state.user.avi,
+    favDrinks: state.favDrinks
   }
 }
 

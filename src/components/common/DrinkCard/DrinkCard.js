@@ -99,11 +99,11 @@ function DrinkCard({drink, updateFavDrinks, username, favDrinks, isAuthenticated
   );
 }
 
-function mapStateToProps(user) {
+function mapStateToProps(state) {
   return {
-    username: user.username,
-    favDrinks: user.favDrinks,
-    isAuthenticated: user.isAuthenticated
+    username: state.user.username,
+    favDrinks: state.favDrinks,
+    isAuthenticated: state.authenticated.status
   }
 }
 
