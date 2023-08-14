@@ -17,10 +17,20 @@ const userReducer = createSlice({
     },
     clearUser(state, action){
       return initialState;
-    }
+    },
+    updateAvi(state, action){
+      state.avi = action.payload
+    },
+    failedUpdateAvi(){}
   }
 });
 
-export const { requestUser, setUser, clearUser } = userReducer.actions
+export const {
+  requestUser,
+  setUser,
+  clearUser,
+  updateAvi,
+  failedUpdateAvi
+} = userReducer.actions
 
 export default userReducer.reducer;

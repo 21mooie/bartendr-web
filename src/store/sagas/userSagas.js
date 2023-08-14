@@ -5,6 +5,7 @@ import { store as notificationsModule } from 'react-notifications-component';
 
 import { url } from '../../consts';
 import * as mutations from '../mutations';
+import { failedUpdateAvi, updateAvi } from "../reducers/userReducer";
 
 
 export function *getUserSaga() {
@@ -38,3 +39,37 @@ export function *getUserSaga() {
         }
     }
 }
+
+export function* updateAviSaga() {
+    while (true) {
+      const { uid, avi } = yield take(mutations.REQUEST_UPDATE_AVI);
+      try {
+        const formData = new FormData();
+        formData.append('uid', uid);
+        formData.append('avi', avi);
+        let response = yield axios({
+          method: 'post',
+          url: `${url}/users/avi`,
+          data: formData,
+          headers: {'Content-Type': 'multipart/form-data' }
+        });
+        const { data } = response;
+        yield put (updateAvi(data.state.avi));
+      } catch (err) {
+        yield put(failedUpdateAvi());
+        notificationsModule.addNotification({
+          title: "Uh-oh!",
+          message: "Avi upload was unsuccessful!",
+          type: "danger",
+          insert: "top",
+          container: "top-right",
+          animationIn: ["animate__animated", "animate__fadeIn"],
+          animationOut: ["animate__animated", "animate__fadeOut"],
+          dismiss: {
+            duration: 3500,
+            onScreen: true
+          }
+        });
+      }
+    }
+  }

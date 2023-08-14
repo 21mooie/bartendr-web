@@ -119,8 +119,6 @@ function rootReducer(user1=user, action) {
       let remove_following = user1.following;
       remove_following = remove_following.filter(uid => uid !== action.followedUserUid);
       return {...user1, following: remove_following};
-    case (mutations.CLEAR_AVI):
-      return {...user1, avi: ''};
     case(mutations.SUCCESSFUL_UPDATE_AVI):
       return {...user1, avi: action.state.avi};
     case(mutations.REQUEST_UPDATE_AVI):
