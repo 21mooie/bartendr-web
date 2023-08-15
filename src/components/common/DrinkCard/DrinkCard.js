@@ -43,7 +43,7 @@ function DrinkCard({drink, updateFavDrinks, username, favDrinks, isAuthenticated
   function hasUserFaved() {
     // must return negation because every only stops when evaled false
     // this keeps functionality while allowing logic to make sense
-    return !favDrinks.drinks.every((currDrink) => {
+    return !favDrinks.every((currDrink) => {
       return currDrink.idDrink !== drink.idDrink;
     });
   }
@@ -99,11 +99,11 @@ function DrinkCard({drink, updateFavDrinks, username, favDrinks, isAuthenticated
   );
 }
 
-function mapStateToProps(user) {
+function mapStateToProps(state) {
   return {
-    username: user.username,
-    favDrinks: user.fav_drinks,
-    isAuthenticated: user.isAuthenticated
+    username: state.user.username,
+    favDrinks: state.favDrinks,
+    isAuthenticated: state.authenticated.status
   }
 }
 

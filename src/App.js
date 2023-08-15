@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import './App.css';
 import {ConnectedDashboard} from "./components/features/Dashboard/Dashboard";
-import { store } from './store/index';
+import { store } from './store/store';
 import {ConnectedNavigation} from "./components/features/Navigation/Navigation";
 import {ConnectedUser} from "./components/features/User/User";
 import SearchWithRouter from "./components/features/Search/Search";

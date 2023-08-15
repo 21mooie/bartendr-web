@@ -1,11 +1,17 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux';
 import {createLogger} from "redux-logger";
 import createSagaMiddleWare from "redux-saga";
+import { configureStore } from '@reduxjs/toolkit'
 
 
-import * as sagas from './sagas';
+import * as sagas from './sagas/sagas';
+import * as userSagas from './sagas/userSagas';
+import * as favDrinksSagas from './sagas/favDrinksSagas';
 import * as mutations from './mutations';
 import {user} from '../consts/defaultState';
+import userReducer from "./reducers/userReducer";
+import favDrinksReducer from "./reducers/favDrinksReducer";
+import authenticatedReducer from "./reducers/authenticatedReducer";
+import followsReducer from "./reducers/followsReducer";
 
 
 const sagaMiddleware = createSagaMiddleWare();
@@ -87,29 +93,22 @@ const sagaMiddleware = createSagaMiddleWare();
 //     }
 //   }
 // }),
-export const store = createStore(
-  rootReducer,
-  applyMiddleware(createLogger(), sagaMiddleware)
-);
+export const store = configureStore({
+  reducer: {
+    user: userReducer,
+    favDrinks: favDrinksReducer,
+    follows: followsReducer,
+    authenticated: authenticatedReducer,
+  },
+  middleware: (getDefaultMiddleware) =>
+    // adding the saga middleware here
+    getDefaultMiddleware().concat(createLogger(), sagaMiddleware),
+});
 
 function rootReducer(user1=user, action) {
   console.log('avi reducer ', user);
   console.log('action.type ', action.type);
   switch(action.type) {
-    case(mutations.SET_STATE):
-      return { ...action.state, isAuthenticated: true};
-    case(mutations.REQUEST_UPDATE_FAV_DRINKS):
-      return user1;
-    case(mutations.ADD_DRINK_TO_STATE):
-      const add_fav = user1.fav_drinks;
-      add_fav.drinks.push(action.drink);
-      add_fav.numDrinks += 1;
-      return { ...user1, fav_drinks: add_fav};
-    case(mutations.REMOVE_DRINK_FROM_STATE):
-      const remove_fav = user1.fav_drinks;
-      remove_fav.drinks = remove_fav.drinks.filter(drink => drink.idDrink !== action.idDrink);
-      remove_fav.numDrinks -= 1;
-      return {...user1, fav_drinks: remove_fav};
     case(mutations.REQUEST_UPDATE_WHO_CURRENT_USER_FOLLOWS):
       return user;
     case(mutations.ADD_USER_TO_FOLLOWING):
@@ -120,8 +119,6 @@ function rootReducer(user1=user, action) {
       let remove_following = user1.following;
       remove_following = remove_following.filter(uid => uid !== action.followedUserUid);
       return {...user1, following: remove_following};
-    case (mutations.CLEAR_AVI):
-      return {...user1, avi: ''};
     case(mutations.SUCCESSFUL_UPDATE_AVI):
       return {...user1, avi: action.state.avi};
     case(mutations.REQUEST_UPDATE_AVI):
@@ -130,7 +127,7 @@ function rootReducer(user1=user, action) {
       return user1;
   }
 }
-
+Object.assign(sagas, userSagas, favDrinksSagas);
 for (let saga in sagas) {
   sagaMiddleware.run(sagas[saga]);
 }

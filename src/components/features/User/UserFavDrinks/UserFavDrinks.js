@@ -5,16 +5,16 @@ import './UserFavDrinks.css';
 import ConnectedDrinkCard from '../../../common/DrinkCard/DrinkCard';
 
 
-function UserFavDrinks({fav_drinks}) {
+function UserFavDrinks({favDrinks}) {
     return (
         <div className="userFavDrinks">
             {
-                fav_drinks.drinks.length > 0 ?
+                favDrinks.length > 0 ?
                     <>
                         <h3>Favorite Drinks</h3>
                         <div className="userFavDrinks__grid">
                             {
-                                fav_drinks.drinks.map((fav_drink) => (
+                                favDrinks.map((fav_drink) => (
                                     <div className="userFavDrinks__item" key={fav_drink.idDrink}>
                                         <ConnectedDrinkCard drink={fav_drink}/>
                                     </div>

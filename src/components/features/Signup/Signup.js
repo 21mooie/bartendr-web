@@ -139,7 +139,7 @@ Signup.propTypes = {}
 
 function mapStateToProps(state) {
   return {
-    isAuthenticated: state.isAuthenticated,
+    isAuthenticated: state.authenticated.status,
   }
 }
 

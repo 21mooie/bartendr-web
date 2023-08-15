@@ -38,7 +38,7 @@ const Navigation = ({showMenuPaths, clearState, requestUser, history, isAuthenti
       }
       return true;
     });
-    if (!isAuthenticated && signOutClicked) {
+    if (signOutClicked) {
       setSignOutClicked(false);
       history.push('/');
     }
@@ -172,11 +172,11 @@ const Navigation = ({showMenuPaths, clearState, requestUser, history, isAuthenti
 
 const NavigationWithRouter = withRouter(Navigation);
 
-const mapStateToProps = (user) => {
-  console.log('navigation ', user);
+const mapStateToProps = (state) => {
+  console.log('navigation ', state);
   return {
-  username: user.username,
-  isAuthenticated: user.isAuthenticated
+  username: state.user.username,
+  isAuthenticated: state.authenticated.status,
 }
 
 };

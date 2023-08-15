@@ -1,7 +1,7 @@
 import TextField from '@material-ui/core/TextField';
 import { AuthenticationDetails, CognitoUser } from 'amazon-cognito-identity-js';
 import React, { useState, useEffect } from 'react'; 
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
 
@@ -11,17 +11,19 @@ import { requestUser } from '../../../store/mutations';
 
 import './Login.css';
 
-function Login({isAuthenticated, requestUser}) {
+function Login({isAuthenticated}) {
   const history = useHistory();
 
   const [loginUsername, setLoginUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     if (isAuthenticated){
       history.push('/dashboard');
     }
-  }, [isAuthenticated])
+  }, [history, isAuthenticated])
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -41,7 +43,8 @@ function Login({isAuthenticated, requestUser}) {
     user.authenticateUser(authDetails,{
       onSuccess: (data) => {
         console.log("onSuccess: ", data);
-        requestUser(loginUsername);
+        // Not sure how to dispatch event from userReducer try .toString()
+        dispatch(requestUser(loginUsername));
       },
       onFailure: (err) => {
         console.error("onFailure: ", err);
@@ -56,7 +59,7 @@ function Login({isAuthenticated, requestUser}) {
           <form onSubmit={onSubmit}> 
             <TextField id="username" onChange={(event) => setLoginUsername(event.target.value)} />          
             <TextField id="password" onChange={(event) => setPassword(event.target.value)} type="password" />
-            <button type="submit " onClick={() => console.log('clicked')}>Log In</button>
+            <button type="submit ">Log In</button>
           </form>
           <Link to="/signup">Signup</Link>
          </div>
@@ -64,18 +67,11 @@ function Login({isAuthenticated, requestUser}) {
 
 function mapStateToProps(state) {
   return {
-    isAuthenticated: state.isAuthenticated,
+    isAuthenticated: state.authenticated.status,
   }
 }
 
-function mapDispatchToProps (dispatch){
-  return {
-    requestUser(username) {
-      dispatch(requestUser(username));
-    }
-  }
-}
 
-const ConnectedLogin = connect(mapStateToProps, mapDispatchToProps)(Login);
+const ConnectedLogin = connect(mapStateToProps, undefined)(Login);
 
 export default ConnectedLogin;

@@ -2,20 +2,21 @@ import React from 'react';
 import { connect } from "react-redux";
 
 
-export const Dashboard = ({user}) => {
+export const Dashboard = ({username, email}) => {
 
    return (
      <div>
-       <h2>{user.username}</h2>
-       <p>{user.email}</p>
+       <h2>{username}</h2>
+       <p>{email}</p>
        <p>hello world</p>
      </div>
    );
 }
 
-function mapStateToProps(user) {
+function mapStateToProps(state) {
   return {
-    user
+    username: state.user.username,
+    email: state.user.email
   }
 }
 
