@@ -100,10 +100,14 @@ describe('ConnectedDrinkCard', () => {
             ]
         };
         store = mockStore({
-            username: 'test_username',
+            user: {
+              username: 'test_username',
+            },
             // see if the reason fav wasn't working because this drink was already in the fav_drinks
             favDrinks: [drink],
-            isAuthenticated: true
+            authenticated: {
+              status: true
+            }
         });
     })
 
@@ -127,7 +131,7 @@ describe('ConnectedDrinkCard', () => {
       // expect(updateFavDrinksMock).resolves.toHaveBeenCalledTimes(1);
     });
 
-    test('should test of on image load function is triggered.', () => {
+    test('should test if image load function is triggered.', () => {
       render(<Provider store={store} ><ConnectedDrinkCard drink={drink}/></Provider>);
       const image = screen.getByAltText("Applecar");
       fireEvent.load(image);
