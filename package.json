@@ -30,8 +30,8 @@
   "scripts": {
     "start": "react-scripts --openssl-legacy-provider start --no-cache",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "test:coverage": "react-scripts test --coverage --watchAll=false",
+    "test": "react-scripts test --env=jsdom",
+    "test:coverage": "react-scripts test --coverage --watchAll=false --env=jsdom",
     "eject": "react-scripts eject",
     "lint": "eslint .",
     "serve": "serve -s build"
