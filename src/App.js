@@ -16,6 +16,7 @@ import Explore from "./components/features/Explore/Explore";
 import ConnectedDrink from "./components/features/Drink/Drink";
 import ConnectedSignup from './components/features/Signup/Signup';
 import ConnectedLogin from './components/features/Login/Login';
+import ScrollToTop from './components/common/ScrollToTop/ScrollToTop';
 
 
 
@@ -31,6 +32,7 @@ function App() {
           <ConnectedNavigation showMenuPaths={['/dashboard', '/user', '/drink', '/search', '/explore']}/>
           {/*Search bar for unauthed users who only want to search*/}
           {/*  Router which switches between components, Guard against auth routes*/}
+          <ScrollToTop />
           <Switch>
             <Route exact path="/" component={LandingPage} />
             <ProtectedRoute path="/dashboard" component={ConnectedDashboard} />
