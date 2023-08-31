@@ -19,9 +19,7 @@ const LandingPage = ({isAuthenticated, requestUser}) => {
 
   useEffect(() => {
     if (!isAuthenticated){
-      if (!autoLoginUser()){
-        getCocktail();
-      };
+      getCocktail();
     }
     
     if (isAuthenticated) {
@@ -36,18 +34,6 @@ const LandingPage = ({isAuthenticated, requestUser}) => {
     }).catch((err) => {
       console.error(err);
     });
-  }
-
-  function autoLoginUser() {
-    console.log('running autologinuser');
-    const cognitoUser = UserPool.getCurrentUser();
-    if (cognitoUser !== null) {
-      let username = cognitoUser.getUsername();
-      console.log(`username: ${username}`);
-      requestUser(username);
-      return true;
-    }
-    return false;
   }
 
   return (
