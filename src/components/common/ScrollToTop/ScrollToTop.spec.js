@@ -8,7 +8,6 @@ import ScrollToTop from './ScrollToTop';
 describe('ScrollToTop', () => {
     it('should render.', () => {
         const { container } = render(<MemoryRouter><ScrollToTop /></MemoryRouter>);
-        screen.debug('');
         expect(container.querySelector('div')).not.toBeInTheDocument();
     });
 

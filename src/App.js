@@ -17,6 +17,7 @@ import ConnectedDrink from "./components/features/Drink/Drink";
 import ConnectedSignup from './components/features/Signup/Signup';
 import ConnectedLogin from './components/features/Login/Login';
 import ScrollToTop from './components/common/ScrollToTop/ScrollToTop';
+import AutoLogin from './components/common/AutoLogin/AutoLogin';
 
 
 
@@ -33,6 +34,7 @@ function App() {
           {/*Search bar for unauthed users who only want to search*/}
           {/*  Router which switches between components, Guard against auth routes*/}
           <ScrollToTop />
+          <AutoLogin />
           <Switch>
             <Route exact path="/" component={LandingPage} />
             <ProtectedRoute path="/dashboard" component={ConnectedDashboard} />
