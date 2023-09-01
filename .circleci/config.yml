@@ -34,7 +34,7 @@ jobs:
         - persist_to_workspace:
             root: .
             paths:
-              - .
+              - build/*
   deploy: # this can be any name you choose
     docker: # Use the Docker executor for the deploy job
         - image: innovatorjapan/awscli:latest
