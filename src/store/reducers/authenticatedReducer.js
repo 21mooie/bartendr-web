@@ -9,7 +9,7 @@ const authenticatedReducer = createSlice({
   initialState,
   reducers: {
     setAuthentication(state, action) {
-      state.status = true;
+      state.status = action.payload.status;
     },
     clearAuthentication(state, action) {
       return initialState;
