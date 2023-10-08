@@ -120,7 +120,7 @@ export function* setUserSaga() {
     );
     yield put(
       setAuthentication({
-          status: data.state.isAuthenticated,
+          status: data.state.authentication,
       })
     );
   }
