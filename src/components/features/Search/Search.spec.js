@@ -101,6 +101,7 @@ describe('SearchWithRouter', () => {
                 ]
             }
         };
+        jest.spyOn(console, "log").mockImplementation(() => {});
     });
 
     test('should render.', () => {
