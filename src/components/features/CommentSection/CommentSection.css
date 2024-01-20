@@ -1,8 +1,10 @@
 .commentSection {
-    text-align: center;
+    display: flex;
+    justify-content: center;
 }
 
-.commentSection__comments {
-    display: inline-block;
-    text-align: left;
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 }

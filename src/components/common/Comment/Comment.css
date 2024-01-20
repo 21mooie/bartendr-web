@@ -1,0 +1,30 @@
+.comment {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+}
+
+.comment__avi__div {
+    margin: 0px 10px;
+}
+
+.comment__avi {
+    height: 70px;
+    width: 70px;
+    border-radius: 200px;
+}
+
+.comment__content {
+    margin: 20px 0px
+}
+
+.comment_datePosted {
+    color: grey;
+}
+
+@media only screen and (max-width: 576px) {
+    .comment__content {
+        margin: 20px 0px;
+        width: 200px;
+    }
+}
