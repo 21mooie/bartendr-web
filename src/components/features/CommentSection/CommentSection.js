@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import './CommentSection.css';
 import {url} from "../../../consts";
+import Comment from '../../common/Comment/Comment';
 
 const CommentSection = ({idDrink, limit}) => {
     const [comments, setComments] = useState([]);
@@ -27,12 +28,10 @@ const CommentSection = ({idDrink, limit}) => {
     }, []);
     return (
         <div className="commentSection">
-  
             <ul className="commentSection__comments">
-                { comments.length > 0 && comments.map((comment, index) => (<li key={index}>{comment.content}</li>)) }
+                { comments.length > 0 && comments.map((comment, index) => (<li key={index}><Comment commentData={comment}/></li>)) }
                 { comments.length === 0 && <li>There are no comments. You can be the first!</li> }
             </ul>
- 
         </div>
         
     );
