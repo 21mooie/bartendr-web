@@ -88,7 +88,7 @@ export function Drink({ username, favDrinks, match, updateFavDrinks, isAuthentic
                 <p>{drink.strInstructions}</p>
               </div>
             </div>
-            <CommentSection idDrink={idDrink} limit={10} />
+            <CommentSection idDrink={idDrink} />
           </div>
       }
       {
