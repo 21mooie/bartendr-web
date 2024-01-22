@@ -1,31 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 
 import './CommentList.css';
 import Comment from '../../common/Comment/Comment';
-import { url } from '../../../consts';
+import { getCommentsAsync } from '../../../async/comments/comments';
+
 
 const CommentList = ({idDrink, limit}) => {
-    // turn into CommentsList
     const [comments, setComments] = useState([]);
-    const [offset, setOffset]   = useState('0');
+    const [offset, setOffset]     = useState('0');
+
     useEffect(() => {
-        //TODO: should be done using redux
-        axios.get(`${url}/cocktail/${idDrink}/comment`,{
-            params: {
-                offset,
-                limit
-            }
-        })
-            .then((result) => {
-                const data = result.data.data;
-                // console.log(data);
-                setComments([...comments,...data]);
-            })
-            .catch((err) => {
-                console.error(err);
-                //TODO: create saga to trigger notification
-            });
+        getCommentsAsync({idDrink, offset, limit, parentId: null})
+            .then((data) => setComments([...comments, ...data]))
+            .catch((err) => console.error(err));
     }, []);
     return (
         <div className="commentList">
