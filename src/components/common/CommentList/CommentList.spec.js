@@ -1,17 +1,15 @@
 import React from 'react';
-import { render, screen, waitForElement } from '@testing-library/react';
-import axios from 'axios';
+import { render, screen, waitForElement, wait } from '@testing-library/react';
 
 import CommentList from './CommentList';
 import commentsMock from '../../../mocks/comments.mock';
+import { getCommentsAsync } from '../../../async/comments/comments';
 
-jest.mock('axios');
+jest.mock( '../../../async/comments/comments');
 
 describe('CommentList', () => {
     beforeAll(() => {
-        axios.get.mockImplementation(() => Promise.resolve({
-            "data": commentsMock,
-        }));
+        getCommentsAsync.mockImplementation(() => Promise.resolve(commentsMock.data))
     });
 
     it('should render.', async () => {
@@ -29,14 +27,11 @@ describe('CommentList', () => {
     });
 
     it('should handle an error getting comments.', async () => {
-        axios.get.mockImplementation(() => Promise.reject({
-            "error": "FAILURE",
-        }));
-        jest.spyOn(console, "error").mockImplementation(() => {});
+        getCommentsAsync.mockImplementationOnce(() => Promise.reject('error'));
+        // how to mock console
+        const spy = jest.spyOn(console, "error").mockImplementation(() => {});
         render(<CommentList idDrink="11111" limit="10"/>);
-        await waitForElement(() => {
-            screen.getAllByRole('listitem');
-            return true;
-        });
+        // how to wait for spies
+        await wait(() => expect(spy).toHaveBeenCalled());
     });
 });
