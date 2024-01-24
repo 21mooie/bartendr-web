@@ -1,25 +1,26 @@
 import React, { useEffect, useState } from 'react';
 
-import './CommentList.css';
-import Comment from '../../common/Comment/Comment';
 import { getCommentsAsync } from '../../../async/comments/comments';
+import WithLoading from '../WithLoading/WithLoading';
+import CommentListRenderer from './CommentListRenderer/CommentListRenderer';
 
+const CommentListRendererWithLoading = WithLoading(CommentListRenderer);
 
 const CommentList = ({idDrink, limit}) => {
     const [comments, setComments] = useState([]);
-    const [offset, setOffset]     = useState('0');
+    const [offset,   setOffset]   = useState('0');
+    const [loading,  setLoading]  = useState(false);
 
     useEffect(() => {
+        setLoading(true);
         getCommentsAsync({idDrink, offset, limit, parentId: null})
             .then((data) => setComments([...comments, ...data]))
-            .catch((err) => console.error(err));
+            .catch((err) => console.error(err))
+            .finally(() => setLoading(false));
     }, []);
     return (
-        <div className="commentList">
-            <ul className="commentList__comments">
-                { comments.length > 0 && comments.map((comment, index) => (<li key={index}><Comment commentData={comment}/></li>)) }
-                { comments.length === 0 && <li>There are no comments. You can be the first!</li> }
-            </ul>
+        <div className='commentList'>
+            <CommentListRendererWithLoading isLoading={loading} comments={comments} />
         </div>
     );
 }

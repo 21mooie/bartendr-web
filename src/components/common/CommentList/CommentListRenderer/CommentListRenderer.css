@@ -1,4 +1,4 @@
-.commentList {
+.commentListRenderer {
     display: flex;
     justify-content: center;
 }
