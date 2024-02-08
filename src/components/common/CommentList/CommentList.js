@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { getCommentsAsync } from '../../../async/comments/comments';
 import WithLoading from '../WithLoading/WithLoading';
 import CommentListRenderer from './CommentListRenderer/CommentListRenderer';
-import ScrollListener from '../ScrollListener/ScrollListener';
+import ScrollListener from '../ScrollToBottomListener/ScrollToBottomListener';
 
 const CommentListRendererWithLoading = WithLoading(CommentListRenderer);
 
