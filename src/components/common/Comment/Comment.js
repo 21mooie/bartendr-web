@@ -6,9 +6,23 @@ import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 
 import './Comment.css';
+import WithLoading from '../WithLoading/WithLoading';
+import CommentListRenderer from '../CommentList/CommentListRenderer/CommentListRenderer';
+
+const RepliesListRendererWithLoading = WithLoading(CommentListRenderer);
 
 const Comment = ({commentData}) => {
-    const [showReplies, setShowReplies] = useState(false);
+    const [showReplies, setShowReplies]            = useState(false);
+    const [repliesRequested, setRepliesRequested ] = useState(false)
+    const [replies, setReplies]                    = useState([]);
+    const [loading, setLoading]                    = useState(false);
+    
+    //TODO: send request for replies and render when selected
+    const showRepliesClicked = () => {
+        setShowReplies(!showReplies);
+        setRepliesRequested(true);
+    };
+
     return (
         <div className="comment">
             <div className="comment__avi__div">
@@ -39,14 +53,23 @@ const Comment = ({commentData}) => {
                 </div>
                 {
                     commentData.hasReplies &&
-                    <div className="comment__showReplies" onClick={() => setShowReplies(!showReplies)}>
-                        {
-                            showReplies ?
-                                <ArrowDropDownIcon className="comment__showReplies_dropDown"/>
-                            :
-                                <ArrowDropUpIcon className="comment__showReplies_dropUp"/>
+                    <div className="comment__showReplies_div">
+                        <div className="comment__showReplies" onClick={() => showRepliesClicked()}>
+                            {
+                                showReplies ?
+                                    <ArrowDropDownIcon className="comment__showReplies_dropDown"/>
+                                :
+                                    <ArrowDropUpIcon className="comment__showReplies_dropUp"/>
+                            }
+                            <span>Show replies</span>
+                        </div>
+                        {   
+                            showReplies      &&
+                            repliesRequested &&
+                            <div className="comment__replies">
+                                <RepliesListRendererWithLoading isLoading={true} initialLoad={true} />
+                            </div>
                         }
-                        <span>Show replies</span>
                     </div>
                 }
             </div>

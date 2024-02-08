@@ -8,12 +8,12 @@ const getCommentsAsync = ({idDrink, offset, limit, parentId}) => {
         axios.get(`${url}/cocktail/${idDrink}/comment`,{
             params: {
                 offset,
-                limit
+                limit,
+                parentId
             }
         })
-        .then((result) => {
-            const data = result.data.data;
-            resolve(data);
+        .then((response) => {
+            resolve(response.data);
         })
         .catch((err) => {
             console.error(err);
