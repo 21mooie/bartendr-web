@@ -44,6 +44,10 @@
     margin: 0px 10px;
 }
 
+.comment__replies {
+    display: block;
+}
+
 @media only screen and (max-width: 576px) {
     .comment__content {
         margin: 20px 0px;
