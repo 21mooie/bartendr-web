@@ -3,7 +3,6 @@ import { render, screen, waitForElement } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import Comment from './Comment';
-import Reply from '';
 
 describe('Comment', () => {
     let commentData;
