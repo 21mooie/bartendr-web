@@ -1,8 +1,13 @@
 import React from 'react';
 import { render, screen, waitForElement } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { act } from 'react-dom/test-utils';
 
 import Comment from './Comment';
+import { getCommentsAsync } from '../../../async/comments/comments';
+import commentsMock from '../../../mocks/comments.mock';
+
+jest.mock( '../../../async/comments/comments');
 
 describe('Comment', () => {
     let commentData;
@@ -20,6 +25,7 @@ describe('Comment', () => {
             "commenterUsername": "muata01092021",
             "commenterAvi": "https://real-image-url.com"
         };
+        getCommentsAsync.mockImplementation(() => Promise.resolve(commentsMock))
     });
     it('should render.', () => {
         render(<Comment commentData={commentData} />);
@@ -32,12 +38,15 @@ describe('Comment', () => {
         expect(container.querySelector('.MuiAvatar-root')).toBeInTheDocument();
     });
 
-    it('should show replies when the button is clicked.', () => {
+    it('should show replies when the button is clicked.', async () => {
         commentData.hasReplies = true;
         const { container } = render(<Comment commentData={commentData} />);
-        expect(container.querySelector('.comment__showReplies_dropUp')).toBeInTheDocument();
-        userEvent.click(container.querySelector('.comment__showReplies'));
-        expect(container.querySelector('.comment__showReplies_dropDown')).toBeInTheDocument();
+        await act(async () => {
+            
+            expect(container.querySelector('.comment__showReplies_dropUp')).toBeInTheDocument();
+            userEvent.click(container.querySelector('.comment__showReplies'));
+        });
+        expect(container.querySelector('.comment__showReplies_dropDown')).toBeInTheDocument();        
     });
 
     describe('when it has replies', () => {
@@ -45,21 +54,32 @@ describe('Comment', () => {
             commentData.hasReplies = true;
         });
 
-        it('should show replies when requested.', () => {
-            //TODO: Change to reply component mock once I've made them
-            const { container } = render(<Comment commentData={commentData} />);
-            expect(container.querySelector('.replyListRenderer')).not.toBeInTheDocument();
-            userEvent.click(container.querySelector('.comment__showReplies'));
-            expect(container.querySelector('.replyListRenderer')).toBeInTheDocument();
+        it('should show replies when requested.', async () => {
+            await act(async () => {
+                const { container } = render(<Comment commentData={commentData} />);
+                expect(container.querySelector('.replyListRenderer')).not.toBeInTheDocument();
+                userEvent.click(container.querySelector('.comment__showReplies'));
+            });
+            await waitForElement(() => {
+                const list = screen.getAllByRole('listitem');
+                if(list.length > 1) {
+                    expect(list.length).toBeGreaterThan(1);
+                    return true;
+                }
+                else {
+                    return false
+                }
+            });
         });
 
-        it('should hide replies when requested.', () => {
+        it('should hide replies when requested.', async () => {
             const { container } = render(<Comment commentData={commentData} />);
-            expect(container.querySelector('.replyListRenderer')).not.toBeInTheDocument();
-            userEvent.click(container.querySelector('.comment__showReplies'));
-            expect(container.querySelector('.replyListRenderer')).toBeInTheDocument();
-            userEvent.click(container.querySelector('.comment__showReplies'));
-            expect(container.querySelector('.replyListRenderer')).not.toBeInTheDocument();
+            await act(async () => {
+                expect(container.querySelector('.replyListRenderer')).not.toBeInTheDocument();
+                userEvent.click(container.querySelector('.comment__showReplies'));
+            });
+            expect(container.querySelector('.comment__replies')).toBeInTheDocument();
+            
         });
 
         it('should not send a new request for replies once replies are hidden then rerequested.', () => {
