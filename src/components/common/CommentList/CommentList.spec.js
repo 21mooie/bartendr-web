@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, screen, waitForElement, wait } from '@testing-library/react';
+import { mockIntersectionObserver } from 'jsdom-testing-mocks';
 
 import CommentList from './CommentList';
 import commentsMock from '../../../mocks/comments.mock';
@@ -9,7 +10,8 @@ jest.mock( '../../../async/comments/comments');
 
 describe('CommentList', () => {
     beforeAll(() => {
-        getCommentsAsync.mockImplementation(() => Promise.resolve(commentsMock.data))
+        mockIntersectionObserver();
+        getCommentsAsync.mockImplementation(() => Promise.resolve(commentsMock))
     });
 
     it('should render.', async () => {

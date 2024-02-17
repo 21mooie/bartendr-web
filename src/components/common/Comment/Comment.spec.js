@@ -49,18 +49,18 @@ describe('Comment', () => {
         it('should show replies when requested.', () => {
             //TODO: Change to reply component mock once I've made them
             const { container } = render(<Comment commentData={commentData} />);
-            expect(container.querySelector('.reply')).not.toBeInTheDocument();
+            expect(container.querySelector('.replyListRenderer')).not.toBeInTheDocument();
             userEvent.click(container.querySelector('.comment__showReplies'));
-            expect(container.querySelector('.reply')).toBeInTheDocument();
+            expect(container.querySelector('.replyListRenderer')).toBeInTheDocument();
         });
 
         it('should hide replies when requested.', () => {
             const { container } = render(<Comment commentData={commentData} />);
-            expect(container.querySelector('.reply')).not.toBeInTheDocument();
+            expect(container.querySelector('.replyListRenderer')).not.toBeInTheDocument();
             userEvent.click(container.querySelector('.comment__showReplies'));
-            expect(container.querySelector('.reply')).toBeInTheDocument();
+            expect(container.querySelector('.replyListRenderer')).toBeInTheDocument();
             userEvent.click(container.querySelector('.comment__showReplies'));
-            expect(container.querySelector('.reply')).not.toBeInTheDocument();
+            expect(container.querySelector('.replyListRenderer')).not.toBeInTheDocument();
         });
 
         it('should not send a new request for replies once replies are hidden then rerequested.', () => {

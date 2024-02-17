@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Avatar } from '@material-ui/core';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
@@ -7,15 +7,29 @@ import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 
 import './Comment.css';
 import WithLoading from '../WithLoading/WithLoading';
-import CommentListRenderer from '../CommentList/CommentListRenderer/CommentListRenderer';
+import { getCommentsAsync } from '../../../async/comments/comments';
+import ListRenderer from '../ListRenderer/ListRenderer';
 
-const RepliesListRendererWithLoading = WithLoading(CommentListRenderer);
+const RepliesListRendererWithLoading = WithLoading(ListRenderer);
 
 const Comment = ({commentData}) => {
     const [showReplies, setShowReplies]            = useState(false);
     const [repliesRequested, setRepliesRequested ] = useState(false)
     const [replies, setReplies]                    = useState([]);
-    const [loading, setLoading]                    = useState(false);
+    const [isLoading, setIsLoading]                = useState(false);
+    //TODO: set offset for getting replies
+
+    useEffect(() => {
+        if(repliesRequested) {
+            setIsLoading(true);
+            setInterval(() => {
+                setReplies([]);
+                setIsLoading(false);
+                setRepliesRequested(false);
+            }, 200);
+        }
+        setRepliesRequested(false);
+    }, [repliesRequested]);
     
     //TODO: send request for replies and render when selected
     const showRepliesClicked = () => {
@@ -65,9 +79,8 @@ const Comment = ({commentData}) => {
                         </div>
                         {   
                             showReplies      &&
-                            repliesRequested &&
                             <div className="comment__replies">
-                                <RepliesListRendererWithLoading isLoading={true} initialLoad={true} />
+                                <RepliesListRendererWithLoading isLoading={isLoading} replies={replies} />
                             </div>
                         }
                     </div>
