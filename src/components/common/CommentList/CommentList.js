@@ -2,9 +2,9 @@ import React, { useEffect, useState, useRef } from 'react';
 
 import { getCommentsAsync } from '../../../async/comments/comments';
 import WithLoading from '../WithLoading/WithLoading';
-import ListRenderer from '../ListRenderer/ListRenderer';
+import CommentListRenderer from './CommentListRenderer/CommentListRenderer';
 
-const CommentListRendererWithLoading = WithLoading(ListRenderer);
+const CommentListRendererWithLoading = WithLoading(CommentListRenderer);
 
 const CommentList = ({idDrink, limit}) => {
     // initialLoad helps to make sure the component's first render shows the loading spinner
@@ -21,9 +21,7 @@ const CommentList = ({idDrink, limit}) => {
         getCommentsAsync({idDrink, offset, limit, parentId: null})
             .then((data) => {
                 setComments([...comments, ...data.results]);
-                if(data.endOfData){
-                    setEndOfData(true);
-                }
+                if(data.endOfData) setEndOfData(true);
             })
             .catch((err) => console.error(err))
             .finally(() => {
@@ -63,7 +61,7 @@ const CommentList = ({idDrink, limit}) => {
         */
         
         <div className='commentList'>
-            <CommentListRendererWithLoading comments={comments} isLoading={loading || initialLoad} initialLoad={initialLoad} refProp={myRef}/>
+            <CommentListRendererWithLoading comments={comments} isLoading={loading || initialLoad} initialLoad={initialLoad} refProp={myRef} />
         </div>
     );
 }
