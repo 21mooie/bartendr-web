@@ -20,7 +20,7 @@ const Comment = ({commentData}) => {
     const [initialLoad, setInitialLoad ]           = useState(true);
     const [offset, setOffset]                      = useState(0);
     const [endOfData, setEndOfData]                = useState(false);
-    //TODO: set offset for getting replies
+    //TODO: Refactor reply logic into ReplyList Component
 
     useEffect(() => {
         if(repliesRequested) {
@@ -28,11 +28,13 @@ const Comment = ({commentData}) => {
             getCommentsAsync({idDrink: commentData.idDrink, offset, limit: 5, parentId: commentData.commentId})
                 .then((data) => {
                     setReplies([...replies, ...data.results]);
+                    setOffset(offset+5);
                     if(data.endOfData) setEndOfData(true);
                 })
                 .catch((err) => console.error(err))
                 .finally(() => {
                     setIsLoading(false);
+                    setInitialLoad(false);
                     setRepliesRequested(false);
                 });
         }
@@ -40,13 +42,8 @@ const Comment = ({commentData}) => {
 
     const showRepliesClicked = () => {
         setShowReplies(!showReplies);
-        if(initialLoad) {
-            requestReplies();
-            setInitialLoad(false);
-        }
+        if(initialLoad) setRepliesRequested(true);
     };
-
-    const requestReplies = () => setRepliesRequested(true);
 
     return (
         <div className="comment">
@@ -97,10 +94,10 @@ const Comment = ({commentData}) => {
                         {   
                             showReplies      &&
                             <div className="comment__replies">
-                                <ReplyListRendererWithLoading replies={replies} isLoading={isLoading} initialLoad={initialLoad}/>
+                                <ReplyListRendererWithLoading replies={replies} isLoading={isLoading || initialLoad} initialLoad={initialLoad}/>
                                 {
                                     !endOfData &&
-                                    <Button onClick={() => {setOffset(offset+5); requestReplies();}}>Show more</Button>
+                                    <Button onClick={() => setRepliesRequested(true)}>Show more</Button>
                                 }
                             </div>
                         }
@@ -109,7 +106,7 @@ const Comment = ({commentData}) => {
             </div>
         </div>
     );
-    // TODO: finish writing logic to increment likes and dislikes and count if a user has already liked something
+    //TODO: finish writing logic to increment likes and dislikes and count if a user has already liked something
     // write function to figure out how many minutes/hours/days/months/years a comment was written
 }
  
