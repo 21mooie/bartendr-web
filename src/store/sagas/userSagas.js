@@ -18,7 +18,6 @@ export function *getUserSaga() {
             if (!data){
                 throw new Error();
             }
-            console.log('data before ', data);
             yield put(mutations.setState(data));
         } catch(err) {
             // turn into a better name

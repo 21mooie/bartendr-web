@@ -164,6 +164,7 @@ const Navigation = ({showMenuPaths, clearState, requestUser, history, isAuthenti
           isOpen={showSidebar}
           triggerCloseSidebar={() => {setShowSidebar(false)}}
           triggerLogout={() => signOut()}
+          username={username}
         />
       }
       </div>
