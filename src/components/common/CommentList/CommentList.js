@@ -2,7 +2,8 @@ import React, { useEffect, useState, useRef } from 'react';
 
 import { getCommentsAsync } from '../../../async/comments/comments';
 import WithLoading from '../WithLoading/WithLoading';
-import CommentListRenderer from './CommentListRenderer/CommentListRenderer';
+import CommentListRenderer from '../ListRenderer/CommentListRenderer/CommentListRenderer';
+
 
 const CommentListRendererWithLoading = WithLoading(CommentListRenderer);
 
