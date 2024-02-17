@@ -1,5 +1,5 @@
 const commentsMock = {
-    "data": [
+    "results": [
         {
             "commentId": "65804aea979a92734c307e51",
             "content": "Hi this is the twelfth comment",

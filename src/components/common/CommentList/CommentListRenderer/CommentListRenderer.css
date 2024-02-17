@@ -3,6 +3,11 @@
     justify-content: center;
 }
 
+.repliesListRenderer {
+    display: flex;
+    justify-content: center;
+}
+
 ul {
     list-style-type: none;
     margin: 0;

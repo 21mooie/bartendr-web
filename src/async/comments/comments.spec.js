@@ -22,7 +22,7 @@ describe('comments', () => {
 
     it('should be succesful.', async () => {
         getCommentsAsync({idDrink: '11111', offset: '0', limit: 10, parentId: null})
-            .then((data) => expect(data.length).toBe(10))
+            .then((data) => expect(data.results.length).toBe(10))
     });
 
     it('should handle an error getting comments.', async () => {

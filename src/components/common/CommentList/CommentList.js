@@ -2,9 +2,9 @@ import React, { useEffect, useState, useRef } from 'react';
 
 import { getCommentsAsync } from '../../../async/comments/comments';
 import WithLoading from '../WithLoading/WithLoading';
-import CommentListRenderer from './CommentListRenderer/CommentListRenderer';
+import ListRenderer from '../ListRenderer/ListRenderer';
 
-const CommentListRendererWithLoading = WithLoading(CommentListRenderer);
+const CommentListRendererWithLoading = WithLoading(ListRenderer);
 
 const CommentList = ({idDrink, limit}) => {
     // initialLoad helps to make sure the component's first render shows the loading spinner
@@ -31,7 +31,7 @@ const CommentList = ({idDrink, limit}) => {
                 setInitialLoad(false);
                 //TODO: Figure out why this is requesting one additional time
                 //TODO: Place in its own Higher order component
-                console.log(myRef.current);
+                // console.log(myRef.current);
                 const observer = new IntersectionObserver((entries) => {
                     const entry = entries[0];
                     console.log('entry', entry);
@@ -63,7 +63,7 @@ const CommentList = ({idDrink, limit}) => {
         */
         
         <div className='commentList'>
-            <CommentListRendererWithLoading isLoading={loading || initialLoad} comments={comments} initialLoad={initialLoad} refProp={myRef}/>
+            <CommentListRendererWithLoading comments={comments} isLoading={loading || initialLoad} initialLoad={initialLoad} refProp={myRef}/>
         </div>
     );
 }

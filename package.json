@@ -12,6 +12,7 @@
     "amazon-cognito-identity-js": "^6.1.2",
     "axios": "^0.20.0",
     "history": "^5.0.0",
+    "jsdom-testing-mocks": "^1.11.0",
     "md5": "^2.3.0",
     "react": "^16.13.1",
     "react-bottom-scroll-listener": "^5.1.0",
