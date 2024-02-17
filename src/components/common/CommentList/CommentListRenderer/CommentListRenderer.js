@@ -1,18 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React  from 'react';
 
 import './CommentListRenderer.css';
 import Comment from '../../Comment/Comment';
 
 
 
-const CommentListRenderer = ({comments}) => {
+
+const CommentListRenderer = ({comments, bottomReachedCallback, refProp}) => {
     return (
         <div className="commentListRenderer">
             <ul className="commentListRenderer__comments">
                 { 
                     comments.length > 0 &&
                     comments.map((comment, index) => {
-                        if (index + 5 === comments.length) return <li key={index}><Comment commentData={comment}/><span>hello world</span></li>
+                        if (index + 5 === comments.length) return (<li key={index} ref={refProp}>
+                                                                        <Comment commentData={comment}/>
+                                                                    </li>)
                         return <li key={index}><Comment commentData={comment}/></li>
                     }) 
                 }
