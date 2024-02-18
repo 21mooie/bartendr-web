@@ -1,5 +1,6 @@
 import React from 'react';
 
+import './ReplyListRenderer.css';
 import Comment from '../../Comment/Comment';
 
 const ReplyListRenderer = ({replies}) => {

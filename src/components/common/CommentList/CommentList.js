@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+import './CommentList.css';
 import { getCommentsAsync } from '../../../async/comments/comments';
 import WithLoading from '../WithLoading/WithLoading';
 import CommentListRenderer from '../ListRenderer/CommentListRenderer/CommentListRenderer';
