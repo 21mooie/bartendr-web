@@ -1,0 +1,61 @@
+.commentBox {
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+}
+
+.commentBox > div {
+    display: flex;
+    flex-direction: column;
+}
+
+.commentBox__buttons {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.commentBox__buttons > button {
+    margin: 10px;
+}
+
+textarea {
+    width: 350px;
+    line-height: 1.5;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-shadow: 1px 1px 1px #999;
+    resize: none;
+}
+
+@media screen and (min-width: 480px) {
+    textarea {
+        width: 400px;
+        line-height: 1.5;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        box-shadow: 1px 1px 1px #999;
+        resize: none;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    textarea {
+        width: 700px;
+        line-height: 1.5;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        box-shadow: 1px 1px 1px #999;
+        resize: none;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    textarea {
+        width: 800px;
+        line-height: 1.5;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        box-shadow: 1px 1px 1px #999;
+        resize: none;
+    }
+}
