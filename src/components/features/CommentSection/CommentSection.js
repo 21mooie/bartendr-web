@@ -7,7 +7,7 @@ import CommentList from '../../common/CommentList/CommentList';
 const CommentSection = ({idDrink}) => {
     return (
         <div className="commentSection">
-            <CommentBox />
+            <CommentBox parentId={null} />
             <CommentList idDrink={idDrink} limit={10}/>
         </div>
     );

@@ -11,7 +11,7 @@ jest.mock('react-notifications-component', () => ({
     store: {
         addNotification: jest.fn(),
     },
-}))
+}));
 
 describe('comments', () => {
     beforeAll(() => {
