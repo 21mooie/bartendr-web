@@ -11,6 +11,9 @@ const mockStore = configureStore();
 describe('CommentSection', () => {
     test('should render.', async () => {
         let store = mockStore({
+            user: {
+                uid: ''
+            },
             authenticated: {
               status: false
             }

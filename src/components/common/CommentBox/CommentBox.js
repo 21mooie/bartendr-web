@@ -1,19 +1,20 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { Button } from '@material-ui/core';
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { store as notificationsModule } from 'react-notifications-component';
 
 import './CommentBox.css';
+import { postCommentAsync } from '../../../async/comments/comments';
 
 
-const CommentBox = ({parentId}) => {
+const CommentBox = ({idDrink, parentId}) => {
     const history         = useHistory();
+    const uid             = useSelector((state) => state.user.uid);
     const isAuthenticated = useSelector((state) => state.authenticated.status);
-    const textRef         = useRef();
-    const submitRef       = useRef();
 
-    const [submitBtnDisabled, setSubmitBtnDisabled] = useState(true);
+    const [comment, setComment]                     = useState('');
+    const [submitBtnDisabled, setSubmitBtnDisabled] = useState(!isAuthenticated || comment === '');
 
     const authenticationGuard = () => {
         if(!isAuthenticated) {
@@ -31,12 +32,14 @@ const CommentBox = ({parentId}) => {
                 }
             });
             history.push({pathname: '/signup'});
-            return;
+            return false;
         }
+        return true;
     };
 
     const textAreaChanged = (e) => {
-        setSubmitBtnDisabled(!isAuthenticated || textRef.current.value === '');
+        setSubmitBtnDisabled(!isAuthenticated || e.target.value === '');
+        setComment(e.target.value);
     };
 
     const textAreaClicked = () => {
@@ -45,11 +48,22 @@ const CommentBox = ({parentId}) => {
 
     const cancelClicked = () => {
         authenticationGuard();
-        textRef.current.value = '';
+        setComment('');
     };
 
     const submitClicked = () => {
-        authenticationGuard();
+        //TODO: Add a loading logic while ui is waiting for a post to be submitted
+        if (authenticationGuard()){
+            postCommentAsync(uid, idDrink, parentId, comment)
+                .then((response) => {
+                    console.log(response);
+                })
+                .catch((err) => console.error(err))
+                .finally(() => {
+                    console.log('finally block');
+                    setComment('');
+                });
+        }
     };
 
     return (
@@ -57,18 +71,16 @@ const CommentBox = ({parentId}) => {
             <div>
                 <textarea
                     onClick={textAreaClicked}
-                    ref={textRef}
+                    value={comment}
                     placeholder="Add a comment..."
                     onChange={textAreaChanged}
                 />
                 <div className='commentBox__buttons'>
                     <Button 
-                        text='Comment'
-                        onSubmit={submitClicked}
+                        onClick={submitClicked}
                         variant='outlined'
                         color='primary'
                         disabled={submitBtnDisabled}
-                        ref={submitRef}
                         className='commentBox__submit'
                     >
                         Comment
