@@ -5,6 +5,9 @@ import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 
 import CommentBox from './CommentBox';
+import { postCommentAsync } from '../../../async/comments/comments';
+
+jest.mock( '../../../async/comments/comments');
 
 const mockStore = configureStore();
 const mockPush = jest.fn();
@@ -24,6 +27,9 @@ describe('CommentBox', () => {
         let store;
         beforeAll(() => {
             store = mockStore({
+                user: {
+                    uid: ""
+                },
                 authenticated: {
                   status: false
                 }
@@ -48,11 +54,15 @@ describe('CommentBox', () => {
         let comment;
         beforeAll(() => {
             store = mockStore({
+                user: {
+                    uid: 'testUid'
+                },
                 authenticated: {
                   status: true
                 }
             });
             comment = 'Hello this is a comment';
+            postCommentAsync.mockImplementation(() => Promise.resolve({"success": "SUCCESSFULLY_POST_COMMENTS"}));
         });
 
         it('should write content to screen.', () => {
@@ -66,7 +76,10 @@ describe('CommentBox', () => {
             const { container } = render(<Provider store={store} ><CommentBox /></Provider>);
             const textarea = container.querySelector('.commentBox textarea');
             userEvent.type(textarea, comment);
-            expect(container.querySelector('.commentBox__submit').disabled).toBe(false);
+            const submitBtn = container.querySelector('.commentBox__submit');
+            expect(submitBtn.disabled).toBe(false);
+            userEvent.click(submitBtn);
+            expect(textarea.value).toBe('');
         });
     
         it('should be able to cancel after writing content.', () => {
