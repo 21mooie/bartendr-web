@@ -1,2 +1,2 @@
-export const url = 'https://bartendr-api-dev.herokuapp.com';
+export const url = 'http://localhost:7777';
 export * from './urls';
