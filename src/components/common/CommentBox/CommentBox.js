@@ -8,7 +8,7 @@ import './CommentBox.css';
 import { postCommentAsync } from '../../../async/comments/comments';
 
 
-const CommentBox = ({idDrink, parentId}) => {
+const CommentBox = ({idDrink, parentId, updateComment}) => {
     const history         = useHistory();
     const uid             = useSelector((state) => state.user.uid);
     const isAuthenticated = useSelector((state) => state.authenticated.status);
@@ -56,12 +56,27 @@ const CommentBox = ({idDrink, parentId}) => {
         if (authenticationGuard()){
             postCommentAsync(uid, idDrink, parentId, comment)
                 .then((response) => {
-                    console.log(response);
+                    updateComment(response.comment)
                 })
-                .catch((err) => console.error(err))
+                .catch((err) => {
+                    console.error(err);
+                    notificationsModule.addNotification({
+                        title: "Uh-oh!",
+                        message: "There was an error with posting your comment.",
+                        type: "danger",
+                        insert: "top",
+                        container: "top-right",
+                        animationIn: ["animate__animated", "animate__fadeIn"],
+                        animationOut: ["animate__animated", "animate__fadeOut"],
+                        dismiss: {
+                            duration: 3500,
+                            onScreen: true
+                        }
+                    });
+                })
                 .finally(() => {
-                    console.log('finally block');
                     setComment('');
+                    setSubmitBtnDisabled(true);
                 });
         }
     };

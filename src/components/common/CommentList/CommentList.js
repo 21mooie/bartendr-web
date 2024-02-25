@@ -8,7 +8,7 @@ import CommentListRenderer from '../ListRenderer/CommentListRenderer/CommentList
 
 const CommentListRendererWithLoading = WithLoading(CommentListRenderer);
 
-const CommentList = ({idDrink, limit}) => {
+const CommentList = ({idDrink, limit, postedComments}) => {
     // initialLoad helps to make sure the component's first render shows the loading spinner
     const [comments, setComments]        = useState([]);
     const [offset,   setOffset]          = useState(0);
@@ -37,7 +37,12 @@ const CommentList = ({idDrink, limit}) => {
 
     return (
         <div className='commentList'>
-            <CommentListRendererWithLoading comments={comments} isLoading={loading || initialLoad} initialLoad={initialLoad} bottomReachedCallback={updateOffset} />
+            <CommentListRendererWithLoading
+                comments={postedComments.length > 0 ? [...postedComments, ...comments] : comments}
+                isLoading={loading || initialLoad}
+                initialLoad={initialLoad}
+                bottomReachedCallback={updateOffset}
+            />
         </div>
     );
 }
