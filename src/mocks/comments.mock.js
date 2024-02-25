@@ -130,7 +130,8 @@ const commentsMock = {
             "commenterUsername": "muata01092021",
             "commenterAvi": ""
         }
-    ]
+    ],
+    "endOfData": false
 };
 
 export default commentsMock;

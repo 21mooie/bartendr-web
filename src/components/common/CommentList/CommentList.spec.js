@@ -52,7 +52,6 @@ describe('CommentList', () => {
             "commenterAvi": "https://test.com"
         }]} />);
         await wait(() => {
-            screen.debug('');
             const p = container.querySelector('.comment__content');
             expect(p.innerHTML).toBe('testPostedComment');
         });

@@ -9,17 +9,20 @@ import './Comment.css';
 import WithLoading from '../WithLoading/WithLoading';
 import { getCommentsAsync } from '../../../async/comments/comments';
 import ReplyListRenderer from '../ListRenderer/ReplyListRenderer/ReplyListRenderer';
+import CommentBox from '../CommentBox/CommentBox';
 
 const ReplyListRendererWithLoading = WithLoading(ReplyListRenderer);
 
 const Comment = ({commentData}) => {
-    const [showReplies, setShowReplies]            = useState(false);
-    const [repliesRequested, setRepliesRequested ] = useState(false)
-    const [replies, setReplies]                    = useState([]);
-    const [isLoading, setIsLoading]                = useState(false);
-    const [initialLoad, setInitialLoad ]           = useState(true);
-    const [offset, setOffset]                      = useState(0);
-    const [endOfData, setEndOfData]                = useState(false);
+    const [showReplies, setShowReplies]                 = useState(false);
+    const [repliesRequested, setRepliesRequested]       = useState(false)
+    const [replies, setReplies]                         = useState([]);
+    const [isLoading, setIsLoading]                     = useState(false);
+    const [initialLoad, setInitialLoad ]                = useState(true);
+    const [offset, setOffset]                           = useState(0);
+    const [endOfData, setEndOfData]                     = useState(false);
+    const [showReplyCommentBox, setShowReplyCommentBox] = useState(false);
+    const [replyAdded, setReplyAdded]                   = useState(false);
     //TODO: Refactor reply logic into ReplyList Component
 
     useEffect(() => {
@@ -27,7 +30,11 @@ const Comment = ({commentData}) => {
             setIsLoading(true);
             getCommentsAsync({idDrink: commentData.idDrink, offset, limit: 5, parentId: commentData.commentId})
                 .then((data) => {
-                    setReplies([...replies, ...data.results]);
+                    const commentMap = {};
+                    for (let reply of replies) {
+                        commentMap[reply.commentId] = true;
+                    }
+                    setReplies([...replies, ...data.results.filter((comment) => commentMap[comment.commentId] === undefined)]);
                     setOffset(offset+5);
                     if(data.endOfData) setEndOfData(true);
                 })
@@ -43,6 +50,17 @@ const Comment = ({commentData}) => {
     const showRepliesClicked = () => {
         setShowReplies(!showReplies);
         if(initialLoad) setRepliesRequested(true);
+    };
+
+    const replyButtonClicked = () => {
+        setShowReplyCommentBox(!showReplyCommentBox);
+    };
+
+    const updateReplies = (comment) => {
+        setReplies([comment,...replies]);
+        setShowReplies(true);
+        setReplyAdded(true);
+        setInitialLoad(false);
     };
 
     return (
@@ -71,10 +89,22 @@ const Comment = ({commentData}) => {
                     <ThumbUpIcon style={{cursor: 'pointer'}}/>
                     <span className="comment__interactions_likeCount">{commentData.numLikes-commentData.numDislikes}</span>
                     <ThumbDownIcon style={{cursor: 'pointer'}}/>
-                    <span className="comment__interactions_reply">Reply</span>
+                    <Button
+                        className="comment__interactions_reply"
+                        onClick={replyButtonClicked}
+                    >
+                        {
+                            showReplyCommentBox ? 'Close' : 'Reply'
+                        }
+                    </Button>
+                    
                 </div>
                 {
-                    commentData.hasReplies &&
+                    showReplyCommentBox &&
+                    <CommentBox idDrink={commentData.idDrink} parentId={commentData.commentId} updateComment={updateReplies} />
+                }
+                {
+                    (commentData.hasReplies || replyAdded) &&
                     <div className="comment__showReplies_div">
                         <div className="comment__showReplies" onClick={() => showRepliesClicked()}>
                             {
@@ -94,11 +124,15 @@ const Comment = ({commentData}) => {
                         {   
                             showReplies      &&
                             <div className="comment__replies">
-                                <ReplyListRendererWithLoading replies={replies} isLoading={isLoading || initialLoad} initialLoad={initialLoad}/>
-                                {
-                                    !endOfData &&
-                                    <Button onClick={() => setRepliesRequested(true)}>Show more</Button>
-                                }
+                                <ReplyListRendererWithLoading
+                                    replies={replies}
+                                    isLoading={isLoading || initialLoad}
+                                    initialLoad={initialLoad}
+                                />
+                                    {
+                                        !endOfData &&
+                                        <Button className='comment__showMoreReplies' onClick={() => setRepliesRequested(true)}>Show more</Button>
+                                    }
                             </div>
                         }
                     </div>
