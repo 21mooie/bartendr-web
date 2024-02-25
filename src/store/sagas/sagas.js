@@ -1,4 +1,4 @@
-import {take,  put} from "redux-saga/effects";
+  import {take,  put} from "redux-saga/effects";
 import axios from "axios";
 import { store } from 'react-notifications-component';
 
@@ -96,9 +96,7 @@ export function* registerUserSaga() {
 
 export function* setUserSaga() {
   while (true) {
-    console.log('calling setUserSaga');
     const { data } = yield take(mutations.SET_STATE);
-    console.log('data ', data);
     yield put(
       setUser({
           email    : data.state.email,
@@ -120,7 +118,7 @@ export function* setUserSaga() {
     );
     yield put(
       setAuthentication({
-          status: data.state.authentication,
+          status: data.state.authentication.status,
       })
     );
   }

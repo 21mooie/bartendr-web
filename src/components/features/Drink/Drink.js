@@ -7,6 +7,7 @@ import './Drink.css';
 import NotFound from "../NotFound/NotFound";
 import {url} from "../../../consts";
 import * as mutations from '../../../store/mutations';
+import CommentSection from '../CommentSection/CommentSection';
 
 
 export function Drink({ username, favDrinks, match, updateFavDrinks, isAuthenticated }) {
@@ -87,6 +88,7 @@ export function Drink({ username, favDrinks, match, updateFavDrinks, isAuthentic
                 <p>{drink.strInstructions}</p>
               </div>
             </div>
+            <CommentSection idDrink={idDrink} />
           </div>
       }
       {

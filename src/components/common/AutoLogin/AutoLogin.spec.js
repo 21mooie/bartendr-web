@@ -11,6 +11,7 @@ jest.mock('react-redux', () => ({
 }));
 
 jest.mock('../../../services/UserPool');
+jest.spyOn(console, "log").mockImplementation(() => {});
 
 describe('AutoLogin', () => {
     it('should render.', () => {
