@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { store } from 'react-notifications-component';
 
 import { getCommentsAsync } from './comments';
 import commentsMock from '../../mocks/comments.mock';

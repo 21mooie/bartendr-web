@@ -19,7 +19,7 @@
 }
 
 textarea {
-    width: 350px;
+    width: 100%;
     line-height: 1.5;
     border-radius: 5px;
     border: 1px solid #ccc;
@@ -29,7 +29,7 @@ textarea {
 
 @media screen and (min-width: 480px) {
     textarea {
-        width: 400px;
+        width: 100%;
         line-height: 1.5;
         border-radius: 5px;
         border: 1px solid #ccc;
@@ -37,6 +37,9 @@ textarea {
         resize: none;
     }
 }
+/*
+//TODO: Find a solution that won't push the width of the replies perpetually to the right. Maybe after two levels
+*/
 
 @media screen and (min-width: 768px) {
     textarea {

@@ -4,12 +4,17 @@ import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
+import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { store as notificationsModule } from 'react-notifications-component';
 
 import './Comment.css';
 import WithLoading from '../WithLoading/WithLoading';
 import { getCommentsAsync } from '../../../async/comments/comments';
 import ReplyListRenderer from '../ListRenderer/ReplyListRenderer/ReplyListRenderer';
 import CommentBox from '../CommentBox/CommentBox';
+import { dateToReadableTimeFrame } from '../../../funcs/date';
+import { postInteractionAsync } from '../../../async/interactions/interactions';
 
 const ReplyListRendererWithLoading = WithLoading(ReplyListRenderer);
 
@@ -23,9 +28,14 @@ const Comment = ({commentData}) => {
     const [endOfData, setEndOfData]                     = useState(false);
     const [showReplyCommentBox, setShowReplyCommentBox] = useState(false);
     const [replyAdded, setReplyAdded]                   = useState(false);
+    const [interaction, setInteraction]                 = useState(commentData.interaction);
+    const [displayLikes, setDisplayLikes]               = useState(commentData.numLikes-commentData.numDislikes);
+    const isAuthenticated                               = useSelector((state) => state.authenticated.status);
+    const uid                                           = useSelector((state) => state.user.uid);
+    const history                                       = useHistory();
     //TODO: Refactor reply logic into ReplyList Component
-
     useEffect(() => {
+        setInteraction(commentData.interaction);
         if(repliesRequested) {
             setIsLoading(true);
             getCommentsAsync({idDrink: commentData.idDrink, offset, limit: 5, parentId: commentData.commentId})
@@ -45,7 +55,8 @@ const Comment = ({commentData}) => {
                     setRepliesRequested(false);
                 });
         }
-    }, [repliesRequested]);
+        //TODO: Once interactions get refactored remove commentData dependency
+    }, [repliesRequested, commentData.interaction]);
 
     const showRepliesClicked = () => {
         setShowReplies(!showReplies);
@@ -53,6 +64,22 @@ const Comment = ({commentData}) => {
     };
 
     const replyButtonClicked = () => {
+        if(!isAuthenticated){
+            notificationsModule.addNotification({
+                title: "Hey!",
+                message: "Login to interact with comments",
+                type: "danger",
+                insert: "top",
+                container: "top-right",
+                animationIn: ["animate__animated", "animate__fadeIn"],
+                animationOut: ["animate__animated", "animate__fadeOut"],
+                dismiss: {
+                    duration: 3500,
+                    onScreen: true
+                }
+            });
+            history.push({pathname: '/signup'});
+        }
         setShowReplyCommentBox(!showReplyCommentBox);
     };
 
@@ -62,6 +89,52 @@ const Comment = ({commentData}) => {
         setReplyAdded(true);
         setInitialLoad(false);
     };
+
+    const interactionClicked = (currentInteraction) => {
+        if(!isAuthenticated) {
+            notificationsModule.addNotification({
+                title: "Hey!",
+                message: "Login to interact with comments",
+                type: "danger",
+                insert: "top",
+                container: "top-right",
+                animationIn: ["animate__animated", "animate__fadeIn"],
+                animationOut: ["animate__animated", "animate__fadeOut"],
+                dismiss: {
+                    duration: 3500,
+                    onScreen: true
+                }
+            });
+            history.push({pathname: '/signup'});
+        }
+        if(currentInteraction !== interaction) {
+            postInteractionAsync('IDDRINK_COMMENT', commentData.idDrink, currentInteraction, commentData.commentId, uid)
+            .then(() => {
+                let likeUpdateVal = 0;
+                if(currentInteraction === 'LIKE'){
+                    likeUpdateVal += 1;
+                    if(interaction === 'DISLIKE')
+                        likeUpdateVal += 1;
+                }
+                else {
+                    likeUpdateVal -= 1;
+                    if(interaction === 'LIKE')
+                        likeUpdateVal -= 1;
+                }
+                   
+
+                setDisplayLikes(displayLikes+likeUpdateVal);
+                setInteraction(currentInteraction);
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+        }
+    };
+
+    
+    //TODO: Find a solution that won't push the width of the replies perpetually to the right. Maybe after two levels the replies are inline
+    
 
     return (
         <div className="comment">
@@ -84,11 +157,11 @@ const Comment = ({commentData}) => {
             <div>
                 <h4>{commentData.commenterUsername}</h4>
                 <p className="comment__content">{commentData.content}</p>
-                <p className="comment_datePosted">posted {commentData.dateTimeCreated}</p>
+                <p className="comment_datePosted">posted { dateToReadableTimeFrame(new Date(commentData.dateTimeCreated)) }</p>
                 <div className="comment__interactions">
-                    <ThumbUpIcon style={{cursor: 'pointer'}}/>
-                    <span className="comment__interactions_likeCount">{commentData.numLikes-commentData.numDislikes}</span>
-                    <ThumbDownIcon style={{cursor: 'pointer'}}/>
+                    <ThumbUpIcon style={{ cursor : 'pointer', color  : interaction === 'LIKE' ? 'green' : ''}} onClick={() => interactionClicked('LIKE')}  />
+                    <span className="comment__interactions_likeCount">{displayLikes}</span>
+                    <ThumbDownIcon style={{cursor: 'pointer', color  : interaction === 'DISLIKE' ? 'red' : ''}} onClick={() => interactionClicked('DISLIKE')} />
                     <Button
                         className="comment__interactions_reply"
                         onClick={replyButtonClicked}

@@ -1,14 +1,34 @@
-import React, { useEffect, useRef }  from 'react';
+import React, { useEffect, useRef, useState }  from 'react';
 
 import './CommentListRenderer.css';
 import Comment from '../../Comment/Comment';
+import { getInteractionsAsync } from '../../../../async/interactions/interactions';
+import { useSelector } from 'react-redux';
 
 
 
 
 const CommentListRenderer = ({comments, bottomReachedCallback}) => {
-    const myRef = useRef();
+    const myRef                                         = useRef();
+    const isAuthenticated                               = useSelector((state) => state.authenticated.status);
+    const uid                                           = useSelector((state) => state.user.uid);
+    const [interactionComments, setInteractionComments] = useState(comments);
+
     useEffect(() => {
+        //TODO: refactor getComments to get Interactions within itself instead of updating them in another trip
+        if (isAuthenticated) {
+            getInteractionsAsync('IDDRINK_COMMENT', uid,  { commentIds: interactionComments.map(comment => comment.commentId ), idDrink: interactionComments[0].idDrink })
+                .then((data) => {
+                    const interactionResults = data.result;
+                    comments.forEach((comment) => {
+                        comment.interaction = interactionResults[comment.commentId]
+                    });
+                    setInteractionComments([...comments]);
+                })
+                .catch((err) => {
+                    console.error(err);
+                })
+        }
         const observer = new IntersectionObserver((entries) => {
             const entry = entries[0];
             if(entry.isIntersecting) {
@@ -16,22 +36,22 @@ const CommentListRenderer = ({comments, bottomReachedCallback}) => {
                 bottomReachedCallback();
             }
         });
-        if(comments.length-5 >= 0) observer.observe(myRef.current);
+        if(interactionComments.length-5 >= 0) observer.observe(myRef.current);
     }, []);
 
     return (
         <div className="commentListRenderer">
             <ul className="commentListRenderer__comments">
                 { 
-                    comments.length > 0 &&
-                    comments.map((comment, index) => {
-                        if (index + 5 === comments.length) return (<li key={index} ref={myRef}>
+                    interactionComments.length > 0 &&
+                    interactionComments.map((comment, index) => {
+                        if (index + 5 === interactionComments.length) return (<li key={index} ref={myRef}>
                                                                         <Comment commentData={comment} />
                                                                     </li>)
                         return <li key={index}><Comment commentData={comment}/></li>
                     }) 
                 }
-                { comments.length === 0 && <li>There are no comments. You can be the first!</li> }
+                { interactionComments.length === 0 && <li>There are no comments. You can be the first!</li> }
             </ul>
         </div>
     );

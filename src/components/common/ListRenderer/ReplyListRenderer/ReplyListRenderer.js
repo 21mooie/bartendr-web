@@ -4,6 +4,8 @@ import './ReplyListRenderer.css';
 import Comment from '../../Comment/Comment';
 
 const ReplyListRenderer = ({replies}) => {
+    // TODO: add request to get the interactions for all the comments
+    // make sure reply interactions are being gotten from the comment level
     return (
         <div className='replyListRenderer'>
             <ul className="replyListRenderer__replies">
