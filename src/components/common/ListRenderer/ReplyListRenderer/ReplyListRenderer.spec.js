@@ -4,7 +4,7 @@ import { render, screen } from '@testing-library/react';
 import ReplyListRenderer from './ReplyListRenderer';
 import commentsMock from '../../../../mocks/comments.mock';
 
-
+jest.mock('../../Comment/Comment', () => ({}) => <div className='comment'>This is a comment</div>)
 
 describe('ReplyListRenderer', () => {
     it('should render.', () => {
