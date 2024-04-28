@@ -31,7 +31,6 @@ const CommentList = ({idDrink, limit, postedComments}) => {
     }, [offset]);
 
     const updateOffset = () => {
-        console.log('bottom reached');
         if(!endOfData) setOffset(offset+limit);
     }
 
@@ -39,6 +38,7 @@ const CommentList = ({idDrink, limit, postedComments}) => {
         <div className='commentList'>
             <CommentListRendererWithLoading
                 comments={postedComments.length > 0 ? [...postedComments, ...comments] : comments}
+                idDrink={idDrink}
                 isLoading={loading || initialLoad}
                 initialLoad={initialLoad}
                 bottomReachedCallback={updateOffset}

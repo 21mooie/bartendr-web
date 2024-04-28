@@ -8,16 +8,16 @@ import { useSelector } from 'react-redux';
 
 
 
-const CommentListRenderer = ({comments, bottomReachedCallback}) => {
+const CommentListRenderer = ({comments, bottomReachedCallback, idDrink}) => {
     const myRef                                         = useRef();
     const isAuthenticated                               = useSelector((state) => state.authenticated.status);
     const uid                                           = useSelector((state) => state.user.uid);
-    const [interactionComments, setInteractionComments] = useState(comments);
+    const [interactionComments, setInteractionComments] = useState([]);
 
     useEffect(() => {
         //TODO: refactor getComments to get Interactions within itself instead of updating them in another trip
-        if (isAuthenticated) {
-            getInteractionsAsync('IDDRINK_COMMENT', uid,  { commentIds: interactionComments.map(comment => comment.commentId ), idDrink: interactionComments[0].idDrink })
+        if (isAuthenticated && interactionComments.length === 0) {
+            getInteractionsAsync('IDDRINK_COMMENT', uid,  { commentIds: comments.map(comment => comment.commentId ), idDrink })
                 .then((data) => {
                     const interactionResults = data.result;
                     comments.forEach((comment) => {
@@ -28,6 +28,9 @@ const CommentListRenderer = ({comments, bottomReachedCallback}) => {
                 .catch((err) => {
                     console.error(err);
                 })
+        } else {
+            comments[0].interaction = 'NONE';
+            setInteractionComments([...comments, ...interactionComments]);
         }
         const observer = new IntersectionObserver((entries) => {
             const entry = entries[0];
@@ -37,7 +40,7 @@ const CommentListRenderer = ({comments, bottomReachedCallback}) => {
             }
         });
         if(interactionComments.length-5 >= 0) observer.observe(myRef.current);
-    }, []);
+    }, [comments]);
 
     return (
         <div className="commentListRenderer">

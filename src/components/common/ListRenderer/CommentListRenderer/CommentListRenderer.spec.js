@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, wait } from '@testing-library/react';
 import { mockIntersectionObserver } from 'jsdom-testing-mocks';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
@@ -46,9 +46,12 @@ describe('CommentListRenderer', () => {
         });
     });
 
-    it('should render.', () => {
-        const { container } = render(<Provider store={store} ><CommentListRenderer comments={commentsMock.results} refProp={null}/></Provider>)
-        expect(container.querySelector('.comment')).toBeInTheDocument();
+    it('should render.', async () => {
+        const { container } = render(<Provider store={store} ><CommentListRenderer comments={commentsMock.results} refProp={null} idDrink='11111' /></Provider>);
+        await wait(() =>  {
+            expect(container.querySelector('.comment')).toBeInTheDocument();
+        });
+        
     });
 
     //TODO: when interactions is refactored from here this will be removed
