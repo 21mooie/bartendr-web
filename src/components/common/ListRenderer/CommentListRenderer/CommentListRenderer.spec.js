@@ -55,7 +55,7 @@ describe('CommentListRenderer', () => {
     });
 
     //TODO: when interactions is refactored from here this will be removed
-    xit('should render no comments.', () => {
+    it('should render no comments.', () => {
         render(<Provider store={store} ><CommentListRenderer comments={[]} refProp={null}/></Provider>)
         expect(screen.getByText('There are no comments. You can be the first!')).toBeInTheDocument();
     });
