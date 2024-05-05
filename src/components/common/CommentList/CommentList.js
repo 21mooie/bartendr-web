@@ -4,44 +4,58 @@ import './CommentList.css';
 import { getCommentsAsync } from '../../../async/comments/comments';
 import WithLoading from '../WithLoading/WithLoading';
 import CommentListRenderer from '../ListRenderer/CommentListRenderer/CommentListRenderer';
+import { useSelector } from 'react-redux';
 
 
 const CommentListRendererWithLoading = WithLoading(CommentListRenderer);
 
-const CommentList = ({idDrink, limit, postedComments}) => {
+const CommentList = ({idDrink, limit, postedComment}) => {
     // initialLoad helps to make sure the component's first render shows the loading spinner
-    const [comments, setComments]        = useState([]);
-    const [offset,   setOffset]          = useState(0);
-    const [initialLoad, setInitialLoad ] = useState(true);
-    const [loading,  setLoading]         = useState(false);
-    const [endOfData, setEndOfData]      = useState(false);
+    const [comments, setComments]               = useState([]);
+    const [offset,   setOffset]                 = useState(0);
+    const [initialLoad, setInitialLoad ]        = useState(true);
+    const [loading,  setLoading]                = useState(false);
+    const [endOfData, setEndOfData]             = useState(false);
+    const [requestComments, setRequestComments] = useState(true);
+    const uid                                   = useSelector((state) => state.user.uid);
 
     useEffect(() => {
-        setLoading(true);
-        getCommentsAsync({idDrink, offset, limit, parentId: null})
-            .then((data) => {
-                setComments([...comments, ...data.results]);
-                if(data.endOfData) setEndOfData(true);
-            })
-            .catch((err) => console.error(err))
-            .finally(() => {
-                setLoading(false)
-                setInitialLoad(false);
-            });
-    }, [offset]);
+        if(postedComment && (comments.length === 0 || postedComment.commentId !== comments[0].commentId))
+            setComments(postedComment ? [postedComment, ...comments] : comments);
+        if(requestComments) {
+            setLoading(true);
+            getCommentsAsync({idDrink, offset, limit, parentId: null, uid })
+                .then((data) => {
+                    setComments([...comments, ...data.results]);
+                    setOffset(offset+limit);
+                    if(data.endOfData) setEndOfData(true);
+                })
+                .catch((err) => console.error(err))
+                .finally(() => {
+                    setLoading(false)
+                    setInitialLoad(false);
+                    setRequestComments(false);
+                });
+        }
+    }, [requestComments, uid, postedComment]);
 
-    const updateOffset = () => {
-        if(!endOfData) setOffset(offset+limit);
-    }
+    const requestCommentsCallback = () => {
+        if(!endOfData) setRequestComments(true);
+    };
+
+    const updateComment = (idx, update) => {
+        comments[idx] = {...comments[idx], ...update};
+        setComments([...comments]);
+    };
 
     return (
         <div className='commentList'>
             <CommentListRendererWithLoading
-                comments={postedComments.length > 0 ? [...postedComments, ...comments] : comments}
-                idDrink={idDrink}
+                comments={comments}
                 isLoading={loading || initialLoad}
                 initialLoad={initialLoad}
-                bottomReachedCallback={updateOffset}
+                bottomReachedCallback={requestCommentsCallback}
+                updateComment={updateComment}
             />
         </div>
     );

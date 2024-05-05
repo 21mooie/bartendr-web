@@ -3,13 +3,14 @@ import { store } from 'react-notifications-component';
 
 import { url } from '../../consts';
 
-const getCommentsAsync = ({idDrink, offset, limit, parentId}) => {
+const getCommentsAsync = ({idDrink, offset, limit, parentId, uid}) => {
     return new Promise((resolve, reject) => {
         axios.get(`${url}/cocktail/${idDrink}/comment`,{
             params: {
                 offset,
                 limit,
-                parentId
+                parentId,
+                uid
             }
         })
         .then((response) => {

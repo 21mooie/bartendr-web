@@ -10,7 +10,7 @@ import { store as notificationsModule } from 'react-notifications-component';
 
 import './Comment.css';
 import WithLoading from '../WithLoading/WithLoading';
-import { getCommentsAsync } from '../../../async/comments/comments';
+import { getCommentsAsync as getRepliesAsync } from '../../../async/comments/comments';
 import ReplyListRenderer from '../ListRenderer/ReplyListRenderer/ReplyListRenderer';
 import CommentBox from '../CommentBox/CommentBox';
 import { dateToReadableTimeFrame } from '../../../funcs/date';
@@ -18,7 +18,7 @@ import { postInteractionAsync } from '../../../async/interactions/interactions';
 
 const ReplyListRendererWithLoading = WithLoading(ReplyListRenderer);
 
-const Comment = ({commentData}) => {
+const Comment = ({commentData, updateComment, index}) => {
     const [showReplies, setShowReplies]                 = useState(false);
     const [repliesRequested, setRepliesRequested]       = useState(false)
     const [replies, setReplies]                         = useState([]);
@@ -27,18 +27,17 @@ const Comment = ({commentData}) => {
     const [offset, setOffset]                           = useState(0);
     const [endOfData, setEndOfData]                     = useState(false);
     const [showReplyCommentBox, setShowReplyCommentBox] = useState(false);
-    const [replyAdded, setReplyAdded]                   = useState(false);
-    const [interaction, setInteraction]                 = useState(commentData.interaction);
-    const [displayLikes, setDisplayLikes]               = useState(commentData.numLikes-commentData.numDislikes);
+    const [displayLikes, setDisplayLikes]               = useState(0);
+
     const isAuthenticated                               = useSelector((state) => state.authenticated.status);
     const uid                                           = useSelector((state) => state.user.uid);
     const history                                       = useHistory();
     //TODO: Refactor reply logic into ReplyList Component
     useEffect(() => {
-        setInteraction(commentData.interaction);
+        setDisplayLikes(commentData.numLikes-commentData.numDislikes)
         if(repliesRequested) {
             setIsLoading(true);
-            getCommentsAsync({idDrink: commentData.idDrink, offset, limit: 5, parentId: commentData.commentId})
+            getRepliesAsync({idDrink: commentData.idDrink, offset, limit: 5, parentId: commentData.commentId})
                 .then((data) => {
                     const commentMap = {};
                     for (let reply of replies) {
@@ -56,7 +55,7 @@ const Comment = ({commentData}) => {
                 });
         }
         //TODO: Once interactions get refactored remove commentData dependency
-    }, [repliesRequested, commentData.interaction]);
+    }, [repliesRequested, commentData]);
 
     const showRepliesClicked = () => {
         setShowReplies(!showReplies);
@@ -86,7 +85,7 @@ const Comment = ({commentData}) => {
     const updateReplies = (comment) => {
         setReplies([comment,...replies]);
         setShowReplies(true);
-        setReplyAdded(true);
+        updateComment(index, { hasReplies: true});
         setInitialLoad(false);
     };
 
@@ -107,29 +106,36 @@ const Comment = ({commentData}) => {
             });
             history.push({pathname: '/signup'});
         }
-        if(currentInteraction !== interaction) {
+        if(currentInteraction !== commentData.interaction) {
             postInteractionAsync('IDDRINK_COMMENT', commentData.idDrink, currentInteraction, commentData.commentId, uid)
             .then(() => {
-                let likeUpdateVal = 0;
+                const update = {
+                    numLikes: commentData.numLikes,
+                    numDislikes: commentData.numDislikes,
+                    interaction: currentInteraction,
+                };
                 if(currentInteraction === 'LIKE'){
-                    likeUpdateVal += 1;
-                    if(interaction === 'DISLIKE')
-                        likeUpdateVal += 1;
+                    update.numLikes += 1;
+                    if(commentData.interaction === 'DISLIKE')
+                        update.numDislikes -= 1;
                 }
                 else {
-                    likeUpdateVal -= 1;
-                    if(interaction === 'LIKE')
-                        likeUpdateVal -= 1;
+                    update.numDislikes += 1;
+                    if(commentData.interaction === 'LIKE')
+                        update.numLikes -= 1;
                 }
                    
-
-                setDisplayLikes(displayLikes+likeUpdateVal);
-                setInteraction(currentInteraction);
+                updateComment(index, update);
             })
             .catch((err) => {
                 console.error(err);
             });
         }
+    };
+
+    const updateReply = (idx, update) => {
+        replies[idx] = {...replies[idx], ...update};
+        setReplies([...replies]);
     };
 
     
@@ -142,7 +148,7 @@ const Comment = ({commentData}) => {
                 {
                     commentData.commenterAvi ?
                         <img 
-                            alt={`Image of commenter ${commentData.commenterUsername}`}
+                            alt={`${commentData.commenterUsername}`}
                             src={commentData.commenterAvi}
                             className="comment__avi"
                         />
@@ -159,9 +165,9 @@ const Comment = ({commentData}) => {
                 <p className="comment__content">{commentData.content}</p>
                 <p className="comment_datePosted">posted { dateToReadableTimeFrame(new Date(commentData.dateTimeCreated)) }</p>
                 <div className="comment__interactions">
-                    <ThumbUpIcon style={{ cursor : 'pointer', color  : interaction === 'LIKE' ? 'green' : ''}} onClick={() => interactionClicked('LIKE')}  />
+                    <ThumbUpIcon style={{ cursor : 'pointer', color  : commentData.interaction === 'LIKE' ? 'green' : ''}} onClick={() => interactionClicked('LIKE')}  />
                     <span className="comment__interactions_likeCount">{displayLikes}</span>
-                    <ThumbDownIcon style={{cursor: 'pointer', color  : interaction === 'DISLIKE' ? 'red' : ''}} onClick={() => interactionClicked('DISLIKE')} />
+                    <ThumbDownIcon style={{cursor: 'pointer', color  : commentData.interaction === 'DISLIKE' ? 'red' : ''}} onClick={() => interactionClicked('DISLIKE')} />
                     <Button
                         className="comment__interactions_reply"
                         onClick={replyButtonClicked}
@@ -177,7 +183,7 @@ const Comment = ({commentData}) => {
                     <CommentBox idDrink={commentData.idDrink} parentId={commentData.commentId} updateComment={updateReplies} />
                 }
                 {
-                    (commentData.hasReplies || replyAdded) &&
+                    commentData.hasReplies &&
                     <div className="comment__showReplies_div">
                         <div className="comment__showReplies" onClick={() => showRepliesClicked()}>
                             {
@@ -201,6 +207,7 @@ const Comment = ({commentData}) => {
                                     replies={replies}
                                     isLoading={isLoading || initialLoad}
                                     initialLoad={initialLoad}
+                                    updateReply={updateReply}
                                 />
                                     {
                                         !endOfData &&
@@ -213,8 +220,6 @@ const Comment = ({commentData}) => {
             </div>
         </div>
     );
-    //TODO: finish writing logic to increment likes and dislikes and count if a user has already liked something
-    // write function to figure out how many minutes/hours/days/months/years a comment was written
 }
  
 export default Comment;

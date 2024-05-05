@@ -69,7 +69,7 @@ describe('CommentList', () => {
         });
     });
     //TODO: when interactions is refactored from here this will be removed
-    xit('should handle an error getting comments.', async () => {
+    it('should handle an error getting comments.', async () => {
         getCommentsAsync.mockImplementationOnce(() => Promise.reject('error'));
         // how to mock console
         const spy = jest.spyOn(console, "error").mockImplementation(() => {});
