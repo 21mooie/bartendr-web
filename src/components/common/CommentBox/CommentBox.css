@@ -18,7 +18,16 @@
     margin: 10px;
 }
 
-textarea {
+.commentBox__textarea {
+    width: 100%;
+    line-height: 1.5;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-shadow: 1px 1px 1px #999;
+    resize: none;
+}
+
+.commentBox__replyBox__textarea {
     width: 100%;
     line-height: 1.5;
     border-radius: 5px;
@@ -28,7 +37,16 @@ textarea {
 }
 
 @media screen and (min-width: 480px) {
-    textarea {
+    .commentBox__textarea {
+        width: 100%;
+        line-height: 1.5;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        box-shadow: 1px 1px 1px #999;
+        resize: none;
+    }
+
+    .commentBox__replyBox__textarea {
         width: 100%;
         line-height: 1.5;
         border-radius: 5px;
@@ -42,8 +60,17 @@ textarea {
 */
 
 @media screen and (min-width: 768px) {
-    textarea {
-        width: 700px;
+    .commentBox__textarea {
+        width: 600px;
+        line-height: 1.5;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        box-shadow: 1px 1px 1px #999;
+        resize: none;
+    }
+
+    .commentBox__replyBox__textarea {
+        width: 500px;
         line-height: 1.5;
         border-radius: 5px;
         border: 1px solid #ccc;
@@ -53,8 +80,17 @@ textarea {
 }
 
 @media screen and (min-width: 992px) {
-    textarea {
+    .commentBox__textarea {
         width: 800px;
+        line-height: 1.5;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        box-shadow: 1px 1px 1px #999;
+        resize: none;
+    }
+
+    .commentBox__replyBox__textarea {
+        width: 600px;
         line-height: 1.5;
         border-radius: 5px;
         border: 1px solid #ccc;

@@ -29,7 +29,16 @@ const CommentListRenderer = ({comments, bottomReachedCallback, updateComment}) =
                         if (index + 5 === comments.length) return (<li key={index} ref={myRef}>
                                                                         <Comment commentData={comment} />
                                                                     </li>)
-                        return <li key={index}><Comment commentData={comment} updateComment={(idx, update) => updateComment(idx, update)} index={index} /></li>
+                        return <li key={index}>
+                                    <Comment
+                                        commentData={comment}
+                                        updateComment={(idx, update) => updateComment(idx, update)}
+                                        index={index}
+                                        showReplies={comment.showReplies}
+                                        showReplyBox={comment.showReplyBox}
+                                        indentReplies={true}
+                                />
+                                </li>
                     }) 
                 }
                 { comments.length === 0 && <li>There are no comments. You can be the first!</li> }

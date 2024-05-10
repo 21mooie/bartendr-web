@@ -20,12 +20,21 @@ const CommentList = ({idDrink, limit, postedComment}) => {
     const uid                                   = useSelector((state) => state.user.uid);
 
     useEffect(() => {
-        if(postedComment && (comments.length === 0 || postedComment.commentId !== comments[0].commentId))
+        if(postedComment && (comments.length === 0 || postedComment.commentId !== comments[0].commentId)){
+            postedComment.showReplies = false;
+            postedComment.showReplyBox = false;
             setComments(postedComment ? [postedComment, ...comments] : comments);
+        }
+            
         if(requestComments) {
             setLoading(true);
             getCommentsAsync({idDrink, offset, limit, parentId: null, uid })
                 .then((data) => {
+                    // custom props to help with rendering
+                    for (const result of data.results) {
+                        result.showReplies = false;
+                        result.showReplyBox = false;
+                    }
                     setComments([...comments, ...data.results]);
                     setOffset(offset+limit);
                     if(data.endOfData) setEndOfData(true);

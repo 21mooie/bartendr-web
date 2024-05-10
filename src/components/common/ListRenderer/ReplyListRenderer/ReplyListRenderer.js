@@ -11,7 +11,16 @@ const ReplyListRenderer = ({replies, updateReply}) => {
             <ul className="replyListRenderer__replies">
                 {
                     replies.length > 0 &&
-                    replies.map((reply, index) => <li key={index}> <Comment commentData={reply} index={index} updateComment={(idx, update) => updateReply(idx, update)}/> </li>)
+                    replies.map((reply, index) => <li key={index}>
+                                                        <Comment
+                                                            commentData={reply}
+                                                            index={index}
+                                                            updateComment={(idx, update) => updateReply(idx, update)}
+                                                            indentReplies={false}
+                                                            showReplies={reply.showReplies}
+                                                            showReplyBox={reply.showReplyBox}
+                                                        />
+                                                  </li>)
                 }
                 { replies.length === 0 && <li>There are no replies. Please submit an error ticket!</li> }
             </ul>
