@@ -8,7 +8,7 @@ import './CommentBox.css';
 import { postCommentAsync } from '../../../async/comments/comments';
 
 
-const CommentBox = ({idDrink, parentId, updateComment}) => {
+const CommentBox = ({idDrink, parentId, updateComment, isReplyBox}) => {
     const history         = useHistory();
     const uid             = useSelector((state) => state.user.uid);
     const isAuthenticated = useSelector((state) => state.authenticated.status);
@@ -85,6 +85,7 @@ const CommentBox = ({idDrink, parentId, updateComment}) => {
         <div className='commentBox'>
             <div>
                 <textarea
+                    className={`${isReplyBox ? 'commentBox__replyBox__textarea' : 'commentBox__textarea'}`}
                     onClick={textAreaClicked}
                     value={comment}
                     placeholder="Add a comment..."

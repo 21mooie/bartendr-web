@@ -1,7 +1,10 @@
 .comment {
+    margin-bottom: 50px;
+}
+
+.comment__main {
     display: flex;
     flex-direction: row;
-    margin-bottom: 50px;
 }
 
 .comment__avi__div {
@@ -48,6 +51,21 @@
 
 .comment__replies {
     display: block;
+}
+
+.comment__showReplies_div {
+    display: flex;
+    flex-direction: column;
+    margin: 0px 0px 0px 70px;
+}
+
+.comment__showReplies_div_no_indent {
+    display: flex;
+    flex-direction: column;
+}
+
+.comment__showReplies_dropDown {
+    margin-bottom: 30px;
 }
 
 @media only screen and (max-width: 576px) {

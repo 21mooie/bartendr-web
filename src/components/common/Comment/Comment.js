@@ -18,15 +18,14 @@ import { postInteractionAsync } from '../../../async/interactions/interactions';
 
 const ReplyListRendererWithLoading = WithLoading(ReplyListRenderer);
 
-const Comment = ({commentData, updateComment, index}) => {
-    const [showReplies, setShowReplies]                 = useState(false);
+const Comment = ({commentData, updateComment, index, showReplies, showReplyBox, indentReplies}) => {
+    //TODO: seperate state which is related to reply into its own component
     const [repliesRequested, setRepliesRequested]       = useState(false)
     const [replies, setReplies]                         = useState([]);
     const [isLoading, setIsLoading]                     = useState(false);
     const [initialLoad, setInitialLoad ]                = useState(true);
     const [offset, setOffset]                           = useState(0);
     const [endOfData, setEndOfData]                     = useState(false);
-    const [showReplyCommentBox, setShowReplyCommentBox] = useState(false);
     const [displayLikes, setDisplayLikes]               = useState(0);
 
     const isAuthenticated                               = useSelector((state) => state.authenticated.status);
@@ -58,7 +57,7 @@ const Comment = ({commentData, updateComment, index}) => {
     }, [repliesRequested, commentData]);
 
     const showRepliesClicked = () => {
-        setShowReplies(!showReplies);
+        updateComment(index, { showReplies: !showReplies });
         if(initialLoad) setRepliesRequested(true);
     };
 
@@ -79,13 +78,13 @@ const Comment = ({commentData, updateComment, index}) => {
             });
             history.push({pathname: '/signup'});
         }
-        setShowReplyCommentBox(!showReplyCommentBox);
+        updateComment(index, { showReplyBox: !showReplyBox });
     };
 
     const updateReplies = (comment) => {
         setReplies([comment,...replies]);
-        setShowReplies(true);
-        updateComment(index, { hasReplies: true});
+        //TODO could perform a check beforehand to check if this is necessary; may save performance
+        updateComment(index, { showReplies: true, hasReplies: true });
         setInitialLoad(false);
     };
 
@@ -143,81 +142,83 @@ const Comment = ({commentData, updateComment, index}) => {
     
 
     return (
-        <div className="comment">
-            <div className="comment__avi__div">
-                {
-                    commentData.commenterAvi ?
-                        <img 
-                            alt={`${commentData.commenterUsername}`}
-                            src={commentData.commenterAvi}
-                            className="comment__avi"
-                        />
-                    :
-                        <Avatar
-                            alt={`Image of empty avatar for commenter ${commentData.commenterUsername}`}
-                            src={commentData.commenterAvi}
-                            style={{height: 70, width: 70}}
-                        />
-                }
-            </div>
-            <div>
-                <h4>{commentData.commenterUsername}</h4>
-                <p className="comment__content">{commentData.content}</p>
-                <p className="comment_datePosted">posted { dateToReadableTimeFrame(new Date(commentData.dateTimeCreated)) }</p>
-                <div className="comment__interactions">
-                    <ThumbUpIcon style={{ cursor : 'pointer', color  : commentData.interaction === 'LIKE' ? 'green' : ''}} onClick={() => interactionClicked('LIKE')}  />
-                    <span className="comment__interactions_likeCount">{displayLikes}</span>
-                    <ThumbDownIcon style={{cursor: 'pointer', color  : commentData.interaction === 'DISLIKE' ? 'red' : ''}} onClick={() => interactionClicked('DISLIKE')} />
-                    <Button
-                        className="comment__interactions_reply"
-                        onClick={replyButtonClicked}
-                    >
-                        {
-                            showReplyCommentBox ? 'Close' : 'Reply'
-                        }
-                    </Button>
-                    
+        <div className='comment'>
+            <div className='comment__main'>
+                <div className="comment__avi__div">
+                    {
+                        commentData.commenterAvi ?
+                            <img 
+                                alt={`${commentData.commenterUsername}`}
+                                src={commentData.commenterAvi}
+                                className="comment__avi"
+                            />
+                        :
+                            <Avatar
+                                alt={`Image of empty avatar for commenter ${commentData.commenterUsername}`}
+                                src={commentData.commenterAvi}
+                                style={{height: 70, width: 70}}
+                            />
+                    }
                 </div>
-                {
-                    showReplyCommentBox &&
-                    <CommentBox idDrink={commentData.idDrink} parentId={commentData.commentId} updateComment={updateReplies} />
-                }
-                {
-                    commentData.hasReplies &&
-                    <div className="comment__showReplies_div">
-                        <div className="comment__showReplies" onClick={() => showRepliesClicked()}>
+                <div>
+                    <h4>{commentData.commenterUsername}</h4>
+                    <p className="comment__content">{commentData.content}</p>
+                    <p className="comment_datePosted">posted { dateToReadableTimeFrame(new Date(commentData.dateTimeCreated)) }</p>
+                    <div className="comment__interactions">
+                        <ThumbUpIcon style={{ cursor : 'pointer', color  : commentData.interaction === 'LIKE' ? 'green' : ''}} onClick={() => interactionClicked('LIKE')}  />
+                        <span className="comment__interactions_likeCount">{displayLikes}</span>
+                        <ThumbDownIcon style={{cursor: 'pointer', color  : commentData.interaction === 'DISLIKE' ? 'red' : ''}} onClick={() => interactionClicked('DISLIKE')} />
+                        <Button
+                            className="comment__interactions_reply"
+                            onClick={replyButtonClicked}
+                        >
                             {
-                                showReplies ?
-                                    <>
-                                        <ArrowDropDownIcon className="comment__showReplies_dropDown"/>
-                                        <span>Hide replies</span>
-                                    </>
-                                :
-                                    <>
-                                        <ArrowDropUpIcon className="comment__showReplies_dropUp"/>
-                                        <span>Show replies</span>
-                                    </>
+                                showReplyBox ? 'Close' : 'Reply' 
                             }
-                            
-                        </div>
-                        {   
-                            showReplies      &&
-                            <div className="comment__replies">
-                                <ReplyListRendererWithLoading
-                                    replies={replies}
-                                    isLoading={isLoading || initialLoad}
-                                    initialLoad={initialLoad}
-                                    updateReply={updateReply}
-                                />
-                                    {
-                                        !endOfData &&
-                                        <Button className='comment__showMoreReplies' onClick={() => setRepliesRequested(true)}>Show more</Button>
-                                    }
-                            </div>
-                        }
+                        </Button>
+                        
                     </div>
-                }
+                    {
+                        showReplyBox &&
+                        <CommentBox idDrink={commentData.idDrink} parentId={commentData.commentId} updateComment={updateReplies} isReplyBox={true} />
+                    }
+                </div>
             </div>
+            {
+                commentData.hasReplies &&
+                <div className={`${indentReplies ? 'comment__showReplies_div' : 'comment__showReplies_div_no_indent'}`}>
+                    <div className="comment__showReplies" onClick={() => showRepliesClicked()}>
+                        {
+                            showReplies ?
+                                <>
+                                    <ArrowDropDownIcon className="comment__showReplies_dropDown"/>
+                                    <span>Hide replies</span>
+                                </>
+                            :
+                                <>
+                                    <ArrowDropUpIcon className="comment__showReplies_dropUp"/>
+                                    <span>Show replies</span>
+                                </>
+                        }
+                        
+                    </div>
+                    {   
+                        showReplies      &&
+                        <div className="comment__replies">
+                            <ReplyListRendererWithLoading
+                                replies={replies}
+                                isLoading={isLoading || initialLoad}
+                                initialLoad={initialLoad}
+                                updateReply={updateReply}
+                            />
+                                {
+                                    !endOfData &&
+                                    <Button className='comment__showMoreReplies' onClick={() => setRepliesRequested(true)}>Show more</Button>
+                                }
+                        </div>
+                    }
+                </div>
+            }
         </div>
     );
 }
