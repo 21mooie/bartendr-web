@@ -13,7 +13,7 @@ import WithLoading from '../WithLoading/WithLoading';
 import { getCommentsAsync as getRepliesAsync } from '../../../async/comments/comments';
 import ReplyListRenderer from '../ListRenderer/ReplyListRenderer/ReplyListRenderer';
 import CommentBox from '../CommentBox/CommentBox';
-import { dateToReadableTimeFrame } from '../../../funcs/date';
+import { dateToReadableTimeFrame } from '../../../funcs/date/date';
 import { postInteractionAsync } from '../../../async/interactions/interactions';
 
 const ReplyListRendererWithLoading = WithLoading(ReplyListRenderer);
