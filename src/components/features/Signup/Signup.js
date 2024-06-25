@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import UserPool from '../../../services/UserPool';
 import { AuthenticationDetails, CognitoUser } from 'amazon-cognito-identity-js';
 import { requestRegistration } from '../../../store/mutations';
+import { setAuthToken } from '../../../funcs/authtoken/authtoken';
 
 const Signup = ({requestRegistration, isAuthenticated}) => {
   const history = useHistory();
@@ -71,6 +72,7 @@ const Signup = ({requestRegistration, isAuthenticated}) => {
       console.log('call result: ' + result);
       cognitoUser.authenticateUser(authDetails,{
         onSuccess: (data) => {
+          setAuthToken();
           console.log("onSuccess: ", data);
           const registration = {
             username,

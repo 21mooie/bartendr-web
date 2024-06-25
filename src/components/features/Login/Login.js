@@ -10,6 +10,7 @@ import { requestUser } from '../../../store/mutations';
 
 
 import './Login.css';
+import { setAuthToken } from '../../../funcs/authtoken/authtoken';
 
 function Login({isAuthenticated}) {
   const history = useHistory();
@@ -42,6 +43,7 @@ function Login({isAuthenticated}) {
 
     user.authenticateUser(authDetails,{
       onSuccess: (data) => {
+        setAuthToken();
         console.log("onSuccess: ", data);
         // Not sure how to dispatch event from userReducer try .toString()
         dispatch(requestUser(loginUsername));
