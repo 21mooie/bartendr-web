@@ -11,7 +11,7 @@ export function* updateFavDrinks() {
     while (true) {
       const { username, drink, add } =  yield take(mutations.REQUEST_UPDATE_FAV_DRINKS);
       try {
-        yield axios.post(`${url}/users/fav_drinks`, {username, idDrink: drink.idDrink, add});
+        yield axios.post(`${url}/users/fav_drinks`, {username, idDrink: drink.idDrink, add}, {retry: 1, retryDelay: 1000});
         console.log('successful drink update');
         if (add) {
           yield put(addDrink(drink));
@@ -19,7 +19,7 @@ export function* updateFavDrinks() {
           yield put(removeDrink(drink));
         }
       } catch (err) {
-        console.log(err);
+        console.error(err);
         yield put(failedUpdateFavDrinks());
         store.addNotification({
           title: "Uh-oh!",

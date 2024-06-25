@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import UserPool from '../../../services/UserPool';
 import { requestUser } from '../../../store/mutations';
+import { setAuthToken } from '../../../funcs/authtoken/authtoken';
 
 
 const AutoLogin = () => {
@@ -13,6 +14,7 @@ const AutoLogin = () => {
     if (cognitoUser !== null) {
       let username = cognitoUser.getUsername();
       console.log(`username: ${username}`);
+      setAuthToken();
       dispatch(requestUser(username));
       return true;
     }

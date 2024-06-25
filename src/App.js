@@ -1,6 +1,7 @@
 import React from 'react';
 import {Provider} from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import './funcs/interceptors/interceptors';
 
 import './App.css';
 import {ConnectedDashboard} from "./components/features/Dashboard/Dashboard";
@@ -18,6 +19,7 @@ import ConnectedSignup from './components/features/Signup/Signup';
 import ConnectedLogin from './components/features/Login/Login';
 import ScrollToTop from './components/common/ScrollToTop/ScrollToTop';
 import AutoLogin from './components/common/AutoLogin/AutoLogin';
+import history from './funcs/history/history';
 
 
 
@@ -27,7 +29,7 @@ console.log(`You are running in  ${process.env.NODE_ENV}`);
 function App() {
 
   return (
-    <Router>
+    <Router history={history}>
       <Provider store={store}>
         <>
           <ConnectedNavigation showMenuPaths={['/dashboard', '/user', '/drink', '/search', '/explore']}/>
