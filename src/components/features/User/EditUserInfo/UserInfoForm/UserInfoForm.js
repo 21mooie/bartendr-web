@@ -134,6 +134,7 @@ function UserInfoForm({toggleUpdateInfoForm, updateAvi}) {
           dataURLKey="data_url"
           acceptType={['jpg','png']}
           maxFileSize={2000000}
+          allowNonImageType={true}
         >
           {({
               imageList,
