@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
+import { Button } from '@material-ui/core';
 
 import UserPool from '../../../services/UserPool';
 import { requestUser } from '../../../store/mutations';
@@ -57,13 +58,15 @@ function Login({isAuthenticated}) {
     });
   };
 
-  return <div>
-          <form onSubmit={onSubmit}> 
-            <TextField id="username" onChange={(event) => setLoginUsername(event.target.value)} />          
-            <TextField id="password" onChange={(event) => setPassword(event.target.value)} type="password" />
-            <button type="submit ">Log In</button>
-          </form>
-          <Link to="/signup">Signup</Link>
+  return <div className="login">
+          <div className="login__container">
+            <form onSubmit={onSubmit} className="form">
+              <TextField id="username" placeholder="Username" onChange={(event) => setLoginUsername(event.target.value)} />          
+              <TextField id="password" placeholder="Password" onChange={(event) => setPassword(event.target.value)} type="password" />
+              <Button  variant='outlined' className="submit" type="submit ">Log In</Button>
+              <Link to="/signup" className="signup">Signup</Link>
+            </form>
+          </div>
          </div>
 }
 
