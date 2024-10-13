@@ -8,6 +8,7 @@ import UserPool from '../../../services/UserPool';
 import { AuthenticationDetails, CognitoUser } from 'amazon-cognito-identity-js';
 import { requestRegistration } from '../../../store/mutations';
 import { setAuthToken } from '../../../funcs/authtoken/authtoken';
+import './Signup.css';
 
 const Signup = ({requestRegistration, isAuthenticated}) => {
   const history = useHistory();
@@ -15,11 +16,6 @@ const Signup = ({requestRegistration, isAuthenticated}) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-
-  const [name, setName] = useState("");
-  const [picture, setPicture] = useState("");
-  const [gender, setGender] = useState("");
-  const [dob, setDateOfBirth] = useState("");
   const [phone_number, setPhoneNumber] = useState("");
 
   const [confirmationCode, setConfirmationCode] = useState("");
@@ -110,30 +106,27 @@ const Signup = ({requestRegistration, isAuthenticated}) => {
   };
 
   return (
-    <div>
-          <form onSubmit={onSubmit}> 
+    <div className="signup_main">
+      <div className="signup__container">
+          <form className="signup_form" onSubmit={onSubmit}> 
             <TextField id="username" label="username" onChange={(event) => setUsername(event.target.value)} />          
             <TextField id="password" label="password" type="password" onChange={(event) => setPassword(event.target.value)} />
-            <TextField id="email" label="email" onChange={(event) => setEmail(event.target.value)} />
-
-            <TextField id="name" label="name" onChange={(event) => setName(event.target.value)} />          
-            <TextField id="picture" label="picture" onChange={(event) => setPicture(event.target.value)} />
-            <TextField id="gender" label="gender" onChange={(event) => setGender(event.target.value)} />
-            <TextField id="dob" label="birth date" onChange={(event) => setDateOfBirth(event.target.value)} />          
-            <TextField id="phone_number" label="phone_number" onChange={(event) => setPhoneNumber(event.target.value)} />
-            <button type="submit " onClick={() => console.log('clicked')}>Sign up</button>
-          </form>
-          <Link to="/login">Login</Link>
-
-          <form onSubmit = {confirmRegistration}>
-            <TextField label="confirmationCode" onChange={(event) => setConfirmationCode(event.target.value)}/>
-            <Button type="submit">Confirm Signup </Button>
+            <TextField id="email" label="email" onChange={(event) => setEmail(event.target.value)} />        
+            <TextField id="phone_number" label="phone number" onChange={(event) => setPhoneNumber(event.target.value)} />
+            <Button variant='outlined' type="submit " onClick={() => console.log('clicked')}>Sign up</Button>
+            <Link to="/login" className="login_link">Login</Link>
           </form>
 
-          <div>
-            <Button onClick={resendConfirmationCode}>Request confirmation</Button>
-          </div>
-         </div>
+        <form onSubmit = {confirmRegistration} className="confirm_form">
+          <TextField label="confirmationCode" onChange={(event) => setConfirmationCode(event.target.value)}/>
+          <Button type="submit">Confirm Signup </Button>
+        </form>
+
+        <div>
+          <Button onClick={resendConfirmationCode}>Request confirmation</Button>
+        </div>
+      </div>
+    </div>
   )
 }
 
