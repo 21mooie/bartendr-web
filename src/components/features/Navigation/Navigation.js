@@ -67,7 +67,7 @@ const Navigation = ({showMenuPaths, clearState, requestUser, history, isAuthenti
         {
           !showFullSearchBar 
           &&
-          <Link to={isAuthenticated ? '/dashboard' : '/'} className="navigation__logo">Bartendr</Link>
+          <Link to={isAuthenticated ? '/dashboard' : '/'} className="navigation__logo">Palace</Link>
         }
         {
           showMenu && isAuthenticated ? (
