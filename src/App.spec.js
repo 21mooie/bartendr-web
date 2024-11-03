@@ -4,6 +4,6 @@ import App from './App';
 
 test('renders learn react link', () => {
   render(<App />);
-  const header = screen.getAllByText("Bartendr");
+  const header = screen.getAllByText("Palace");
   expect(header[0]).toBeInTheDocument();
 });
