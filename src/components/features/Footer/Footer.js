@@ -35,8 +35,8 @@ export const Footer = (props) => {
         </div>
         <div className="footer__social_media">
           <div className="footer__social_media_wrap">
-            <Link className="footer__social_logo">Bartendr</Link>
-            <p className="footer__website_rights">Bartender © {new Date().getFullYear()} All rights reserved.</p>
+            <Link className="footer__social_logo">Palace</Link>
+            <p className="footer__website_rights">Palace © {new Date().getFullYear()} All rights reserved.</p>
             <div className="footer__social_icons">
               <Link className="footer__social_icon_link"><FacebookIcon /></Link>
               <Link className="footer__social_icon_link"><InstagramIcon /></Link>
