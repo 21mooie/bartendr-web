@@ -196,7 +196,6 @@ function UserInfoForm({toggleUpdateInfoForm, updateAvi}) {
             />
           </ReactCrop>
         }
-        <TextField id="information " label="New information" onChange={event => console.log(event.target.value)}/>
         <Button onClick={toggleUpdateInfoForm}>Cancel</Button>
         <Button type="submit">Submit</Button>
         {
