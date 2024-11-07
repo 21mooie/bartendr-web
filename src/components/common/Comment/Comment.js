@@ -179,7 +179,7 @@ const Comment = ({commentData, updateComment, index, showReplies, showReplyBox, 
                         
                     </div>
                     {
-                        showReplyBox &&
+                        showReplyBox && commentData.idDrink &&
                         <CommentBox idDrink={commentData.idDrink} parentId={commentData.commentId} updateComment={updateReplies} isReplyBox={true} />
                     }
                 </div>
