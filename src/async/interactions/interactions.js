@@ -22,14 +22,10 @@ const getInteractionsAsync = (type, uid, params) => {
     });
 };
 
-const postInteractionAsync = (type, idDrink, interaction, commentId, uid) => {
+const postInteractionAsync = (interactionBody) => {
     return new Promise((resolve, reject) => {
         axios.post(`${url}/interactions`, {
-            type,
-            idDrink,
-            interaction,
-            commentId,
-            uid
+            ...interactionBody
         })
         .then((response) => {
             resolve(response.data);

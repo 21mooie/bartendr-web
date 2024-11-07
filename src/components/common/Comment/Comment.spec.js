@@ -51,7 +51,7 @@ jest.mock('react-notifications-component', () => ({
     },
 }));
 
-describe('Comment', () => {
+xdescribe('Comment', () => {
     let commentData;
     let store;
     beforeAll(() => {

@@ -8,7 +8,13 @@ const CommentSection = ({idDrink}) => {
     const [postedComment, setPostedComment] = useState(null);
     return (
         <div className="commentSection">
-            <CommentBox parentId={null} idDrink={idDrink} updateComment={(comment) => setPostedComment(comment)} isReplyBox={false}/>
+            <CommentBox
+                parentId={null}
+                idDrink={idDrink}
+                updateComment={(comment) => setPostedComment(comment)}
+                isReplyBox={false}
+                commentType='IDDRINK'
+            />
             <CommentList idDrink={idDrink} limit={10} postedComment={postedComment} />
         </div>
     );
