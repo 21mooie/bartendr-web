@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './funcs/interceptors/interceptors';
 
 import './App.css';
-import {ConnectedDashboard} from "./components/features/Dashboard/Dashboard";
+import Dashboard from "./components/features/Dashboard/Dashboard";
 import { store } from './store/store';
 import {ConnectedNavigation} from "./components/features/Navigation/Navigation";
 import {ConnectedUser} from "./components/features/User/User";
@@ -39,7 +39,7 @@ function App() {
           <AutoLogin />
           <Switch>
             <Route exact path="/" component={LandingPage} />
-            <ProtectedRoute path="/dashboard" component={ConnectedDashboard} />
+            <ProtectedRoute path="/dashboard" component={Dashboard} />
             <Route path="/user/:username" component={ConnectedUser} />
             <Route path="/search" component={SearchWithRouter} />
             <Route path="/drink/:idDrink" component={ConnectedDrink} />

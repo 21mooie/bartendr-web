@@ -20,15 +20,14 @@ function Explore(props) {
     if (uid && requestComments)
       getExploreAsync(uid, limit)
         .then(data => {
-          console.log(data);
+          setRequestComments(false);
           setComments([...comments, ...data.results]);
         }).catch(err => console.error(err))
         .finally(() => {
           setLoading(false);
           setInitialLoad(false);
-          setRequestComments(false);
         });
-  }, [uid, limit, requestComments]);
+  }, [uid, limit, requestComments, comments]);
 
   const updateComment = (idx, update) => {
     comments[idx] = {...comments[idx], ...update};

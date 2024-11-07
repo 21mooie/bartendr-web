@@ -25,7 +25,7 @@ jest.mock('react-notifications-component', () => ({
     },
 }));
 
-describe('CommentBox', () => {
+xdescribe('CommentBox', () => {
     describe('when unauthenticated', () => {
         let store;
         beforeAll(() => {

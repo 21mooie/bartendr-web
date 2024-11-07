@@ -26,8 +26,10 @@ const CommentListRenderer = ({comments, bottomReachedCallback, updateComment}) =
                 { 
                     comments.length > 0 &&
                     comments.map((comment, index) => {
+                        const commentType = comment.idDrink ? 'IDDRINK_COMMENT' :  'STATUS_COMMENT';
                         if (index + 5 === comments.length) return (<li key={index} ref={myRef}>
-                                                                        <Comment commentData={comment} />
+                                                                        <Comment commentData={comment}
+                                                                        commentType={commentType} />
                                                                     </li>)
                         return <li key={index}>
                                     <Comment
@@ -37,7 +39,8 @@ const CommentListRenderer = ({comments, bottomReachedCallback, updateComment}) =
                                         showReplies={comment.showReplies}
                                         showReplyBox={comment.showReplyBox}
                                         indentReplies={true}
-                                />
+                                        commentType={commentType}
+                                    />
                                 </li>
                     }) 
                 }

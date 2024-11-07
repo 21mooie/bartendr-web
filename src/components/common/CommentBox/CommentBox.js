@@ -5,10 +5,13 @@ import { useHistory } from "react-router-dom";
 import { store as notificationsModule } from 'react-notifications-component';
 
 import './CommentBox.css';
-import { postCommentAsync } from '../../../async/comments/comments';
+import {
+    postCommentAsync,
+    postStatusAsync
+} from '../../../async/comments/comments';
 
 
-const CommentBox = ({idDrink, parentId, updateComment, isReplyBox}) => {
+const CommentBox = ({idDrink, parentId, updateComment, isReplyBox, statusId, commentType, statusOwnerUid}) => {
     const history         = useHistory();
     const uid             = useSelector((state) => state.user.uid);
     const isAuthenticated = useSelector((state) => state.authenticated.status);
@@ -54,30 +57,54 @@ const CommentBox = ({idDrink, parentId, updateComment, isReplyBox}) => {
     const submitClicked = () => {
         //TODO: Add a loading logic while ui is waiting for a post to be submitted
         if (authenticationGuard()){
-            postCommentAsync(uid, idDrink, parentId, comment)
-                .then((response) => {
-                    updateComment(response.comment)
-                })
-                .catch((err) => {
-                    console.error(err);
-                    notificationsModule.addNotification({
-                        title: "Uh-oh!",
-                        message: "There was an error with posting your comment.",
-                        type: "danger",
-                        insert: "top",
-                        container: "top-right",
-                        animationIn: ["animate__animated", "animate__fadeIn"],
-                        animationOut: ["animate__animated", "animate__fadeOut"],
-                        dismiss: {
-                            duration: 3500,
-                            onScreen: true
-                        }
+            if (commentType === 'IDDRINK')
+                postCommentAsync(uid, idDrink, parentId, comment)
+                    .then((response) => {
+                        updateComment(response.comment)
+                    })
+                    .catch((err) => {
+                        console.error(err);
+                        notificationsModule.addNotification({
+                            title: "Uh-oh!",
+                            message: "There was an error with posting your comment.",
+                            type: "danger",
+                            insert: "top",
+                            container: "top-right",
+                            animationIn: ["animate__animated", "animate__fadeIn"],
+                            animationOut: ["animate__animated", "animate__fadeOut"],
+                            dismiss: {
+                                duration: 3500,
+                                onScreen: true
+                            }
+                        });
+                    })
+                    .finally(() => {
+                        setComment('');
+                        setSubmitBtnDisabled(true);
                     });
-                })
-                .finally(() => {
-                    setComment('');
-                    setSubmitBtnDisabled(true);
-                });
+            else
+                postStatusAsync(uid, statusId, parentId, comment, statusOwnerUid)
+                    .then(data => updateComment(data))
+                    .catch((err) => {
+                        console.error(err);
+                        notificationsModule.addNotification({
+                            title: "Uh-oh!",
+                            message: "There was an error with posting your comment.",
+                            type: "danger",
+                            insert: "top",
+                            container: "top-right",
+                            animationIn: ["animate__animated", "animate__fadeIn"],
+                            animationOut: ["animate__animated", "animate__fadeOut"],
+                            dismiss: {
+                                duration: 3500,
+                                onScreen: true
+                            }
+                        });
+                    })
+                    .finally(() => {
+                        setComment('');
+                        setSubmitBtnDisabled(true);
+                    });
         }
     };
 
@@ -88,7 +115,7 @@ const CommentBox = ({idDrink, parentId, updateComment, isReplyBox}) => {
                     className={`${isReplyBox ? 'commentBox__replyBox__textarea' : 'commentBox__textarea'}`}
                     onClick={textAreaClicked}
                     value={comment}
-                    placeholder="Add a comment..."
+                    placeholder={commentType === 'IDDRINK' ? "Add a comment..." : statusId ? 'Write a quick message...' : "Update your status..."}
                     onChange={textAreaChanged}
                 />
                 <div className='commentBox__buttons'>

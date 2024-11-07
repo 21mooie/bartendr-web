@@ -18,7 +18,7 @@ import { postInteractionAsync } from '../../../async/interactions/interactions';
 
 const ReplyListRendererWithLoading = WithLoading(ReplyListRenderer);
 
-const Comment = ({commentData, updateComment, index, showReplies, showReplyBox, indentReplies}) => {
+const Comment = ({commentData, updateComment, index, showReplies, showReplyBox, indentReplies, commentType}) => {
     //TODO: seperate state which is related to reply into its own component
     const [repliesRequested, setRepliesRequested]       = useState(false)
     const [replies, setReplies]                         = useState([]);
@@ -36,23 +36,24 @@ const Comment = ({commentData, updateComment, index, showReplies, showReplyBox, 
         setDisplayLikes(commentData.numLikes-commentData.numDislikes)
         if(repliesRequested) {
             setIsLoading(true);
-            getRepliesAsync({idDrink: commentData.idDrink, offset, limit: 5, parentId: commentData.commentId})
-                .then((data) => {
-                    const commentMap = {};
-                    for (let reply of replies) {
-                        commentMap[reply.commentId] = true;
-                    }
-                    setReplies([...replies, ...data.results.filter((comment) => commentMap[comment.commentId] === undefined)]);
-                    setOffset(offset+5);
-                    if(data.endOfData) setEndOfData(true);
-                })
-                .catch((err) => console.error(err))
-                .finally(() => {
-                    setIsLoading(false);
-                    setInitialLoad(false);
-                    setRepliesRequested(false);
-                });
-        }
+            if (commentType === 'IDDRINK_COMMENT')
+                getRepliesAsync({idDrink: commentData.idDrink, offset, limit: 5, parentId: commentData.commentId})
+                    .then((data) => {
+                        const commentMap = {};
+                        for (let reply of replies) {
+                            commentMap[reply.commentId] = true;
+                        }
+                        setReplies([...replies, ...data.results.filter((comment) => commentMap[comment.commentId] === undefined)]);
+                        setOffset(offset+5);
+                        if(data.endOfData) setEndOfData(true);
+                    })
+                    .catch((err) => console.error(err))
+                    .finally(() => {
+                        setIsLoading(false);
+                        setInitialLoad(false);
+                        setRepliesRequested(false);
+                    });
+            }
         //TODO: Once interactions get refactored remove commentData dependency
     }, [repliesRequested, commentData]);
 
@@ -106,7 +107,26 @@ const Comment = ({commentData, updateComment, index, showReplies, showReplyBox, 
             history.push({pathname: '/signup'});
         }
         if(currentInteraction !== commentData.interaction) {
-            postInteractionAsync('IDDRINK_COMMENT', commentData.idDrink, currentInteraction, commentData.commentId, uid)
+            let interactionBody;
+            if (commentType === 'IDDRINK_COMMENT')
+                interactionBody = {
+                    type: commentType,
+                    idDrink: commentData.interaction,
+                    interaction: currentInteraction,
+                    commentId: currentInteraction.commentId,
+                    uid,
+                };
+            else
+                interactionBody = {
+                    type: commentType,
+                    interaction: currentInteraction,
+                    statusOwnerUid: commentData.statusOwnerUid,
+                    statusId: commentData.statusId,
+                    id: commentData.id,
+                    uid,
+                };
+
+            postInteractionAsync(interactionBody)
             .then(() => {
                 const update = {
                     numLikes: commentData.numLikes,
@@ -180,7 +200,24 @@ const Comment = ({commentData, updateComment, index, showReplies, showReplyBox, 
                     </div>
                     {
                         showReplyBox && commentData.idDrink &&
-                        <CommentBox idDrink={commentData.idDrink} parentId={commentData.commentId} updateComment={updateReplies} isReplyBox={true} />
+                        <CommentBox
+                            idDrink={commentData.idDrink}
+                            parentId={commentData.commentId}
+                            updateComment={updateReplies}
+                            isReplyBox={true}
+                            commentType='IDDRINK'
+                        />
+                    }
+                    {
+                        showReplyBox && commentData.statusId &&
+                        <CommentBox
+                            statusId={commentData.statusId}
+                            parentId={commentData.id}
+                            updateComment={updateReplies}
+                            isReplyBox={true}
+                            commentType='STATUS'
+                            statusOwnerUid={commentData.statusOwnerUid}
+                        />
                     }
                 </div>
             </div>

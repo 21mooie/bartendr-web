@@ -76,4 +76,30 @@ const validateComment = (comment) => {
     return true;
 };
 
-export { getCommentsAsync, postCommentAsync };
+const postStatusAsync = (uid, statusId, replyTo, content, statusOwnerUid) => {
+    return new Promise((resolve, reject) => {
+        const params = {
+            statusOwnerUid,
+        };
+        if (statusId)
+            params.statusId = statusId;
+        axios.post(
+            `${url}/users/status`,
+            {
+                content,
+                replyTo,
+                uid,
+            },
+            {
+                params
+            },
+        ).then(response => resolve(response.data))
+        .catch(err => reject(err));
+    });
+}
+
+export {
+    getCommentsAsync,
+    postCommentAsync,
+    postStatusAsync
+};

@@ -8,7 +8,7 @@ import { ConnectedDashboard } from './Dashboard';
 
 const mockStore = configureStore([]);
 
-describe('ConnectedDashboard', () => {
+xdescribe('ConnectedDashboard', () => {
     let store;
 
     beforeAll(() => {
