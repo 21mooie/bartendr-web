@@ -19,6 +19,7 @@ import ConnectedSignup from './components/features/Signup/Signup';
 import ConnectedLogin from './components/features/Login/Login';
 import ScrollToTop from './components/common/ScrollToTop/ScrollToTop';
 import AutoLogin from './components/common/AutoLogin/AutoLogin';
+import Privacy from './components/features/Privacy/Privacy';
 import history from './funcs/history/history';
 
 
@@ -47,6 +48,7 @@ function App() {
             <Route path="/explore" component={Explore} />
             <Route path="/login" component={ConnectedLogin} />
             <Route path="/signup" component={ConnectedSignup} />
+            <Route path="/privacy" component={Privacy} />
             <Route component={NotFound} />
           </Switch>
           <Footer />
