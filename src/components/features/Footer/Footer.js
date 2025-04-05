@@ -24,8 +24,8 @@ export const Footer = (props) => {
           </div>
           <div className="footer__links_wrapper">
             <div className="footer__link_items">
-              <h3 className="footer__link_title">Videos</h3>
-              <Link className="footer__link">Blah blah blah</Link>
+              <h3 className="footer__link_title">Terms</h3>
+              <Link className="footer__link" to="/privacy">Privacy Policy</Link>
             </div>
             <div className="footer__link_items">
               <h3 className="footer__link_title">Other</h3>
